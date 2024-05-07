@@ -1,13 +1,22 @@
+import { Button, ConfigProvider, DatePicker, Space } from 'antd'
 import { useState } from 'react'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+    <ConfigProvider
+      theme={{
+        token:{
+          colorPrimary: '#e73773'
+        }
+      }}
+    >
       <div>
-
-
+      <Space>
+      <DatePicker />
+      <Button type="primary">Primary Button</Button>
+      </Space>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
@@ -21,7 +30,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </ConfigProvider>
   )
 }
 
