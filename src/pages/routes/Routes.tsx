@@ -6,28 +6,7 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
-
-export class Route {
-  label: string;
-  path: string;
-  fullPath: string;
-  element: JSX.Element;
-  icon: JSX.Element;
-
-  constructor(
-    label: string,
-    path: string,
-    fullPath: string,
-    element: JSX.Element,
-    icon: JSX.Element
-  ) {
-    this.label = label;
-    this.path = path;
-    this.fullPath = fullPath;
-    this.element = element;
-    this.icon = icon;
-  }
-}
+import { Route } from "./models/Route";
 
 const page1 = new Route(
   "Page 1",
