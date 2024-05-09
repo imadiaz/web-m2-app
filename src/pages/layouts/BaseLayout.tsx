@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu, Button, theme } from "antd";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
-import { buttonSiderStyle, contentStyle, headerStyle, layoutStyle } from "./BaseLayoutStyles";
+  buttonSiderStyle,
+  contentStyle,
+  headerStyle,
+  layoutStyle,
+} from "./BaseLayoutStyles";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { proofPagesSiderOptions } from "../routes/Routes";
 
 const { Header, Sider, Content } = Layout;
 
 const BaseLayout: React.FC = () => {
+  //provisional code
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedPath, setSelectedPath] = useState("");
+
+  useEffect(() => {
+    setSelectedPath(location.pathname);
+  }, [location]);
+
+  const handleOnClick = (data: any) => {
+    navigate(data.key);
+  };
+  //----------
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -23,24 +38,9 @@ const BaseLayout: React.FC = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "page 1",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "page 2",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "page 3",
-            },
-          ]}
+          onClick={handleOnClick}
+          selectedKeys={[selectedPath]}
+          items={proofPagesSiderOptions()}
         />
       </Sider>
       <Layout>
@@ -52,10 +52,8 @@ const BaseLayout: React.FC = () => {
             style={buttonSiderStyle}
           />
         </Header>
-        <Content
-          style={contentStyle(colorBgContainer, borderRadiusLG)}
-        >
-          Content
+        <Content style={contentStyle(colorBgContainer, borderRadiusLG)}>
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
