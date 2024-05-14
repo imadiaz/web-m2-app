@@ -1,6 +1,3 @@
-export const layoutStyle = {
-  minHeight: "100vh",
-};
 export const headerStyle = (colorBgContainer: string) => ({
   padding: 0,
   background: colorBgContainer,
