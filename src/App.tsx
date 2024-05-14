@@ -21,6 +21,11 @@ function App() {
             colorBgContainer: "#001529",
           },
         },
+        components: {
+          Card:{
+            colorBgContainer: '#001529'
+          }
+        }
       }}
     >
       <Routes>
