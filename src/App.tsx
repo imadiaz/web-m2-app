@@ -30,7 +30,7 @@ function App() {
             headerSortHoverBg: '#011e39',
             headerSortActiveBg: '#011e39',
           },
-        },
+        }
       }}
     >
       <Routes>
