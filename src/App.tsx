@@ -15,6 +15,11 @@ function App() {
           linkHoverDecoration: "underline",
           colorBgLayout: "#e2e8f0",
         },
+        components: {
+          Card:{
+            colorBgContainer: '#001529'
+          }
+        }
       }}
     >
       <Routes>
