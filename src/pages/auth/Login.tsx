@@ -28,6 +28,7 @@ const LoginPage = () => {
     if (getSessionUser() !== null) {
       const data = getSessionUser() as User;
       distpatch(setCredentials({ ...data }));
+      navigate(Routes.AppDirectionHome);
     }
   }, []);
 
