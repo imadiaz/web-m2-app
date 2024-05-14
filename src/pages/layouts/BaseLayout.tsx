@@ -5,7 +5,6 @@ import {
   buttonSiderStyle,
   contentStyle,
   headerStyle,
-  layoutStyle,
 } from "./BaseLayoutStyles";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { proofPagesSiderOptions } from "../routes/Routes";
@@ -33,7 +32,7 @@ const BaseLayout: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout style={layoutStyle}>
+    <Layout className="flex w-full h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <Menu
           theme="dark"
