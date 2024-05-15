@@ -3,6 +3,7 @@ import BaseLayout from "./pages/layouts/BaseLayout";
 import { Route, Routes } from "react-router-dom";
 import { proofRoutes } from "./pages/routes/Routes";
 import LoginPage from "./pages/auth/Login";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 function App() {
   return (
@@ -16,18 +17,25 @@ function App() {
           colorBgLayout: "#e2e8f0",
         },
         components: {
-          Card:{
-            colorBgContainer: '#001529'
-          }
-        }
+          Card: {
+            colorBgContainer: "#001529",
+          },
+        },
       }}
     >
       <Routes>
         <Route index path="/" element={<LoginPage />} />
-        <Route element={<BaseLayout />}>
-          {proofRoutes.map((value, index) => (
-            <Route key={index} path={value.fullPath} element={value.element} />
-          ))}
+
+        <Route element={<PrivateRoutes />}>
+          <Route element={<BaseLayout />}>
+            {proofRoutes.map((value, index) => (
+              <Route
+                key={index}
+                path={value.fullPath}
+                element={value.element}
+              />
+            ))}
+          </Route>
         </Route>
       </Routes>
     </ConfigProvider>
