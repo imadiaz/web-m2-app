@@ -32,10 +32,10 @@ function App() {
           },
         },
         components: {
-          Card:{
-            colorBgContainer: '#001529'
-          }
-        }
+          Card: {
+            colorBgContainer: "#001529",
+          },
+        },
       }}
     >
       <Routes>
