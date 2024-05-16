@@ -7,7 +7,10 @@ import {
   headerStyle,
 } from "./BaseLayoutStyles";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { proofPagesSiderOptions } from "../routes/Routes";
+import { getUserSiderOptions } from "../routes/Routes";
+import { useSessionStorage } from "../../core/useSessionStorage";
+import User from "../../data/user/user";
+import Constants from "../../utils/Constants";
 
 const { Header, Sider, Content } = Layout;
 
@@ -16,6 +19,7 @@ const BaseLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedPath, setSelectedPath] = useState("");
+  const [getSessionUser] = useSessionStorage<User>(Constants.EMPTY_STRING);
 
   useEffect(() => {
     setSelectedPath(location.pathname);
@@ -39,7 +43,7 @@ const BaseLayout: React.FC = () => {
           mode="inline"
           onClick={handleOnClick}
           selectedKeys={[selectedPath]}
-          items={proofPagesSiderOptions()}
+          items={getUserSiderOptions(getSessionUser() as User)}
         />
       </Sider>
       <Layout>

@@ -1,5 +1,5 @@
-const AppDirectionHome = "/page1";
+const AdminDirectionHome = "/companies";
 
 export default {
-  AppDirectionHome,
+  AdminDirectionHome,
 };
