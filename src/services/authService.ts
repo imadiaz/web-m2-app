@@ -10,7 +10,7 @@ export const authService = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...credentials },
       }),
-      transformResponse: (response: { data: User }, meta, arg) => response.data,
+      transformResponse: (response: { data: User }, _, __) => response.data,
       invalidatesTags: ["User"],
     }),
   }),
