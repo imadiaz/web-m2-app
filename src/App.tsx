@@ -1,7 +1,7 @@
 import { ConfigProvider } from "antd";
 import BaseLayout from "./pages/layouts/BaseLayout";
 import { Route, Routes } from "react-router-dom";
-import { proofRoutes } from "./pages/routes/Routes";
+import { adminRoutes } from "./pages/routes/Routes";
 import LoginPage from "./pages/auth/Login";
 import PrivateRoutes from "./components/PrivateRoutes";
 
@@ -28,7 +28,7 @@ function App() {
 
         <Route element={<PrivateRoutes />}>
           <Route element={<BaseLayout />}>
-            {proofRoutes.map((value, index) => (
+            {adminRoutes.map((value, index) => (
               <Route
                 key={index}
                 path={value.fullPath}

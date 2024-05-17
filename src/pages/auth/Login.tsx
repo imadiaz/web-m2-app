@@ -11,9 +11,8 @@ import User from "../../data/user/user";
 import Strings from "../../utils/Strings";
 import { handleErrorNotification } from "../../utils/Notifications";
 import Meta from "antd/es/card/Meta";
-import { validateEmail } from "../../utils/Validations";
+import { getInitRoute, validateEmail } from "../../utils/Extensions";
 import Constants from "../../utils/Constants";
-import Routes from "../../utils/Routes";
 
 const LoginPage = () => {
   const [isPasswordVisible, setPasswordVisible] = React.useState(false);
@@ -25,10 +24,10 @@ const LoginPage = () => {
   );
 
   useEffect(() => {
-    if (getSessionUser() !== null) {
+    if (getSessionUser() !== undefined) {
       const data = getSessionUser() as User;
       distpatch(setCredentials({ ...data }));
-      navigate(Routes.AppDirectionHome);
+      navigate(getInitRoute(data));
     }
   }, []);
 
@@ -40,7 +39,7 @@ const LoginPage = () => {
 
       setSessionUser(data);
       distpatch(setCredentials({ ...data }));
-      navigate(Routes.AppDirectionHome);
+      navigate(getInitRoute(data));
     } catch (error) {
       handleErrorNotification(error);
     }
