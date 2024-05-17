@@ -12,7 +12,7 @@ const PrivateRoutes = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (getSessionUser() !== null) {
+    if (getSessionUser() !== undefined) {
       const storedUser = getSessionUser() as User;
       dispatch(setCredentials({ ...storedUser }));
     }
