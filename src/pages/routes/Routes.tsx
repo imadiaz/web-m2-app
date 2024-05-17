@@ -1,10 +1,14 @@
 import { ItemType } from "antd/es/menu/hooks/useItems";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Page1, Page2, Page3 } from "../proofPages/proofPages";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+import { Page2, Page3 } from "../proofPages/proofPages";
+>>>>>>> 5972a9a (Get Companies responsive (#15))
 =======
 import { Page2, Page3 } from "../proofPages/proofPages";
 >>>>>>> 5972a9a (Get Companies responsive (#15))
@@ -16,6 +20,7 @@ import { UserRoles, getUserRol } from "../../utils/Extensions";
 import { BsBuildings } from "react-icons/bs";
 import Routes from "../../utils/Routes";
 import Company from "../company/Companies";
+<<<<<<< HEAD
 
 const companies = new Route(
   "Companies",
@@ -42,16 +47,22 @@ import User from "../../data/user/user";
 import { UserRoles, getUserRol } from "../../utils/Extensions";
 import { BsBuildings } from "react-icons/bs";
 import Routes from "../../utils/Routes";
+=======
+>>>>>>> 5972a9a (Get Companies responsive (#15))
 
 const companies = new Route(
   "Companies",
   "companies",
   Routes.AdminDirectionHome,
+<<<<<<< HEAD
   <Page1 />,
 <<<<<<< HEAD
   <UserOutlined />
 >>>>>>> 049089b (react-router-dom (#5))
 =======
+=======
+  <Company />,
+>>>>>>> 5972a9a (Get Companies responsive (#15))
   <BsBuildings />
 >>>>>>> 9e42fb8 (Sider options for admin (#8))
 =======
