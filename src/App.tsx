@@ -1,37 +1,45 @@
-import { Button, ConfigProvider, DatePicker, Space } from 'antd'
-import { useState } from 'react'
+import { ConfigProvider } from "antd";
+import BaseLayout from "./pages/layouts/BaseLayout";
+import { Route, Routes } from "react-router-dom";
+import { adminRoutes } from "./pages/routes/Routes";
+import LoginPage from "./pages/auth/Login";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <ConfigProvider
       theme={{
-        token:{
-          colorPrimary: '#e73773'
-        }
+        token: {
+          colorPrimary: "#e73773",
+          colorLinkHover: "#e73773",
+          colorLinkActive: "#e73773",
+          linkHoverDecoration: "underline",
+          colorBgLayout: "#e2e8f0",
+        },
+        components: {
+          Card: {
+            colorBgContainer: "#001529",
+          },
+        },
       }}
     >
-      <div>
-      <Space>
-      <DatePicker />
-      <Button type="primary">Primary Button</Button>
-      </Space>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route index path="/" element={<LoginPage />} />
+
+        <Route element={<PrivateRoutes />}>
+          <Route element={<BaseLayout />}>
+            {adminRoutes.map((value, index) => (
+              <Route
+                key={index}
+                path={value.fullPath}
+                element={value.element}
+              />
+            ))}
+          </Route>
+        </Route>
+      </Routes>
     </ConfigProvider>
-  )
+  );
 }
 
-export default App
+export default App;
