@@ -1,5 +1,5 @@
 import { RuleObject } from "antd/lib/form";
-import Strings from "./Strings";
+import Strings from "./strings";
 import User from "../data/user/user";
 import Routes from "../utils/Routes";
 
