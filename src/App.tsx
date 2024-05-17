@@ -17,10 +17,10 @@ function App() {
           colorBgLayout: "#e2e8f0",
         },
         components: {
-          Card: {
-            colorBgContainer: "#001529",
-          },
-        },
+          Card:{
+            colorBgContainer: '#001529'
+          }
+        }
       }}
     >
       <Routes>
