@@ -8,11 +8,11 @@ import { setCredentials } from "../../core/authReducer";
 import { useNavigate } from "react-router-dom";
 import { useSessionStorage } from "../../core/useSessionStorage";
 import User from "../../data/user/user";
-import Strings from "../../utils/Strings";
 import { handleErrorNotification } from "../../utils/Notifications";
 import Meta from "antd/es/card/Meta";
 import { getInitRoute, validateEmail } from "../../utils/Extensions";
 import Constants from "../../utils/Constants";
+import Strings from "../../utils/strings";
 
 const LoginPage = () => {
   const [isPasswordVisible, setPasswordVisible] = React.useState(false);
