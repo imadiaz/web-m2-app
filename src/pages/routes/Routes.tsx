@@ -1,5 +1,5 @@
 import { ItemType } from "antd/es/menu/hooks/useItems";
-import { Page1, Page2, Page3 } from "../proofPages/proofPages";
+import { Page2, Page3 } from "../proofPages/proofPages";
 import { VideoCameraOutlined, UploadOutlined } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { Route } from "./models/Route";
@@ -7,12 +7,13 @@ import User from "../../data/user/user";
 import { UserRoles, getUserRol } from "../../utils/Extensions";
 import { BsBuildings } from "react-icons/bs";
 import Routes from "../../utils/Routes";
+import Company from "../company/Companies";
 
 const companies = new Route(
   "Companies",
   "companies",
   Routes.AdminDirectionHome,
-  <Page1 />,
+  <Company />,
   <BsBuildings />
 );
 const page2 = new Route(

@@ -30,14 +30,20 @@ const BaseLayout: React.FC = () => {
   };
   //----------
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [isCollapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   return (
-    <Layout className="flex w-full h-screen">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Layout className="flex w-full h-screen relative">
+      <Sider
+        width="13%"
+        className={`${isCollapsed ? "hidden" : ""} sm:block`}
+        trigger={null}
+        collapsible
+        collapsed={isCollapsed}
+      >
         <Menu
           theme="dark"
           mode="inline"
@@ -50,12 +56,15 @@ const BaseLayout: React.FC = () => {
         <Header style={headerStyle(colorBgContainer)}>
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+            icon={isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!isCollapsed)}
             style={buttonSiderStyle}
           />
         </Header>
-        <Content style={contentStyle(colorBgContainer, borderRadiusLG)}>
+        <Content
+          className="p-3 mt-6 ml-4 mr-4"
+          style={contentStyle(colorBgContainer, borderRadiusLG)}
+        >
           <Outlet />
         </Content>
       </Layout>

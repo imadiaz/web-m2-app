@@ -12,7 +12,7 @@ import { handleErrorNotification } from "../../utils/Notifications";
 import Meta from "antd/es/card/Meta";
 import { getInitRoute, validateEmail } from "../../utils/Extensions";
 import Constants from "../../utils/Constants";
-import Strings from "../../utils/strings";
+import Strings from "../../utils/Strings";
 
 const LoginPage = () => {
   const [isPasswordVisible, setPasswordVisible] = React.useState(false);
