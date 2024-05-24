@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useGetCompaniesMutation } from "../../services/companyService";
 import { Button, Input, Space } from "antd";
 import { Company } from "../../data/company/company";
-import CompaniesTable from "./components/CompaniesTable";
 import { IoIosSearch } from "react-icons/io";
 import CustomButton from "../../components/CustomButtons";
 import Strings from "../../utils/Strings";
 import CompanyCard from "./components/CompanyCard";
 import PaginatedList from "../../components/PaginatedList";
+import CompanyTable from "./components/CompanyTable";
 
 const Companies = () => {
   const [getCompanies] = useGetCompaniesMutation();
   const [data, setData] = useState<Company[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const [querySearch, setQuerySearch] = useState("");
+  const [querySearch, setQuerySearch] = useState(Strings.empty);
   const [dataBackup, setDataBackup] = useState<Company[]>([]);
   const [clearFilters, setClearFilters] = useState(false);
 
@@ -31,10 +31,9 @@ const Companies = () => {
 
   useEffect(() => {
     handleGetCompanies();
-    console.log(data);
   }, []);
 
-  const handleSearch = (event: any) => {
+  const handleOnSearch = (event: any) => {
     const getSearch = event.target.value;
 
     if (getSearch.length > 0) {
@@ -64,7 +63,7 @@ const Companies = () => {
         <Space className="flex-1 mb-1 md:mb-0">
           <Input
             className="w-full"
-            onChange={handleSearch}
+            onChange={handleOnSearch}
             placeholder={Strings.searchRecord}
             value={querySearch}
             addonAfter={<IoIosSearch />}
@@ -78,7 +77,7 @@ const Companies = () => {
         </div>
       </div>
       <div className="flex-1 overflow-auto hidden lg:block">
-        <CompaniesTable
+        <CompanyTable
           data={data}
           isLoading={isLoading}
           clearFilters={clearFilters}

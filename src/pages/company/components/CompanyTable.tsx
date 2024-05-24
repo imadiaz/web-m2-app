@@ -20,7 +20,7 @@ interface CompaniesTableProps {
   setClearFilters: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CompaniesTable = ({
+const CompanyTable = ({
   data,
   isLoading,
   clearFilters,
@@ -159,12 +159,12 @@ const CompaniesTable = ({
     showExpandColumn: false,
     expandedRowRender: (record: Company) => (
       <Space className="flex justify-evenly">
-        <CustomButton type="action">View priorities</CustomButton>
-        <CustomButton type="action">View levels</CustomButton>
-        <CustomButton type="action">View card types</CustomButton>
-        <CustomButton type="action">View cards</CustomButton>
-        <CustomButton type="edit">Edit</CustomButton>
-        <CustomButton type="action">Import excel</CustomButton>
+        <CustomButton type="action">{Strings.viewPriorities}</CustomButton>
+        <CustomButton type="action">{Strings.viewLevels}</CustomButton>
+        <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>
+        <CustomButton type="action">{Strings.viewCards}</CustomButton>
+        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <CustomButton type="action">{Strings.importExcel}</CustomButton>
       </Space>
     ),
   };
@@ -190,4 +190,4 @@ const CompaniesTable = ({
   );
 };
 
-export default CompaniesTable;
+export default CompanyTable;

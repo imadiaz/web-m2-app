@@ -18,27 +18,29 @@ const CompanyCard = ({ data }: CompanyCardProps) => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <CustomButton type="action">View priorities</CustomButton>,
+      label: (
+        <CustomButton type="action">{Strings.viewPriorities}</CustomButton>
+      ),
     },
     {
       key: "2",
-      label: <CustomButton type="action">View levels</CustomButton>,
+      label: <CustomButton type="action">{Strings.viewLevels}</CustomButton>,
     },
     {
       key: "3",
-      label: <CustomButton type="action">View card types</CustomButton>,
+      label: <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>,
     },
     {
       key: "4",
-      label: <CustomButton type="action">View cards</CustomButton>,
+      label: <CustomButton type="action">{Strings.viewCards}</CustomButton>,
     },
     {
       key: "5",
-      label: <CustomButton type="edit">Edit</CustomButton>,
+      label: <CustomButton type="edit">{Strings.edit}</CustomButton>,
     },
     {
       key: "6",
-      label: <CustomButton type="action">Import Excel</CustomButton>,
+      label: <CustomButton type="action">{Strings.importExcel}</CustomButton>,
     },
   ];
 
