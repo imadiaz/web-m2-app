@@ -10,7 +10,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { getUserSiderOptions } from "../routes/Routes";
 import { useSessionStorage } from "../../core/useSessionStorage";
 import User from "../../data/user/user";
-import Constants from "../../utils/Constants";
+import Strings from "../../utils/Strings";
 
 const { Header, Sider, Content } = Layout;
 
@@ -19,7 +19,7 @@ const BaseLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedPath, setSelectedPath] = useState("");
-  const [getSessionUser] = useSessionStorage<User>(Constants.EMPTY_STRING);
+  const [getSessionUser] = useSessionStorage<User>(Strings.empty);
 
   useEffect(() => {
     setSelectedPath(location.pathname);
@@ -30,14 +30,20 @@ const BaseLayout: React.FC = () => {
   };
   //----------
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [isCollapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   return (
-    <Layout className="flex w-full h-screen">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Layout className="flex w-full h-screen relative">
+      <Sider
+        width="13%"
+        className={`${isCollapsed ? "hidden" : ""} sm:block`}
+        trigger={null}
+        collapsible
+        collapsed={isCollapsed}
+      >
         <Menu
           theme="dark"
           mode="inline"
@@ -50,12 +56,15 @@ const BaseLayout: React.FC = () => {
         <Header style={headerStyle(colorBgContainer)}>
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+            icon={isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!isCollapsed)}
             style={buttonSiderStyle}
           />
         </Header>
-        <Content style={contentStyle(colorBgContainer, borderRadiusLG)}>
+        <Content
+          className="p-3 mt-6 ml-4 mr-4"
+          style={contentStyle(colorBgContainer, borderRadiusLG)}
+        >
           <Outlet />
         </Content>
       </Layout>
