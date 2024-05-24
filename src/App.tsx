@@ -31,19 +31,6 @@ function App() {
             headerSortActiveBg: '#011e39',
           },
         },
-        components: {
-          Card: {
-            colorBgContainer: "#001529",
-            colorPrimary: 'white',
-            colorTextHeading: 'white',
-          },
-          Table:{
-            headerBg: '#001529',
-            headerColor: 'white',
-            headerSortHoverBg: '#011e39',
-            headerSortActiveBg: '#011e39',
-          },
-        },
       }}
     >
       <Routes>
