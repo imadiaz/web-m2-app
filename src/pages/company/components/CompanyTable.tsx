@@ -157,7 +157,7 @@ const CompanyTable = ({
   const actionsRow = {
     defaultExpandAllRows: true,
     showExpandColumn: false,
-    expandedRowRender: (record: Company) => (
+    expandedRowRender: (_: Company) => (
       <Space className="flex justify-evenly">
         <CustomButton type="action">{Strings.viewPriorities}</CustomButton>
         <CustomButton type="action">{Strings.viewLevels}</CustomButton>

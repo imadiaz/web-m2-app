@@ -24,6 +24,7 @@ export default class Strings {
     static cellular: "Cellular";
     static status: "Status";
     static empty = "";
+    static welcome = "Welcome!";
 
     //company actions
     static viewPriorities = "View priorities";
