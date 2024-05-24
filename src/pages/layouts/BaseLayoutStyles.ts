@@ -11,8 +11,6 @@ export const contentStyle = (
   colorBgContainer: string,
   borderRadiusLG: number
 ) => ({
-  margin: "24px 16px",
-  padding: 10,
   background: colorBgContainer,
   borderRadius: borderRadiusLG,
 });

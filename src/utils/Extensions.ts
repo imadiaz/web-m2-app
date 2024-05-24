@@ -1,5 +1,5 @@
 import { RuleObject } from "antd/lib/form";
-import Strings from "./strings";
+import Strings from "./Strings";
 import User from "../data/user/user";
 import Routes from "../utils/Routes";
 
@@ -40,3 +40,29 @@ export const getUserRol = (user: User): UserRoles | null => {
 export const enum UserRoles {
   ADMIN,
 }
+
+export const RESPONSIVE_LIST = {
+  gutter: 4,
+  xs: 1,
+  sm: 2,
+  md: 2,
+  lg: 3,
+  xl: 3,
+  xxl: 4,
+};
+
+export const getStatusAndText = (
+  input: string
+): { status: "error" | "success"; text: string } => {
+  if (input === "A") {
+    return {
+      status: "success",
+      text: "Active",
+    };
+  } else {
+    return {
+      status: "error",
+      text: "Inactive",
+    };
+  }
+};
