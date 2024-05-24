@@ -23,4 +23,14 @@ export default class Strings {
     static extension: "Extension";
     static cellular: "Cellular";
     static status: "Status";
+    static empty = "";
+    static welcome = "Welcome!";
+
+     //company actions
+  static viewPriorities = "View priorities";
+  static viewLevels = "View levels";
+  static viewCardTypes = "View card types";
+  static viewCards = "View cards";
+  static edit = "Edit";
+  static importExcel = "Import excel";
 }

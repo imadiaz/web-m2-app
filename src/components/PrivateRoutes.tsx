@@ -1,13 +1,14 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSessionStorage } from "../core/useSessionStorage";
 import User from "../data/user/user";
-import Constants from "../utils/Constants";
 import { useAppDispatch } from "../core/store";
 import { useEffect } from "react";
 import { setCredentials } from "../core/authReducer";
+import Strings from "../utils/Strings";
+
 
 const PrivateRoutes = () => {
-  const [getSessionUser] = useSessionStorage<User>(Constants.EMPTY_STRING);
+  const [getSessionUser] = useSessionStorage<User>(Strings.empty);
   const location = useLocation();
   const dispatch = useAppDispatch();
 
