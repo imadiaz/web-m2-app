@@ -6,12 +6,12 @@ export default class Strings {
     static searchRecord = "Search record";
     static create = "Create";
     static clearFiltersAndSorters = "Clear filters and sorters";
-  
+
     //errors
     static requiredEmail = "Please input your e-mail address!";
     static requiredPassword = "Please input your password!";
     static requiredValidEmailAddress = "Please enter a valid e-mail address!";
-  
+
     //company
     static logo: "Logo";
     static companyName: "Name";
@@ -23,4 +23,13 @@ export default class Strings {
     static extension: "Extension";
     static cellular: "Cellular";
     static status: "Status";
+    static empty = "";
+
+    //company actions
+    static viewPriorities = "View priorities";
+    static viewLevels = "View levels";
+    static viewCardTypes = "View card types";
+    static viewCards = "View cards";
+    static edit = "Edit";
+    static importExcel = "Import excel";
 }
