@@ -32,6 +32,7 @@ export const handleSucccessNotification = (value: NotificationSuccess) => {
     message: "Success!",
     description: getSuccessMessage(value),
     type: "success",
+    placement: "bottom",
   });
 };
 

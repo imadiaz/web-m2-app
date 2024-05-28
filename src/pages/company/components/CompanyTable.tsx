@@ -6,7 +6,7 @@ import CustomButton from "../../../components/CustomButtons";
 import { useTableHeight } from "./tableHeight";
 import Constants from "../../../utils/Constants";
 import { getStatusAndText } from "../../../utils/Extensions";
-import Strings from "../../../utils/Strings";
+import Strings from "../../../utils/strings";
 
 type OnChange = NonNullable<TableProps<Company>["onChange"]>;
 type Filters = Parameters<OnChange>[1];
@@ -46,8 +46,7 @@ const CompanyTable = ({
     }
   }, [clearFilters, setClearFilters]);
 
-  const handleChange: OnChange = (pagination, filters, sorter, extra) => {
-    console.log("Various parameters", pagination, filters, sorter, extra);
+  const handleChange: OnChange = (_, filters, sorter, __) => {
     setFilteredInfo(filters);
     setSortedInfo(sorter as Sorts);
   };
