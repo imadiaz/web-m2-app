@@ -22,8 +22,7 @@ export default class Strings {
   static requiredPhone = "Please enter the phone number";
   static requiredExtension = "Please enter a extension";
   static requiredCellular = "Please enter the cellular";
-  static requiredLogoURL = "Please enter the logo URL";
-  static requiredValidURL = "Please enter a valid URL";
+  static requiredLogoURL = "Please upload the logo";
 
   //company
   static logo = "Logo";
@@ -36,6 +35,9 @@ export default class Strings {
   static extension = "Extension";
   static cellular = "Cellular";
   static status = "Status";
+  //This logo will be removed when firebase upload is implemented.
+  static logoTemp =
+    "https://th.bing.com/th/id/OIG4.jIj.NbKiwFNdl.C3Ltft?pid=ImgGn";
 
   //company actions
   static viewPriorities = "View priorities";

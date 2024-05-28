@@ -1,14 +1,25 @@
-import { Form, GetRef, Input, InputNumber } from "antd";
+import {
+  Form,
+  GetProp,
+  GetRef,
+  Image,
+  Input,
+  InputNumber,
+  Upload,
+  UploadFile,
+  UploadProps,
+} from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import { FaRegBuilding } from "react-icons/fa";
 import { MdOutlineLocalPhone, MdOutlineQrCodeScanner } from "react-icons/md";
 import { SlCompass } from "react-icons/sl";
 import { IoIosContact } from "react-icons/io";
-import { IoLink } from "react-icons/io5";
+import { PlusOutlined } from "@ant-design/icons";
 import { BsDiagram3 } from "react-icons/bs";
 import { HiDevicePhoneMobile } from "react-icons/hi2";
 import { TiPlusOutline } from "react-icons/ti";
 import Strings from "../../../utils/localizations/Strings";
+import { useState } from "react";
 
 type FormInstance = GetRef<typeof Form>;
 
@@ -16,7 +27,41 @@ interface FormProps {
   form: FormInstance;
 }
 
+type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
+
+const getBase64 = (file: FileType): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+
 const RegisterCompanyForm = ({ form }: FormProps) => {
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as FileType);
+    }
+
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewOpen(true);
+  };
+
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const uploadButton = (
+    <button style={{ border: 0, background: "none" }} type="button">
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </button>
+  );
+
   return (
     <Form form={form} name="registerCompanyForm">
       <div className="flex flex-col">
@@ -156,18 +201,28 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
         </Form.Item>
         <Form.Item
           name="logo"
-          rules={[
-            { required: true, message: Strings.requiredLogoURL },
-            { type: "url", message: Strings.requiredValidURL },
-            { max: 500 },
-          ]}
+          label={Strings.logo}
+          //rules={[{ required: true, message: Strings.requiredLogoURL }]}
         >
-          <Input
-            size="large"
-            maxLength={500}
-            addonBefore={<IoLink />}
-            placeholder={Strings.logo}
-          />
+          <Upload
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            onChange={handleChange}
+          >
+            {fileList.length === 0 ? uploadButton : null}
+          </Upload>
+          {previewImage && (
+            <Image
+              wrapperStyle={{ display: "none" }}
+              preview={{
+                visible: previewOpen,
+                onVisibleChange: (visible) => setPreviewOpen(visible),
+                afterOpenChange: (visible) => !visible && setPreviewImage(""),
+              }}
+              src={previewImage}
+            />
+          )}
         </Form.Item>
       </div>
     </Form>

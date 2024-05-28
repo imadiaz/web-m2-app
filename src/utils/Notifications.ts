@@ -6,14 +6,14 @@ export const handleErrorNotification = (value: any, text?: string) => {
       message: "Ups!",
       description: value.data.message,
       type: "error",
-      placement: "bottom",
+      
     });
   } else {
     notification.open({
       message: "Ups!",
       description: `${value} ${text}`,
       type: "error",
-      placement: "bottom",
+      
     });
   }
 };
@@ -23,7 +23,7 @@ export const handleWarningNotification = (value: string) => {
     message: "Warning!",
     description: value,
     type: "warning",
-    placement: "bottom",
+    
   });
 };
 
@@ -32,7 +32,7 @@ export const handleSucccessNotification = (value: NotificationSuccess) => {
     message: "Success!",
     description: getSuccessMessage(value),
     type: "success",
-    placement: "bottom",
+    
   });
 };
 

@@ -133,7 +133,7 @@ const Companies = () => {
                 values.extension?.toString(),
                 values.cellular?.toString(),
                 values.email,
-                values.logo
+                Strings.logoTemp
               )
             ).unwrap();
             setModalOpen(false);

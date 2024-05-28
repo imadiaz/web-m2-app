@@ -56,7 +56,7 @@ const ModalForm = ({
     <Modal
       onOk={handleOnOk}
       okText={Strings.save}
-      width={800}
+      width={810}
       title={title}
       open={open}
       onCancel={onCancel}
