@@ -6,7 +6,7 @@ import CustomButton from "../../../components/CustomButtons";
 import { useTableHeight } from "./tableHeight";
 import Constants from "../../../utils/Constants";
 import { getStatusAndText } from "../../../utils/Extensions";
-import Strings from "../../../utils/strings";
+import Strings from "../../../utils/localizations/Strings";
 
 type OnChange = NonNullable<TableProps<Company>["onChange"]>;
 type Filters = Parameters<OnChange>[1];

@@ -2,8 +2,8 @@ import { Card, Dropdown, MenuProps, Tag, theme } from "antd";
 import { Company } from "../../../data/company/company";
 import CustomButton from "../../../components/CustomButtons";
 import { getStatusAndText } from "../../../utils/Extensions";
-import Strings from "../../../utils/strings";
 import { SlOptionsVertical } from "react-icons/sl";
+import Strings from "../../../utils/localizations/Strings";
 
 interface CompanyCardProps {
   data: Company;

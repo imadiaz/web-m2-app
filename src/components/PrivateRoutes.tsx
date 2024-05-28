@@ -4,7 +4,7 @@ import User from "../data/user/user";
 import { useAppDispatch } from "../core/store";
 import { useEffect } from "react";
 import { setCredentials } from "../core/authReducer";
-import Strings from "../utils/Strings";
+import Strings from "../utils/localizations/Strings";
 
 const PrivateRoutes = () => {
   const [getSessionUser] = useSessionStorage<User>(Strings.empty);

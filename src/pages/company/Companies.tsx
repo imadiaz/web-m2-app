@@ -7,7 +7,6 @@ import { Button, Form, Input, Space } from "antd";
 import { Company } from "../../data/company/company";
 import { IoIosSearch } from "react-icons/io";
 import CustomButton from "../../components/CustomButtons";
-import Strings from "../../utils/strings";
 import CompanyCard from "./components/CompanyCard";
 import PaginatedList from "../../components/PaginatedList";
 import CompanyTable from "./components/CompanyTable";
@@ -19,6 +18,7 @@ import {
   handleErrorNotification,
   handleSucccessNotification,
 } from "../../utils/Notifications";
+import Strings from "../../utils/localizations/Strings";
 
 const Companies = () => {
   const [getCompanies] = useGetCompaniesMutation();

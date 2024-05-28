@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Form, Modal } from "antd";
 import type { GetRef } from "antd";
-import Strings from "../utils/strings";
+import Strings from "../utils/localizations/Strings";
 
 type FormInstance = GetRef<typeof Form>;
 

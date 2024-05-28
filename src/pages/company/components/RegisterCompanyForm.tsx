@@ -1,6 +1,5 @@
 import { Form, GetRef, Input, InputNumber } from "antd";
 import { MailOutlined } from "@ant-design/icons";
-import Strings from "../../../utils/strings";
 import { FaRegBuilding } from "react-icons/fa";
 import { MdOutlineLocalPhone, MdOutlineQrCodeScanner } from "react-icons/md";
 import { SlCompass } from "react-icons/sl";
@@ -9,6 +8,7 @@ import { IoLink } from "react-icons/io5";
 import { BsDiagram3 } from "react-icons/bs";
 import { HiDevicePhoneMobile } from "react-icons/hi2";
 import { TiPlusOutline } from "react-icons/ti";
+import Strings from "../../../utils/localizations/Strings";
 
 type FormInstance = GetRef<typeof Form>;
 
