@@ -1,7 +1,7 @@
 import { RuleObject } from "antd/lib/form";
-import Strings from "./Strings";
 import User from "../data/user/user";
 import Routes from "../utils/Routes";
+import Strings from "./localizations/Strings";
 
 export const validateEmail = (
   _: RuleObject,

@@ -10,7 +10,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { getUserSiderOptions } from "../routes/Routes";
 import { useSessionStorage } from "../../core/useSessionStorage";
 import User from "../../data/user/user";
-import Strings from "../../utils/Strings";
+import Strings from "../../utils/localizations/Strings";
 
 const { Header, Sider, Content } = Layout;
 
