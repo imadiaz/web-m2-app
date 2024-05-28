@@ -55,7 +55,6 @@ const Companies = () => {
 
       setData(filterData);
 
-      console.log(filterData);
     } else {
       setData(dataBackup);
     }
@@ -122,7 +121,6 @@ const Companies = () => {
       <Form.Provider
         onFormFinish={async (_, { values }) => {
           try {
-            console.log(values);
             setModalLoading(true);
             await registerCompany(
               new CreateCompany(
