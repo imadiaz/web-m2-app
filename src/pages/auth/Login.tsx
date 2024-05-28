@@ -11,8 +11,7 @@ import User from "../../data/user/user";
 import { handleErrorNotification } from "../../utils/Notifications";
 import Meta from "antd/es/card/Meta";
 import { getInitRoute, validateEmail } from "../../utils/Extensions";
-import Constants from "../../utils/Constants";
-import Strings from "../../utils/Strings";
+import Strings from "../../utils/strings";
 
 const LoginPage = () => {
   const [isPasswordVisible, setPasswordVisible] = React.useState(false);
@@ -20,7 +19,7 @@ const LoginPage = () => {
   const distpatch = useAppDispatch();
   const navigate = useNavigate();
   const [getSessionUser, setSessionUser] = useSessionStorage<User>(
-    Constants.EMPTY_STRING
+    Strings.empty
   );
 
   useEffect(() => {
@@ -51,7 +50,7 @@ const LoginPage = () => {
         <Meta
           title={
             <h1 className="text-center text-3xl block font-semibold text-white">
-              {Constants.WELCOME}
+              {Strings.welcome}
             </h1>
           }
         />
