@@ -1,5 +1,8 @@
 import { Company } from "../data/company/company";
-import { CreateCompany } from "../data/company/company.request";
+import {
+  CreateCompany,
+  UpdateCompanyRequest,
+} from "../data/company/company.request";
 import { apiSlice } from "./apiSlice";
 
 export const companyService = apiSlice.injectEndpoints({
@@ -14,9 +17,21 @@ export const companyService = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...company },
       }),
-      transformResponse: (response: {data: any}) => response.data
+      transformResponse: (response: { data: any }) => response.data,
+    }),
+    updateCompany: builder.mutation<void, UpdateCompanyRequest>({
+      query: (company) => ({
+        url: "/company/update",
+        method: "PUT",
+        body: { ...company },
+      }),
+      transformResponse: (response: { data: any }) => response.data,
     }),
   }),
 });
 
-export const { useGetCompaniesMutation, useCreateCompanyMutation } = companyService;
+export const {
+  useGetCompaniesMutation,
+  useCreateCompanyMutation,
+  useUpdateCompanyMutation,
+} = companyService;

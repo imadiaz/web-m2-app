@@ -19,6 +19,8 @@ import {
   handleSucccessNotification,
 } from "../../utils/Notifications";
 import Strings from "../../utils/localizations/Strings";
+import { useAppSelector } from "../../core/store";
+import { selectCurrentChangeIndicator } from "../../core/genericReducer";
 
 const Companies = () => {
   const [getCompanies] = useGetCompaniesMutation();
@@ -30,6 +32,11 @@ const Companies = () => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerCompany] = useCreateCompanyMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
+  const changeIndicator = useAppSelector(selectCurrentChangeIndicator);
+
+  useEffect(() => {
+    if (changeIndicator === 1) handleGetCompanies();
+  }, [changeIndicator]);
 
   const handleClearFilters = () => {
     setClearFilters(true);
@@ -54,7 +61,6 @@ const Companies = () => {
       const filterData = dataBackup.filter((item) => search(item, getSearch));
 
       setData(filterData);
-
     } else {
       setData(dataBackup);
     }
@@ -137,7 +143,7 @@ const Companies = () => {
               )
             ).unwrap();
             setModalOpen(false);
-            handleGetCompanies()
+            handleGetCompanies();
             handleSucccessNotification(NotificationSuccess.REGISTER);
           } catch (error) {
             handleErrorNotification(error);

@@ -48,6 +48,7 @@ export default class Strings {
 
   //Card titles
   static createCompany = "Create company";
+  static updateCompany = "Update company";
 
   //general actions
   static edit = "Edit";
