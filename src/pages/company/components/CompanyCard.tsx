@@ -4,6 +4,13 @@ import CustomButton from "../../../components/CustomButtons";
 import { getStatusAndText } from "../../../utils/Extensions";
 import { SlOptionsVertical } from "react-icons/sl";
 import Strings from "../../../utils/localizations/Strings";
+import UpdateCompany from "./UpdateCompany";
+import { useAppDispatch } from "../../../core/store";
+import {
+  resetChangeIndicator,
+  resetRowData,
+  setRowData,
+} from "../../../core/genericReducer";
 
 interface CompanyCardProps {
   data: Company;
@@ -11,9 +18,16 @@ interface CompanyCardProps {
 
 const CompanyCard = ({ data }: CompanyCardProps) => {
   const { status, text } = getStatusAndText(data.status);
+  const dispatch = useAppDispatch();
   const {
     token: { colorBgContainer, colorPrimary },
   } = theme.useToken();
+
+  const handleUpdateClick = (row: Company) => {
+    dispatch(resetRowData());
+    dispatch(setRowData(row));
+    dispatch(resetChangeIndicator());
+  };
 
   const items: MenuProps["items"] = [
     {
@@ -36,7 +50,7 @@ const CompanyCard = ({ data }: CompanyCardProps) => {
     },
     {
       key: "5",
-      label: <CustomButton type="edit">{Strings.edit}</CustomButton>,
+      label: <UpdateCompany onClick={handleUpdateClick} row={data} />,
     },
     {
       key: "6",

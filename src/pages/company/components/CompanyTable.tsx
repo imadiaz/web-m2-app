@@ -7,6 +7,13 @@ import { useTableHeight } from "./tableHeight";
 import Constants from "../../../utils/Constants";
 import { getStatusAndText } from "../../../utils/Extensions";
 import Strings from "../../../utils/localizations/Strings";
+import { useAppDispatch } from "../../../core/store";
+import {
+  resetChangeIndicator,
+  resetRowData,
+  setRowData,
+} from "../../../core/genericReducer";
+import UpdateCompany from "./UpdateCompany";
 
 type OnChange = NonNullable<TableProps<Company>["onChange"]>;
 type Filters = Parameters<OnChange>[1];
@@ -30,6 +37,13 @@ const CompanyTable = ({
   const [sortedInfo, setSortedInfo] = useState<Sorts>({});
   const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
+  const dispatch = useAppDispatch();
+
+  const handleUpdateClick = (row: Company) => {
+    dispatch(resetRowData());
+    dispatch(setRowData(row));
+    dispatch(resetChangeIndicator());
+  };
 
   const uniqueExtensions = [...new Set(data.map((item) => item.extension))];
 
@@ -156,13 +170,13 @@ const CompanyTable = ({
   const actionsRow = {
     defaultExpandAllRows: true,
     showExpandColumn: false,
-    expandedRowRender: (_: Company) => (
+    expandedRowRender: (data: Company) => (
       <Space className="flex justify-evenly">
         <CustomButton type="action">{Strings.viewPriorities}</CustomButton>
         <CustomButton type="action">{Strings.viewLevels}</CustomButton>
         <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>
         <CustomButton type="action">{Strings.viewCards}</CustomButton>
-        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <UpdateCompany onClick={handleUpdateClick} row={data} />
         <CustomButton type="action">{Strings.importExcel}</CustomButton>
       </Space>
     ),

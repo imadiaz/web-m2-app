@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useAppSelector } from "../../../core/store";
 import {
   Form,
   GetProp,
@@ -9,17 +11,17 @@ import {
   UploadFile,
   UploadProps,
 } from "antd";
-import { MailOutlined } from "@ant-design/icons";
+import Strings from "../../../utils/localizations/Strings";
 import { FaRegBuilding } from "react-icons/fa";
 import { MdOutlineLocalPhone, MdOutlineQrCodeScanner } from "react-icons/md";
-import { SlCompass } from "react-icons/sl";
 import { IoIosContact } from "react-icons/io";
-import { PlusOutlined } from "@ant-design/icons";
 import { BsDiagram3 } from "react-icons/bs";
-import { HiDevicePhoneMobile } from "react-icons/hi2";
 import { TiPlusOutline } from "react-icons/ti";
-import Strings from "../../../utils/localizations/Strings";
-import { useState } from "react";
+import { HiDevicePhoneMobile } from "react-icons/hi2";
+import { PlusOutlined, MailOutlined } from "@ant-design/icons";
+import { SlCompass } from "react-icons/sl";
+import { Company } from "../../../data/company/company";
+import { selectCurrentRowData } from "../../../core/genericReducer";
 
 type FormInstance = GetRef<typeof Form>;
 
@@ -37,17 +39,33 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const RegisterCompanyForm = ({ form }: FormProps) => {
+const UpdateCompanyForm = ({ form }: FormProps) => {
+  const rowData = useAppSelector(selectCurrentRowData) as unknown as Company;
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState(Strings.empty);
+  const [previewImage, setPreviewImage] = useState(
+    rowData.logo || Strings.empty
+  );
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  useEffect(() => {
+    form.setFieldsValue({ ...rowData });
+    if (rowData.logo) {
+      setFileList([
+        {
+          uid: "-1",
+          name: "logo.png",
+          status: "done",
+          url: rowData.logo,
+        },
+      ]);
+    }
+  }, [rowData, form]);
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as FileType);
     }
-
-    setPreviewImage(file.url || (file.preview as string));
+    setPreviewImage(file.url || (file.preview as string) || rowData.logo);
     setPreviewOpen(true);
   };
 
@@ -63,9 +81,12 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
   );
 
   return (
-    <Form form={form} name="registerCompanyForm">
+    <Form form={form}>
       <div className="flex flex-col">
         <div className="flex flex-row flex-wrap">
+          <Form.Item name="id" className="hidden">
+            <Input />
+          </Form.Item>
           <Form.Item
             name="name"
             validateDebounce={1000}
@@ -230,5 +251,4 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
     </Form>
   );
 };
-
-export default RegisterCompanyForm;
+export default UpdateCompanyForm;
