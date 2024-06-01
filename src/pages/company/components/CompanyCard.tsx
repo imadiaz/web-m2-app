@@ -11,6 +11,7 @@ import {
   resetRowData,
   setRowData,
 } from "../../../core/genericReducer";
+import ViewPrioritiesButton from "./ViewPrioritiesButton";
 
 interface CompanyCardProps {
   data: Company;
@@ -33,7 +34,7 @@ const CompanyCard = ({ data }: CompanyCardProps) => {
     {
       key: "1",
       label: (
-        <CustomButton type="action">{Strings.viewPriorities}</CustomButton>
+        <ViewPrioritiesButton id={data.id} companyName={data.name}/>
       ),
     },
     {

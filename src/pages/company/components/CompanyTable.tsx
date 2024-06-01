@@ -3,7 +3,7 @@ import { Company } from "../../../data/company/company";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Badge, Table, Space } from "antd";
 import CustomButton from "../../../components/CustomButtons";
-import { useTableHeight } from "./tableHeight";
+import { useTableHeight } from "../../../utils/tableHeight";
 import Constants from "../../../utils/Constants";
 import { getStatusAndText } from "../../../utils/Extensions";
 import Strings from "../../../utils/localizations/Strings";
@@ -14,6 +14,7 @@ import {
   setRowData,
 } from "../../../core/genericReducer";
 import UpdateCompany from "./UpdateCompany";
+import ViewPrioritiesButton from "./ViewPrioritiesButton";
 
 type OnChange = NonNullable<TableProps<Company>["onChange"]>;
 type Filters = Parameters<OnChange>[1];
@@ -172,7 +173,7 @@ const CompanyTable = ({
     showExpandColumn: false,
     expandedRowRender: (data: Company) => (
       <Space className="flex justify-evenly">
-        <CustomButton type="action">{Strings.viewPriorities}</CustomButton>
+        <ViewPrioritiesButton id={data.id} companyName={data.name}/>
         <CustomButton type="action">{Strings.viewLevels}</CustomButton>
         <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>
         <CustomButton type="action">{Strings.viewCards}</CustomButton>

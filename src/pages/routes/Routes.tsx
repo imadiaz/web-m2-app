@@ -1,6 +1,4 @@
 import { ItemType } from "antd/es/menu/hooks/useItems";
-import { Page2, Page3 } from "../proofPages/proofPages";
-import { VideoCameraOutlined, UploadOutlined } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { Route } from "./models/Route";
 import User from "../../data/user/user";
@@ -8,6 +6,7 @@ import { UserRoles, getUserRol } from "../../utils/Extensions";
 import { BsBuildings } from "react-icons/bs";
 import Routes from "../../utils/Routes";
 import Company from "../company/Companies";
+import Priorities from "../priority/Priorities";
 
 const companies = new Route(
   "Companies",
@@ -16,28 +15,19 @@ const companies = new Route(
   <Company />,
   <BsBuildings />
 );
-const page2 = new Route(
-  "Page 2",
-  "page2",
-  "/page2",
-  <Page2 />,
-  <VideoCameraOutlined />
-);
-const page3 = new Route(
-  "Page 3",
-  "page3",
-  "/page3",
-  <Page3 />,
-  <UploadOutlined />
+const priorities = new Route(
+  "Priorities",
+  "priorities",
+  "priority/all/",
+  <Priorities />,
+  <></>
 );
 
-const adminRoutes: Route[] = [companies, page2, page3];
+const adminRoutes: Route[] = [companies, priorities];
 
 const adminRoutesSiderOptions = (): ItemType[] => {
   const items: MenuProps["items"] = [
     getItem(companies.label, companies.fullPath, companies.icon),
-    getItem(page2.label, page2.fullPath, page2.icon),
-    getItem(page3.label, page3.fullPath, page3.icon),
   ];
   return items;
 };

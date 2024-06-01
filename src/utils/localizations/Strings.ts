@@ -46,6 +46,11 @@ export default class Strings {
   static viewCards = "View cards";
   static importExcel = "Import excel";
 
+  //Priority
+  static code = "Code"
+  static description = "Description"
+  static daysNumber = "Days number"
+
   //Card titles
   static createCompany = "Create company";
   static updateCompany = "Update company";
@@ -55,4 +60,6 @@ export default class Strings {
   static create = "Create";
   static save = "Save";
   static cancel = "Cancel";
+  static actions = "Actions"
+  static delete = "Delete"
 }
