@@ -38,6 +38,7 @@ export default class Strings {
   //This logo will be removed when firebase upload is implemented.
   static logoTemp =
     "https://th.bing.com/th/id/OIG4.jIj.NbKiwFNdl.C3Ltft?pid=ImgGn";
+  static noExtension = "No extension";
 
   //company actions
   static viewPriorities = "View priorities";
@@ -47,10 +48,10 @@ export default class Strings {
   static importExcel = "Import excel";
 
   //Priority
-  static prioritiesOf = "Priorities of:"
-  static code = "Code"
-  static description = "Description"
-  static daysNumber = "Days number"
+  static prioritiesOf = "Priorities of:";
+  static code = "Code";
+  static description = "Description";
+  static daysNumber = "Days number";
 
   //Card titles
   static createCompany = "Create company";
@@ -61,6 +62,6 @@ export default class Strings {
   static create = "Create";
   static save = "Save";
   static cancel = "Cancel";
-  static actions = "Actions"
-  static delete = "Delete"
+  static actions = "Actions";
+  static delete = "Delete";
 }
