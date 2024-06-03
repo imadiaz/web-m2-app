@@ -47,6 +47,7 @@ export default class Strings {
   static importExcel = "Import excel";
 
   //Priority
+  static prioritiesOf = "Priorities of:"
   static code = "Code"
   static description = "Description"
   static daysNumber = "Days number"

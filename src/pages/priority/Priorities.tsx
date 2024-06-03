@@ -76,7 +76,8 @@ const Priorities = () => {
               />
             </Space>
             <h1 className="font-semibold text-lg ml-0 md:ml-3">
-              Priorities of: <span className="font-normal">{companyName}</span>
+              {Strings.prioritiesOf}
+              <span className="font-normal">{companyName}</span>
             </h1>
           </div>
           <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">

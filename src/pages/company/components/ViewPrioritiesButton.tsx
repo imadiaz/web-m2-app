@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../../components/CustomButtons";
 import Strings from "../../../utils/localizations/Strings";
+import Routes from "../../../utils/Routes";
 
 interface props {
   id: string;
@@ -11,7 +12,7 @@ const ViewPrioritiesButton = ({ id, companyName }: props) => {
   const navigate = useNavigate();
 
   const handleOnViewPriorities = (id: string, companyName: string) => {
-    navigate("/priority/all", { state: { id, companyName } });
+    navigate(Routes.PriorityAll, { state: { id, companyName } });
   };
 
   return (
