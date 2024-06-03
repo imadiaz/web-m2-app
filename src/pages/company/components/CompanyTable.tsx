@@ -173,7 +173,7 @@ const CompanyTable = ({
     showExpandColumn: false,
     expandedRowRender: (data: Company) => (
       <Space className="flex justify-evenly">
-        <ViewPrioritiesButton id={data.id} companyName={data.name}/>
+        <ViewPrioritiesButton companyId={data.id} companyName={data.name}/>
         <CustomButton type="action">{Strings.viewLevels}</CustomButton>
         <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>
         <CustomButton type="action">{Strings.viewCards}</CustomButton>

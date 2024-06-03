@@ -4,21 +4,21 @@ import Strings from "../../../utils/localizations/Strings";
 import Routes from "../../../utils/Routes";
 
 interface props {
-  id: string;
+  companyId: string;
   companyName: string;
 }
 
-const ViewPrioritiesButton = ({ id, companyName }: props) => {
+const ViewPrioritiesButton = ({ companyId, companyName }: props) => {
   const navigate = useNavigate();
 
-  const handleOnViewPriorities = (id: string, companyName: string) => {
-    navigate(Routes.PriorityAll, { state: { id, companyName } });
+  const handleOnViewPriorities = (companyId: string, companyName: string) => {
+    navigate(Routes.PriorityAll, { state: { companyId, companyName } });
   };
 
   return (
     <CustomButton
       type="action"
-      onClick={() => handleOnViewPriorities(id, companyName)}
+      onClick={() => handleOnViewPriorities(companyId, companyName)}
     >
       {Strings.viewPriorities}
     </CustomButton>
