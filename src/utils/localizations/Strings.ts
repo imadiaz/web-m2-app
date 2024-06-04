@@ -63,4 +63,6 @@ export default class Strings {
   static cancel = "Cancel";
   static actions = "Actions"
   static delete = "Delete"
+
+  static tagVersion = "Version 1.0.0"
 }
