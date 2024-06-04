@@ -75,6 +75,7 @@ const UpdateCompany = ({ onClick, row }: ButtonEditProps) => {
           FormComponent={UpdateCompanyForm}
           title={Strings.updateCompany}
           isLoading={modalIsLoading}
+          isUpdateForm={true}
         />
       </Form.Provider>
     </>

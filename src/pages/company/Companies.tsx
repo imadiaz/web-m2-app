@@ -158,6 +158,7 @@ const Companies = () => {
           FormComponent={RegisterCompanyForm}
           title={Strings.createCompany}
           isLoading={modalIsLoading}
+          isUpdateForm={false}
         />
       </Form.Provider>
     </>
