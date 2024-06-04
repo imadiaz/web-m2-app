@@ -65,6 +65,7 @@ const BaseLayout: React.FC = () => {
           className="p-3 mt-6 ml-4 mr-4"
           style={contentStyle(colorBgContainer, borderRadiusLG)}
         >
+          <span className="absolute bottom-0 right-8 text-xs md:text-sm">{Strings.tagVersion}</span>
           <Outlet />
         </Content>
       </Layout>
