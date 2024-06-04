@@ -3,7 +3,7 @@ import {
   useCreateCompanyMutation,
   useGetCompaniesMutation,
 } from "../../services/companyService";
-import { Button, Form, Input, Space } from "antd";
+import { Form, Input, Space } from "antd";
 import { Company } from "../../data/company/company";
 import { IoIosSearch } from "react-icons/io";
 import CustomButton from "../../components/CustomButtons";
@@ -28,7 +28,6 @@ const Companies = () => {
   const [isLoading, setLoading] = useState(false);
   const [querySearch, setQuerySearch] = useState(Strings.empty);
   const [dataBackup, setDataBackup] = useState<Company[]>([]);
-  const [clearFilters, setClearFilters] = useState(false);
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerCompany] = useCreateCompanyMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
@@ -37,10 +36,6 @@ const Companies = () => {
   useEffect(() => {
     if (changeIndicator === 1) handleGetCompanies();
   }, [changeIndicator]);
-
-  const handleClearFilters = () => {
-    setClearFilters(true);
-  };
 
   const handleGetCompanies = async () => {
     setLoading(true);
@@ -98,9 +93,6 @@ const Companies = () => {
               value={querySearch}
               addonAfter={<IoIosSearch />}
             />
-            <Button onClick={handleClearFilters} className="hidden xl:block">
-              {Strings.clearFiltersAndSorters}
-            </Button>
           </Space>
           <div className="flex mb-1 md:mb-0 md:justify-end flex-1">
             <CustomButton onClick={handleOnClickCreateButton} type="success">
@@ -109,12 +101,7 @@ const Companies = () => {
           </div>
         </div>
         <div className="flex-1 overflow-auto hidden lg:block">
-          <CompanyTable
-            data={data}
-            isLoading={isLoading}
-            clearFilters={clearFilters}
-            setClearFilters={setClearFilters}
-          />
+          <CompanyTable data={data} isLoading={isLoading} />
         </div>
         <div className="flex-1 overflow-auto lg:hidden">
           <PaginatedList
