@@ -24,6 +24,11 @@ export default class Strings {
   static requiredCellular = "Please enter the cellular";
   static requiredLogoURL = "Please upload the logo";
 
+  //errors priority form
+  static requiredCode = "Please enter the code"
+  static requiredDescription = "Please enter the description"
+  static requiredDaysNumber = "Please enter the days number"
+
   //company
   static logo = "Logo";
   static companyName = "Name";
@@ -56,6 +61,7 @@ export default class Strings {
   //Card titles
   static createCompany = "Create company";
   static updateCompany = "Update company";
+  static createPriority = "Create priority for"
 
   //general actions
   static edit = "Edit";
