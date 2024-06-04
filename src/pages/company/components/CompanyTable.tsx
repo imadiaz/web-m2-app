@@ -1,6 +1,6 @@
-import { ColumnsType, TableProps } from "antd/es/table";
+import { ColumnsType } from "antd/es/table";
 import { Company } from "../../../data/company/company";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { Badge, Table, Space } from "antd";
 import CustomButton from "../../../components/CustomButtons";
 import { useTableHeight } from "../../../utils/tableHeight";
@@ -16,26 +16,12 @@ import {
 import UpdateCompany from "./UpdateCompany";
 import ViewPrioritiesButton from "./ViewPrioritiesButton";
 
-type OnChange = NonNullable<TableProps<Company>["onChange"]>;
-type Filters = Parameters<OnChange>[1];
-type GetSingle<T> = T extends (infer U)[] ? U : never;
-type Sorts = GetSingle<Parameters<OnChange>[2]>;
-
 interface CompaniesTableProps {
   data: Company[];
   isLoading: boolean;
-  clearFilters: boolean;
-  setClearFilters: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CompanyTable = ({
-  data,
-  isLoading,
-  clearFilters,
-  setClearFilters,
-}: CompaniesTableProps) => {
-  const [filteredInfo, setFilteredInfo] = useState<Filters>({});
-  const [sortedInfo, setSortedInfo] = useState<Sorts>({});
+const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
   const dispatch = useAppDispatch();
@@ -49,22 +35,9 @@ const CompanyTable = ({
   const uniqueExtensions = [...new Set(data.map((item) => item.extension))];
 
   const extensionFilters = uniqueExtensions.map((extension) => ({
-    text: extension === null ? "No extension" : extension,
+    text: extension === null ? Strings.noExtension : extension,
     value: extension,
   }));
-
-  useEffect(() => {
-    if (clearFilters) {
-      setFilteredInfo({});
-      setSortedInfo({});
-      setClearFilters(false);
-    }
-  }, [clearFilters, setClearFilters]);
-
-  const handleChange: OnChange = (_, filters, sorter, __) => {
-    setFilteredInfo(filters);
-    setSortedInfo(sorter as Sorts);
-  };
 
   const columns: ColumnsType<Company> = useMemo(
     () => [
@@ -86,50 +59,42 @@ const CompanyTable = ({
         key: "name",
         sorter: (a, b) => a.name.localeCompare(b.name),
         sortDirections: ["ascend", "descend"],
-        sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
       },
       {
         title: Strings.rfc,
         dataIndex: "rfc",
         key: "rfc",
         sorter: (a, b) => a.rfc.localeCompare(b.rfc),
-        sortOrder: sortedInfo.columnKey === "rfc" ? sortedInfo.order : null,
       },
       {
         title: Strings.companyAddress,
         dataIndex: "address",
         key: "address",
         sorter: (a, b) => a.address.localeCompare(b.address),
-        sortOrder: sortedInfo.columnKey === "address" ? sortedInfo.order : null,
       },
       {
         title: Strings.contact,
         dataIndex: "contact",
         key: "contact",
         sorter: (a, b) => a.contact.localeCompare(b.contact),
-        sortOrder: sortedInfo.columnKey === "contact" ? sortedInfo.order : null,
       },
       {
         title: Strings.position,
         dataIndex: "position",
         key: "position",
         sorter: (a, b) => a.position.localeCompare(b.position),
-        sortOrder:
-          sortedInfo.columnKey === "position" ? sortedInfo.order : null,
       },
       {
         title: Strings.phone,
         dataIndex: "phone",
         key: "phone",
         sorter: (a, b) => a.phone.localeCompare(b.phone),
-        sortOrder: sortedInfo.columnKey === "phone" ? sortedInfo.order : null,
       },
       {
         title: Strings.extension,
         dataIndex: "extension",
         key: "extension",
         filters: extensionFilters,
-        filteredValue: filteredInfo.extension || null,
         onFilter: (value, record) => record.extension === value,
         ellipsis: true,
       },
@@ -138,15 +103,12 @@ const CompanyTable = ({
         dataIndex: "email",
         key: "email",
         sorter: (a, b) => a.email.localeCompare(b.email),
-        sortOrder: sortedInfo.columnKey === "email" ? sortedInfo.order : null,
       },
       {
         title: Strings.cellular,
         dataIndex: "cellular",
         key: "cellular",
         sorter: (a, b) => a.cellular.localeCompare(b.cellular),
-        sortOrder:
-          sortedInfo.columnKey === "cellular" ? sortedInfo.order : null,
       },
       {
         title: Strings.status,
@@ -160,12 +122,11 @@ const CompanyTable = ({
           { text: "Inactive", value: "I" },
         ],
         onFilter: (value, record) => record.status === value,
-        filteredValue: filteredInfo.status || null,
         filterMultiple: false,
         ellipsis: true,
       },
     ],
-    [sortedInfo, filteredInfo, Strings, extensionFilters, getStatusAndText]
+    [Strings, extensionFilters, getStatusAndText]
   );
 
   const actionsRow = {
@@ -198,7 +159,6 @@ const CompanyTable = ({
         key={data.length}
         scroll={{ y: tableHeight }}
         expandable={actionsRow}
-        onChange={handleChange}
       />
     </div>
   );
