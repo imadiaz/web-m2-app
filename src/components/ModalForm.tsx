@@ -11,15 +11,18 @@ interface ModalFormProps {
   title: string;
   FormComponent: React.ComponentType<{ form: FormInstance }>;
   isLoading: boolean;
+  isUpdateForm: boolean
 }
 
 // reset form fields when modal is form, closed
 const useResetFormOnCloseModal = ({
   form,
   open,
+  isUpdateForm,
 }: {
   form: FormInstance;
   open: boolean;
+  isUpdateForm: boolean
 }) => {
   const prevOpenRef = useRef<boolean>();
   useEffect(() => {
@@ -28,10 +31,10 @@ const useResetFormOnCloseModal = ({
   const prevOpen = prevOpenRef.current;
 
   useEffect(() => {
-    if (!open && prevOpen) {
+    if (!open && prevOpen && !isUpdateForm) {
       form.resetFields();
     }
-  }, [form, prevOpen, open]);
+  }, [form, prevOpen, open, isUpdateForm]);
 };
 
 const ModalForm = ({
@@ -40,12 +43,14 @@ const ModalForm = ({
   title,
   FormComponent,
   isLoading,
+  isUpdateForm
 }: ModalFormProps) => {
   const [form] = Form.useForm();
 
   useResetFormOnCloseModal({
     form,
     open,
+    isUpdateForm
   });
 
   const handleOnOk = () => {
