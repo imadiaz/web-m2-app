@@ -87,13 +87,14 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
             validateFirst
             rules={[
               { required: true, message: Strings.requiredRFC },
-              { len: 12 },
+              { max: 13 }, {min: 12}
             ]}
           >
             <Input
               size="large"
               showCount
-              maxLength={12}
+              maxLength={13}
+              minLength={12}
               addonBefore={<MdOutlineQrCodeScanner />}
               placeholder={Strings.rfc}
               onInput={(e) =>
@@ -163,7 +164,6 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
           </Form.Item>
           <Form.Item
             name="extension"
-            rules={[{ message: Strings.requiredExtension }]}
           >
             <InputNumber
               size="large"
