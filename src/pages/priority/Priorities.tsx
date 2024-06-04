@@ -1,15 +1,26 @@
 import { useEffect, useState } from "react";
-import { useGetPrioritiesMutation } from "../../services/priorityService";
+import {
+  useCreatePriorityMutation,
+  useGetPrioritiesMutation,
+} from "../../services/priorityService";
 import { Priority } from "../../data/priority/priority";
-import { Input, Space } from "antd";
+import { Form, Input, Space } from "antd";
 import { IoIosSearch } from "react-icons/io";
 import Strings from "../../utils/localizations/Strings";
 import CustomButton from "../../components/CustomButtons";
 import PriorityTable from "./components/PriorityTable";
 import { useLocation } from "react-router-dom";
+import ModalForm from "../../components/ModalForm";
+import { CreatePriority } from "../../data/priority/priority.request";
+import {
+  NotificationSuccess,
+  handleErrorNotification,
+  handleSucccessNotification,
+} from "../../utils/Notifications";
+import RegisterPriorityForm from "./components/RegisterPriorityForm";
 
 interface stateType {
-  id: string;
+  companyId: string;
   companyName: string;
 }
 
@@ -17,10 +28,22 @@ const Priorities = () => {
   const [getPriorities] = useGetPrioritiesMutation();
   const [isLoading, setLoading] = useState(false);
   const { state } = useLocation();
-  const { id, companyName } = state as stateType;
+  const { companyId, companyName } = state as stateType;
   const [data, setData] = useState<Priority[]>([]);
   const [querySearch, setQuerySearch] = useState(Strings.empty);
   const [dataBackup, setDataBackup] = useState<Priority[]>([]);
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [registerPriority] = useCreatePriorityMutation();
+  const [modalIsLoading, setModalLoading] = useState(false);
+
+  const handleOnClickCreateButton = () => {
+    setModalOpen(true);
+  };
+  const handleOnCancelButton = () => {
+    if (!modalIsLoading) {
+      setModalOpen(false);
+    }
+  };
 
   const handleOnSearch = (event: any) => {
     const getSearch = event.target.value;
@@ -46,9 +69,9 @@ const Priorities = () => {
 
   const handleGetPriorities = async () => {
     setLoading(true);
-    if (id) {
+    if (companyId) {
       try {
-        const response = await getPriorities(id).unwrap();
+        const response = await getPriorities(companyId).unwrap();
         console.log(response);
         setData(response);
         setDataBackup(response);
@@ -81,7 +104,11 @@ const Priorities = () => {
             </h1>
           </div>
           <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
-            <CustomButton type="success" className="w-full md:w-auto">
+            <CustomButton
+              type="success"
+              onClick={handleOnClickCreateButton}
+              className="w-full md:w-auto"
+            >
               {Strings.create}
             </CustomButton>
           </div>
@@ -90,6 +117,36 @@ const Priorities = () => {
           <PriorityTable data={data} isLoading={isLoading} />
         </div>
       </div>
+      <Form.Provider
+        onFormFinish={async (_, { values }) => {
+          try {
+            setModalLoading(true);
+            await registerPriority(
+              new CreatePriority(
+                Number(companyId),
+                values.code.trim(),
+                values.description.trim(),
+                values.daysNumber
+              )
+            ).unwrap();
+            setModalOpen(false);
+            handleGetPriorities();
+            handleSucccessNotification(NotificationSuccess.REGISTER);
+          } catch (error) {
+            handleErrorNotification(error);
+          } finally {
+            setModalLoading(false);
+          }
+        }}
+      >
+        <ModalForm
+          open={modalIsOpen}
+          onCancel={handleOnCancelButton}
+          FormComponent={RegisterPriorityForm}
+          title={Strings.createPriority.concat(` ${companyName}`)}
+          isLoading={modalIsLoading}
+        />
+      </Form.Provider>
     </>
   );
 };

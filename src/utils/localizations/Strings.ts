@@ -24,6 +24,11 @@ export default class Strings {
   static requiredCellular = "Please enter the cellular";
   static requiredLogoURL = "Please upload the logo";
 
+  //errors priority form
+  static requiredCode = "Please enter the code"
+  static requiredDescription = "Please enter the description"
+  static requiredDaysNumber = "Please enter the days number"
+
   //company
   static logo = "Logo";
   static companyName = "Name";
@@ -38,6 +43,7 @@ export default class Strings {
   //This logo will be removed when firebase upload is implemented.
   static logoTemp =
     "https://th.bing.com/th/id/OIG4.jIj.NbKiwFNdl.C3Ltft?pid=ImgGn";
+  static noExtension = "No extension";
 
   //company actions
   static viewPriorities = "View priorities";
@@ -47,14 +53,15 @@ export default class Strings {
   static importExcel = "Import excel";
 
   //Priority
-  static prioritiesOf = "Priorities of:"
-  static code = "Code"
-  static description = "Description"
-  static daysNumber = "Days number"
+  static prioritiesOf = "Priorities of:";
+  static code = "Code";
+  static description = "Description";
+  static daysNumber = "Days number";
 
   //Card titles
   static createCompany = "Create company";
   static updateCompany = "Update company";
+  static createPriority = "Create priority for"
 
   //general actions
   static edit = "Edit";

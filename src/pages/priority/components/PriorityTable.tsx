@@ -25,14 +25,6 @@ const PriorityTable = ({ data, isLoading }: PrioritiesTableProps) => {
       dispatch(resetChangeIndicator());
     }; */
 
-  /* const uniqueExtensions = [...new Set(data.map((item) => item.extension))];
-  
-    const extensionFilters = uniqueExtensions.map((extension) => ({
-      text: extension === null ? "No extension" : extension,
-      value: extension,
-    }));
-   */
-
   const columns: ColumnsType<Priority> = useMemo(
     () => [
       {
