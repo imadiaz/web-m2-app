@@ -1,6 +1,5 @@
 import { Card, Dropdown, MenuProps, Tag, theme } from "antd";
 import { Company } from "../../../data/company/company";
-import CustomButton from "../../../components/CustomButtons";
 import { getStatusAndText } from "../../../utils/Extensions";
 import { SlOptionsVertical } from "react-icons/sl";
 import Strings from "../../../utils/localizations/Strings";
@@ -34,29 +33,12 @@ const CompanyCard = ({ data }: CompanyCardProps) => {
     {
       key: "1",
       label: (
-        //<ViewPrioritiesButton id={data.id} companyName={data.name}/>
         <ViewSitesButton companyId={data.id} companyName={data.name} />
       ),
     },
     {
-      key: "2",
-      label: <CustomButton type="action">{Strings.viewLevels}</CustomButton>,
-    },
-    {
-      key: "3",
-      label: <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>,
-    },
-    {
-      key: "4",
-      label: <CustomButton type="action">{Strings.viewCards}</CustomButton>,
-    },
-    {
       key: "5",
       label: <UpdateCompany onClick={handleUpdateClick} row={data} />,
-    },
-    {
-      key: "6",
-      label: <CustomButton type="action">{Strings.importExcel}</CustomButton>,
     },
   ];
 

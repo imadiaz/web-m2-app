@@ -140,6 +140,7 @@ const Priorities = () => {
         }}
       >
         <ModalForm
+          isUpdateForm={false}
           open={modalIsOpen}
           onCancel={handleOnCancelButton}
           FormComponent={RegisterPriorityForm}

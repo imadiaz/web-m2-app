@@ -46,7 +46,7 @@ export default class Strings {
   static noExtension = "No extension";
 
   //company actions
-  static viewSites = "Sites"
+  static viewSites = "View sites"
 
   static viewPriorities = "View priorities";
   static viewLevels = "View levels";

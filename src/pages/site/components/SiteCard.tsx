@@ -4,6 +4,7 @@ import CustomButton from "../../../components/CustomButtons";
 import { getStatusAndText } from "../../../utils/Extensions";
 import { SlOptionsVertical } from "react-icons/sl";
 import Strings from "../../../utils/localizations/Strings";
+import ViewPrioritiesButton from "./ViewPrioritiesButton";
 
 interface CompanyCardProps {
   data: Company;
@@ -26,7 +27,7 @@ const SiteCard = ({ data }: CompanyCardProps) => {
     {
       key: "1",
       label: (
-        <></>
+        <ViewPrioritiesButton companyId={data.id} companyName={data.name}/>
       ),
     },
     {

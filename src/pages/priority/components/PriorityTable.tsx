@@ -65,16 +65,20 @@ const PriorityTable = ({ data, isLoading }: PrioritiesTableProps) => {
         onFilter: (value, record) => record.status === value,
         ellipsis: true,
       },
-      {
-        title: Strings.actions,
-        key: "actions",
-        render: (record) => {
-            return(<Space className="flex justify-normal"><CustomButton type="edit">{Strings.edit}</CustomButton> <CustomButton type="cancel">{Strings.delete}</CustomButton></Space>);
-          },
-      },
     ],
     [Strings, getStatusAndText]
   );
+
+  const actionsRow = {
+    defaultExpandAllRows: true,
+    showExpandColumn: false,
+    expandedRowRender: (_: Priority) => (
+      <Space className="flex justify-evenly">
+        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <CustomButton type="cancel">{Strings.delete}</CustomButton>
+      </Space>
+    ),
+  };
 
   return (
     <div className="h-full" ref={contentRef}>
@@ -90,6 +94,7 @@ const PriorityTable = ({ data, isLoading }: PrioritiesTableProps) => {
         }}
         key={data.length}
         scroll={{ y: tableHeight }}
+        expandable={actionsRow}
       />
     </div>
   );
