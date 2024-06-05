@@ -54,9 +54,28 @@ export default class Strings {
   static viewCards = "View cards";
   static importExcel = "Import excel";
 
+  //erros sites form
+  static requiredLatitud = "Please enter the latitud"
+  static requiredLongitud = "Please enter de Longitud"
+  static requiredSiteCode = "Please enter the site code"
+  static requiredSiteBusinessName = "Please enter the business name"
+  static requiredSiteType = "Please enter the site type"
+  static requiredDueDate = "Please enter the due date"
+  static requiredMonthlyPayment = "Please enter the monthly payment"
+  static requiredCurrency = "Please enter the currency"
+  static requiredAppHistoryDays =  "Please enter app history days"
+
   //sites
   static sitesOf = "Sites of:"
-
+  static latitud = "Latitud"
+  static longitud = "Longitud"
+  static siteCode = "Site code"
+  static siteBusinessName = "Site business name"
+  static siteType = "Site type"
+  static dueDate = "Due date"
+  static monthlyPayment = "Monthly payment"
+  static currency = "Currency"
+  static appHistoryDays = "App history days"
 
   //Priority
   static prioritiesOf = "Priorities of:";
@@ -68,6 +87,7 @@ export default class Strings {
   static createCompany = "Create company";
   static updateCompany = "Update company";
   static createPriority = "Create priority for"
+  static createSite = "Create site for"
 
   //general actions
   static edit = "Edit";

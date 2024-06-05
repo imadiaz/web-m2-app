@@ -84,6 +84,27 @@ const Priorities = () => {
     handleGetPriorities();
   }, [state, getPriorities]);
 
+  const handleOnFormCreateFinish = async (values: any) => {
+    try {
+      setModalLoading(true);
+      await registerPriority(
+        new CreatePriority(
+          Number(companyId),
+          values.code.trim(),
+          values.description.trim(),
+          values.daysNumber
+        )
+      ).unwrap();
+      setModalOpen(false);
+      handleGetPriorities();
+      handleSucccessNotification(NotificationSuccess.REGISTER);
+    } catch (error) {
+      handleErrorNotification(error);
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="h-full flex flex-col">
@@ -117,28 +138,7 @@ const Priorities = () => {
           <PriorityTable data={data} isLoading={isLoading} />
         </div>
       </div>
-      <Form.Provider
-        onFormFinish={async (_, { values }) => {
-          try {
-            setModalLoading(true);
-            await registerPriority(
-              new CreatePriority(
-                Number(companyId),
-                values.code.trim(),
-                values.description.trim(),
-                values.daysNumber
-              )
-            ).unwrap();
-            setModalOpen(false);
-            handleGetPriorities();
-            handleSucccessNotification(NotificationSuccess.REGISTER);
-          } catch (error) {
-            handleErrorNotification(error);
-          } finally {
-            setModalLoading(false);
-          }
-        }}
-      >
+      <Form.Provider onFormFinish={async (_, { values }) => {await handleOnFormCreateFinish(values)}}>
         <ModalForm
           isUpdateForm={false}
           open={modalIsOpen}

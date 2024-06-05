@@ -1,14 +1,26 @@
 import { useEffect, useState } from "react";
-import { useGetSitesMutation } from "../../services/siteService";
+import {
+  useCreateSiteMutation,
+  useGetSitesMutation,
+} from "../../services/siteService";
 import Strings from "../../utils/localizations/Strings";
 import { useLocation } from "react-router-dom";
-import { Input, Space } from "antd";
+import { Form, Input, Space } from "antd";
 import CustomButton from "../../components/CustomButtons";
 import SiteTable from "./components/SiteTable";
 import { IoIosSearch } from "react-icons/io";
 import PaginatedList from "../../components/PaginatedList";
 import SiteCard from "./components/SiteCard";
 import { Site } from "../../data/site/site";
+import { CreateSite } from "../../data/site/site.request";
+import ModalForm from "../../components/ModalForm";
+import RegisterSiteForm from "./components/RegisterSiteForm";
+import {
+  NotificationSuccess,
+  handleErrorNotification,
+  handleSucccessNotification,
+} from "../../utils/Notifications";
+import Constants from "../../utils/Constants";
 
 interface stateType {
   companyId: string;
@@ -23,6 +35,9 @@ const Sites = () => {
   const [isLoading, setLoading] = useState(false);
   const [querySearch, setQuerySearch] = useState(Strings.empty);
   const [dataBackup, setDataBackup] = useState<Site[]>([]);
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [registerSite] = useCreateSiteMutation();
+  const [modalIsLoading, setModalLoading] = useState(false);
 
   const handleGetSites = async () => {
     setLoading(true);
@@ -61,6 +76,87 @@ const Sites = () => {
       name.toLowerCase().includes(search.toLowerCase())
     );
   };
+
+  const handleOnClickCreateButton = () => {
+    setModalOpen(true);
+  };
+
+  const handleOnCancelButton = () => {
+    if (!modalIsLoading) {
+      setModalOpen(false);
+    }
+  };
+
+
+  const handleOnFormCreateFinish = async (values: any) =>{
+    try {
+      setModalLoading(true);
+      await registerSite(
+        new CreateSite(
+          Number(companyId),
+          values.siteCode,
+          values.siteBusinessName,
+          values.name,
+          values.siteType,
+          values.rfc,
+          values.address,
+          values.contact,
+          values.position,
+          values.phone.toString(),
+          values.extension?.toString(),
+          values.cellular?.toString(),
+          values.email,
+          Strings.logoTemp,
+          values.latitud.toString(),
+          values.longitud.toString(),
+          values.dueDate.format(Constants.DATE_FORMAT),
+          values.monthlyPayment,
+          values.currency,
+          values.appHistoryDays
+        )
+      ).unwrap();
+      setModalOpen(false);
+      handleGetSites();
+      handleSucccessNotification(NotificationSuccess.REGISTER);
+    } catch (error) {
+      handleErrorNotification(error);
+    } finally {
+      setModalLoading(false);
+    }try {
+      setModalLoading(true);
+      await registerSite(
+        new CreateSite(
+          Number(companyId),
+          values.siteCode,
+          values.siteBusinessName,
+          values.name,
+          values.siteType,
+          values.rfc,
+          values.address,
+          values.contact,
+          values.position,
+          values.phone.toString(),
+          values.extension?.toString(),
+          values.cellular?.toString(),
+          values.email,
+          Strings.logoTemp,
+          values.latitud.toString(),
+          values.longitud.toString(),
+          values.dueDate.format(Constants.DATE_FORMAT),
+          values.monthlyPayment,
+          values.currency,
+          values.appHistoryDays
+        )
+      ).unwrap();
+      setModalOpen(false);
+      handleGetSites();
+      handleSucccessNotification(NotificationSuccess.REGISTER);
+    } catch (error) {
+      handleErrorNotification(error);
+    } finally {
+      setModalLoading(false);
+    }
+  }
   return (
     <>
       <div className="h-full flex flex-col">
@@ -83,7 +179,7 @@ const Sites = () => {
           <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
             <CustomButton
               type="success"
-              //onClick={handleOnClickCreateButton}
+              onClick={handleOnClickCreateButton}
               className="w-full md:w-auto"
             >
               {Strings.create}
@@ -101,6 +197,20 @@ const Sites = () => {
           />
         </div>
       </div>
+      <Form.Provider
+        onFormFinish={async (_, { values }) => {
+          await handleOnFormCreateFinish(values)
+        }}
+      >
+        <ModalForm
+          open={modalIsOpen}
+          onCancel={handleOnCancelButton}
+          FormComponent={RegisterSiteForm}
+          title={Strings.createSite.concat(` ${companyName}`)}
+          isLoading={modalIsLoading}
+          isUpdateForm={false}
+        />
+      </Form.Provider>
     </>
   );
 };
