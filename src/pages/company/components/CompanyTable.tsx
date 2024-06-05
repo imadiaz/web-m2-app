@@ -2,7 +2,6 @@ import { ColumnsType } from "antd/es/table";
 import { Company } from "../../../data/company/company";
 import { useMemo, useRef } from "react";
 import { Badge, Table, Space } from "antd";
-import CustomButton from "../../../components/CustomButtons";
 import { useTableHeight } from "../../../utils/tableHeight";
 import Constants from "../../../utils/Constants";
 import { getStatusAndText } from "../../../utils/Extensions";
@@ -134,13 +133,8 @@ const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
     showExpandColumn: false,
     expandedRowRender: (data: Company) => (
       <Space className="flex justify-evenly">
-        {/* <ViewPrioritiesButton companyId={data.id} companyName={data.name}/> */}
         <ViewSitesButton companyId={data.id} companyName={data.name} />
-        <CustomButton type="action">{Strings.viewLevels}</CustomButton>
-        <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>
-        <CustomButton type="action">{Strings.viewCards}</CustomButton>
         <UpdateCompany onClick={handleUpdateClick} row={data} />
-        <CustomButton type="action">{Strings.importExcel}</CustomButton>
       </Space>
     ),
   };

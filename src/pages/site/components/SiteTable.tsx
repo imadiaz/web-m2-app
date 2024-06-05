@@ -7,6 +7,7 @@ import { getStatusAndText } from "../../../utils/Extensions";
 import Constants from "../../../utils/Constants";
 import CustomButton from "../../../components/CustomButtons";
 import { Site } from "../../../data/site/site";
+import ViewPrioritiesButton from "./ViewPrioritiesButton";
 
 interface TableProps {
     data: Site[];
@@ -124,9 +125,9 @@ const SiteTable = ({data, isLoading}: TableProps) => {
   const actionsRow = {
     defaultExpandAllRows: true,
     showExpandColumn: false,
-    expandedRowRender: (_: Site) => (
+    expandedRowRender: (data: Site) => (
       <Space className="flex justify-evenly">
-        <CustomButton type="action">{Strings.viewPriorities}</CustomButton>
+        <ViewPrioritiesButton companyId={data.id} companyName={data.name}/>
         <CustomButton type="action">{Strings.viewLevels}</CustomButton>
         <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>
         <CustomButton type="action">{Strings.viewCards}</CustomButton>
