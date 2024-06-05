@@ -46,11 +46,17 @@ export default class Strings {
   static noExtension = "No extension";
 
   //company actions
+  static viewSites = "Sites"
+
   static viewPriorities = "View priorities";
   static viewLevels = "View levels";
   static viewCardTypes = "View card types";
   static viewCards = "View cards";
   static importExcel = "Import excel";
+
+  //sites
+  static sitesOf = "Sites of:"
+
 
   //Priority
   static prioritiesOf = "Priorities of:";

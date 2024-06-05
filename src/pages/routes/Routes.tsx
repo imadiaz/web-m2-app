@@ -7,6 +7,7 @@ import { BsBuildings } from "react-icons/bs";
 import Routes from "../../utils/Routes";
 import Company from "../company/Companies";
 import Priorities from "../priority/Priorities";
+import Sites from "../site/Sites";
 
 const companies = new Route(
   "Companies",
@@ -23,7 +24,15 @@ const priorities = new Route(
   <></>
 );
 
-const adminRoutes: Route[] = [companies, priorities];
+const sites = new Route(
+  "Sites",
+  "sites",
+  Routes.SitesAllByCompany,
+  <Sites/>,
+  <></>
+)
+
+const adminRoutes: Route[] = [companies, priorities, sites];
 
 const adminRoutesSiderOptions = (): ItemType[] => {
   const items: MenuProps["items"] = [
