@@ -1,36 +1,28 @@
-import { ColumnsType } from "antd/es/table";
-import { Company } from "../../../data/company/company";
 import { useMemo, useRef } from "react";
-import { Badge, Table, Space } from "antd";
-import CustomButton from "../../../components/CustomButtons";
 import { useTableHeight } from "../../../utils/tableHeight";
-import Constants from "../../../utils/Constants";
-import { getStatusAndText } from "../../../utils/Extensions";
+import { ColumnsType } from "antd/es/table";
 import Strings from "../../../utils/localizations/Strings";
-import { useAppDispatch } from "../../../core/store";
-import {
-  resetChangeIndicator,
-  resetRowData,
-  setRowData,
-} from "../../../core/genericReducer";
-import UpdateCompany from "./UpdateCompany";
-import ViewSitesButton from "./ViewSitesButton";
+import { Badge, Space, Table} from "antd";
+import { getStatusAndText } from "../../../utils/Extensions";
+import Constants from "../../../utils/Constants";
+import CustomButton from "../../../components/CustomButtons";
+import { Site } from "../../../data/site/site";
 
-interface CompaniesTableProps {
-  data: Company[];
-  isLoading: boolean;
-}
+interface TableProps {
+    data: Site[];
+    isLoading: boolean;
+  }
 
-const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
+const SiteTable = ({data, isLoading}: TableProps) => {
+    const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
-  const dispatch = useAppDispatch();
+  //const dispatch = useAppDispatch();
 
-  const handleUpdateClick = (row: Company) => {
+  /* const handleUpdateClick = (row: Company) => {
     dispatch(resetRowData());
     dispatch(setRowData(row));
     dispatch(resetChangeIndicator());
-  };
+  }; */
 
   const uniqueExtensions = [...new Set(data.map((item) => item.extension))];
 
@@ -39,7 +31,7 @@ const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
     value: extension,
   }));
 
-  const columns: ColumnsType<Company> = useMemo(
+  const columns: ColumnsType<Site> = useMemo(
     () => [
       {
         title: Strings.logo,
@@ -132,14 +124,13 @@ const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
   const actionsRow = {
     defaultExpandAllRows: true,
     showExpandColumn: false,
-    expandedRowRender: (data: Company) => (
+    expandedRowRender: (_: Site) => (
       <Space className="flex justify-evenly">
-        {/* <ViewPrioritiesButton companyId={data.id} companyName={data.name}/> */}
-        <ViewSitesButton companyId={data.id} companyName={data.name} />
+        <CustomButton type="action">{Strings.viewPriorities}</CustomButton>
         <CustomButton type="action">{Strings.viewLevels}</CustomButton>
         <CustomButton type="action">{Strings.viewCardTypes}</CustomButton>
         <CustomButton type="action">{Strings.viewCards}</CustomButton>
-        <UpdateCompany onClick={handleUpdateClick} row={data} />
+        <CustomButton type="edit">{Strings.edit}</CustomButton>
         <CustomButton type="action">{Strings.importExcel}</CustomButton>
       </Space>
     ),
@@ -163,6 +154,6 @@ const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
       />
     </div>
   );
-};
+}
 
-export default CompanyTable;
+export default SiteTable
