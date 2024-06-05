@@ -81,6 +81,33 @@ const Companies = () => {
     }
   };
 
+  const handleOnFormCreateFinish = async (values: any) =>{
+    try {
+      setModalLoading(true);
+      await registerCompany(
+        new CreateCompany(
+          values.name,
+          values.rfc,
+          values.address,
+          values.contact,
+          values.position,
+          values.phone.toString(),
+          values.extension?.toString(),
+          values.cellular?.toString(),
+          values.email,
+          Strings.logoTemp
+        )
+      ).unwrap();
+      setModalOpen(false);
+      handleGetCompanies();
+      handleSucccessNotification(NotificationSuccess.REGISTER);
+    } catch (error) {
+      handleErrorNotification(error);
+    } finally {
+      setModalLoading(false);
+    }
+  }
+
   return (
     <>
       <div className="h-full flex flex-col">
@@ -113,30 +140,7 @@ const Companies = () => {
       </div>
       <Form.Provider
         onFormFinish={async (_, { values }) => {
-          try {
-            setModalLoading(true);
-            await registerCompany(
-              new CreateCompany(
-                values.name,
-                values.rfc,
-                values.address,
-                values.contact,
-                values.position,
-                values.phone.toString(),
-                values.extension?.toString(),
-                values.cellular?.toString(),
-                values.email,
-                Strings.logoTemp
-              )
-            ).unwrap();
-            setModalOpen(false);
-            handleGetCompanies();
-            handleSucccessNotification(NotificationSuccess.REGISTER);
-          } catch (error) {
-            handleErrorNotification(error);
-          } finally {
-            setModalLoading(false);
-          }
+         await handleOnFormCreateFinish(values)
         }}
       >
         <ModalForm

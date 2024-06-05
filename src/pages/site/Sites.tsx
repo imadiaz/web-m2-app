@@ -86,6 +86,77 @@ const Sites = () => {
       setModalOpen(false);
     }
   };
+
+
+  const handleOnFormCreateFinish = async (values: any) =>{
+    try {
+      setModalLoading(true);
+      await registerSite(
+        new CreateSite(
+          Number(companyId),
+          values.siteCode,
+          values.siteBusinessName,
+          values.name,
+          values.siteType,
+          values.rfc,
+          values.address,
+          values.contact,
+          values.position,
+          values.phone.toString(),
+          values.extension?.toString(),
+          values.cellular?.toString(),
+          values.email,
+          Strings.logoTemp,
+          values.latitud.toString(),
+          values.longitud.toString(),
+          values.dueDate.format(Constants.DATE_FORMAT),
+          values.monthlyPayment,
+          values.currency,
+          values.appHistoryDays
+        )
+      ).unwrap();
+      setModalOpen(false);
+      handleGetSites();
+      handleSucccessNotification(NotificationSuccess.REGISTER);
+    } catch (error) {
+      handleErrorNotification(error);
+    } finally {
+      setModalLoading(false);
+    }try {
+      setModalLoading(true);
+      await registerSite(
+        new CreateSite(
+          Number(companyId),
+          values.siteCode,
+          values.siteBusinessName,
+          values.name,
+          values.siteType,
+          values.rfc,
+          values.address,
+          values.contact,
+          values.position,
+          values.phone.toString(),
+          values.extension?.toString(),
+          values.cellular?.toString(),
+          values.email,
+          Strings.logoTemp,
+          values.latitud.toString(),
+          values.longitud.toString(),
+          values.dueDate.format(Constants.DATE_FORMAT),
+          values.monthlyPayment,
+          values.currency,
+          values.appHistoryDays
+        )
+      ).unwrap();
+      setModalOpen(false);
+      handleGetSites();
+      handleSucccessNotification(NotificationSuccess.REGISTER);
+    } catch (error) {
+      handleErrorNotification(error);
+    } finally {
+      setModalLoading(false);
+    }
+  }
   return (
     <>
       <div className="h-full flex flex-col">
@@ -128,41 +199,7 @@ const Sites = () => {
       </div>
       <Form.Provider
         onFormFinish={async (_, { values }) => {
-          try {
-            setModalLoading(true);
-            console.log(values.dueDate.toString())
-            await registerSite(
-              new CreateSite(
-                Number(companyId),
-                values.siteCode,
-                values.siteBusinessName,
-                values.name,
-                values.siteType,
-                values.rfc,
-                values.address,
-                values.contact,
-                values.position,
-                values.phone.toString(),
-                values.extension?.toString(),
-                values.cellular?.toString(),
-                values.email,
-                Strings.logoTemp,
-                values.latitud.toString(),
-                values.longitud.toString(),
-                values.dueDate.format(Constants.DATE_FORMAT),
-                values.monthlyPayment,
-                values.currency,
-                values.appHistoryDays
-              )
-            ).unwrap();
-            setModalOpen(false);
-            handleGetSites();
-            handleSucccessNotification(NotificationSuccess.REGISTER);
-          } catch (error) {
-            handleErrorNotification(error);
-          } finally {
-            setModalLoading(false);
-          }
+          await handleOnFormCreateFinish(values)
         }}
       >
         <ModalForm
