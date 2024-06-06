@@ -9,15 +9,13 @@ import {
   resetRowData,
   setRowData,
 } from "../../../core/genericReducer";
-import { CardTypes } from "../../../data/cardtypes/cardTypes";
 import CustomButton from "../../../components/CustomButtons";
-import ViewPreclassifiersButton from "./ViewPreclassifiersButton";
 
 interface CardProps {
-  data: CardTypes;
+  data: Preclassifier;
 }
 
-const CardTypesCard = ({ data }: CardProps) => {
+const PreclassifierCard = ({ data }: CardProps) => {
   const { status, text } = getStatusAndText(data.status);
   const dispatch = useAppDispatch();
   const {
@@ -42,18 +40,14 @@ const CardTypesCard = ({ data }: CardProps) => {
       label: (
         <CustomButton type="cancel">{Strings.delete}</CustomButton>
       ),
-    },
-    {
-      key: "5",
-      label: <ViewPreclassifiersButton cardTypeId={data.id} />
-    },
+    }
   ];
 
   const titleCard = (
     <div className="flex flex-row justify-center items-center">
       <div className="ml-2 max-w-xs">
         <p className="break-words text-wrap text-sm md:text-base text-white">
-          {data.name}
+          {data.preclassifierCode}
         </p>
       </div>
       <div className="absolute left-1">
@@ -82,28 +76,16 @@ const CardTypesCard = ({ data }: CardProps) => {
       </div>
       <div className="">
         <div className="flex flex-row">
-          <h1 className="font-semibold mr-1">{Strings.methodology}: </h1>
-          <p>{data.methodology}</p>
+          <h1 className="font-semibold mr-1">{Strings.code}: </h1>
+          <p>{data.preclassifierCode}</p>
         </div>
         <div className="flex  flex-row">
-          <h1 className="font-semibold mr-1">{Strings.name}: </h1>
-          <p>{data.name}</p>
-        </div>
-        <div className="flex flex-row">
-          <h1 className="font-semibold mr-1">{Strings.contact}: </h1>
-          <p>{data.description}</p>
-        </div>
-        <div className="flex flex-row">
-          <h1 className="font-semibold mr-1">{Strings.responsible}: </h1>
-          <p>{data.responsableName}</p>
-        </div>
-        <div className="flex flex-row flex-wrap">
-          <h1 className="font-semibold mr-1">{Strings.color}: </h1>
-          <div style={{ backgroundColor: `#${data.color}`, width: 50, height: 20 }} />
+          <h1 className="font-semibold mr-1">{Strings.description}: </h1>
+          <p>{data.preclassifierDescription}</p>
         </div>
       </div>
     </Card>
   );
 };
 
-export default CardTypesCard;
+export default PreclassifierCard;
