@@ -44,14 +44,14 @@ const PreclassifierTable = ({ data, isLoading }: TableProps) => {
       },
       {
         title: Strings.status,
-        key: "status",
+        key: Strings.status,
         render: (record: Preclassifier) => {
           const { status, text } = getStatusAndText(record.status);
           return <Badge status={status} text={text} />;
         },
         filters: [
-          { text: "Active", value: "A" },
-          { text: "Inactive", value: "I" },
+          { text: Strings.active, value: "A" },
+          { text: Strings.inactive, value: "I" },
         ],
         onFilter: (value, record) => record.status === value,
         ellipsis: true,
