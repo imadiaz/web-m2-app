@@ -113,4 +113,7 @@ export default class Strings {
   //status
   static active = "Active";
   static inactive = "Inactive";
+
+
+  static preclassifiers = "Preclassifiers"
 }

@@ -7,6 +7,7 @@ import { Badge, Space, Table } from "antd";
 import CustomButton from "../../../components/CustomButtons";
 import Constants from "../../../utils/Constants";
 import { CardTypes } from "../../../data/cardtypes/cardTypes";
+import ViewPreclassifiersButton from "./ViewPreclassifiersButton";
 
 interface TableProps {
   data: CardTypes[];
@@ -86,9 +87,9 @@ const CardTypesTable = ({ data, isLoading }: TableProps) => {
       const actionsRow = {
         defaultExpandAllRows: true,
         showExpandColumn: false,
-        expandedRowRender: (_: CardTypes) => (
+        expandedRowRender: (data: CardTypes) => (
           <Space className="flex justify-end">
-            <CustomButton type="action">{Strings.viewPreclassifiers}</CustomButton>
+            <ViewPreclassifiersButton cardTypeId={data.id} />
             <CustomButton type="edit">{Strings.edit}</CustomButton>
             <CustomButton type="cancel">{Strings.delete}</CustomButton>
           </Space>
