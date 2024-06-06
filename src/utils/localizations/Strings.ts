@@ -99,6 +99,7 @@ export default class Strings {
   static updateCompany = "Update company";
   static createPriority = "Create priority for";
   static createSite = "Create site for";
+  static createPreclassifier= "Create Preclassifier"
 
   //general actions
   static edit = "Edit";
