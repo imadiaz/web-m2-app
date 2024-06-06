@@ -57,12 +57,12 @@ export const getStatusAndText = (
   if (input === "A") {
     return {
       status: "success",
-      text: "Active",
+      text: Strings.active,
     };
   } else {
     return {
       status: "error",
-      text: "Inactive",
+      text: Strings.inactive,
     };
   }
 };

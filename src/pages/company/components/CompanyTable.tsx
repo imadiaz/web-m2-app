@@ -132,7 +132,7 @@ const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
     defaultExpandAllRows: true,
     showExpandColumn: false,
     expandedRowRender: (data: Company) => (
-      <Space className="flex justify-evenly">
+      <Space className="flex justify-end">
         <ViewSitesButton companyId={data.id} companyName={data.name} />
         <UpdateCompany onClick={handleUpdateClick} row={data} />
       </Space>

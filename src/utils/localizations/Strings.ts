@@ -25,9 +25,9 @@ export default class Strings {
   static requiredLogoURL = "Please upload the logo";
 
   //errors priority form
-  static requiredCode = "Please enter the code"
-  static requiredDescription = "Please enter the description"
-  static requiredDaysNumber = "Please enter the days number"
+  static requiredCode = "Please enter the code";
+  static requiredDescription = "Please enter the description";
+  static requiredDaysNumber = "Please enter the days number";
 
   //company
   static logo = "Logo";
@@ -46,8 +46,9 @@ export default class Strings {
   static noExtension = "No extension";
 
   //company actions
-  static viewSites = "View sites"
+  static viewSites = "View sites";
 
+  //site actions
   static viewPriorities = "View priorities";
   static viewLevels = "View levels";
   static viewCardTypes = "View card types";
@@ -55,27 +56,37 @@ export default class Strings {
   static importExcel = "Import excel";
 
   //erros sites form
-  static requiredLatitud = "Please enter the latitud"
-  static requiredLongitud = "Please enter de Longitud"
-  static requiredSiteCode = "Please enter the site code"
-  static requiredSiteBusinessName = "Please enter the business name"
-  static requiredSiteType = "Please enter the site type"
-  static requiredDueDate = "Please enter the due date"
-  static requiredMonthlyPayment = "Please enter the monthly payment"
-  static requiredCurrency = "Please enter the currency"
-  static requiredAppHistoryDays =  "Please enter app history days"
+  static requiredLatitud = "Please enter the latitud";
+  static requiredLongitud = "Please enter de Longitud";
+  static requiredSiteCode = "Please enter the site code";
+  static requiredSiteBusinessName = "Please enter the business name";
+  static requiredSiteType = "Please enter the site type";
+  static requiredDueDate = "Please enter the due date";
+  static requiredMonthlyPayment = "Please enter the monthly payment";
+  static requiredCurrency = "Please enter the currency";
+  static requiredAppHistoryDays = "Please enter app history days";
 
   //sites
-  static sitesOf = "Sites of:"
-  static latitud = "Latitud"
-  static longitud = "Longitud"
-  static siteCode = "Site code"
-  static siteBusinessName = "Site business name"
-  static siteType = "Site type"
-  static dueDate = "Due date"
-  static monthlyPayment = "Monthly payment"
-  static currency = "Currency"
-  static appHistoryDays = "App history days"
+  static sitesOf = "Sites of:";
+  static latitud = "Latitud";
+  static longitud = "Longitud";
+  static siteCode = "Site code";
+  static siteBusinessName = "Site business name";
+  static siteType = "Site type";
+  static dueDate = "Due date";
+  static monthlyPayment = "Monthly payment";
+  static currency = "Currency";
+  static appHistoryDays = "App history days";
+
+  //CardTypes
+  static methodology = "Methodology";
+  static name = "Name";
+  static color = "Color";
+  static responsible = 'Responsible'
+  static cardTypesOf = "Card types of:"
+
+  //CardTypes actions
+  static viewPreclassifiers = "View preclassifiers"
 
   //Priority
   static prioritiesOf = "Priorities of:";
@@ -86,16 +97,20 @@ export default class Strings {
   //Card titles
   static createCompany = "Create company";
   static updateCompany = "Update company";
-  static createPriority = "Create priority for"
-  static createSite = "Create site for"
+  static createPriority = "Create priority for";
+  static createSite = "Create site for";
 
   //general actions
   static edit = "Edit";
   static create = "Create";
   static save = "Save";
   static cancel = "Cancel";
-  static actions = "Actions"
-  static delete = "Delete"
+  static actions = "Actions";
+  static delete = "Delete";
 
-  static tagVersion = "Version 1.0.0"
+  static tagVersion = "Version 1.0.0";
+
+  //status
+  static active = "Active";
+  static inactive = "Inactive";
 }
