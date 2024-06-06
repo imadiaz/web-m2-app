@@ -119,6 +119,7 @@ export default class Strings {
   static updateCompany = "Update company";
   static createPriority = "Create priority for";
   static createSite = "Create site for";
+  static createPreclassifier= "Create Preclassifier"
   static createCardType = "Create card type for"
 
   //general actions

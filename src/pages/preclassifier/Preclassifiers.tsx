@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { Input, Space } from "antd";
+import { Form, Input, Space } from "antd";
 import { IoIosSearch } from "react-icons/io";
 import Strings from "../../utils/localizations/Strings";
 import CustomButton from "../../components/CustomButtons";
 import { useLocation } from "react-router-dom";
-import { useGetPreclassifierMutation } from "../../services/preclassifierService";
+import { useCreatePreclassifierMutation, useGetPreclassifierMutation } from "../../services/preclassifierService";
 import PreclassifierTable from "./components/PreclassifierTable";
 import PaginatedList from "../../components/PaginatedList";
 import PreclassifierCard from "./components/PreclassifierCard";
+import ModalForm from "../../components/ModalForm";
+import { NotificationSuccess, handleErrorNotification, handleSucccessNotification } from "../../utils/Notifications";
+import { CreatePreclassifier } from "../../data/preclassifier/preclassifier.request";
+import RegisterPreclassifierForm from "./components/RegisterPreclassifierForm";
 
 interface stateType {
   cardTypeId: string;
@@ -21,6 +25,18 @@ const Preclassifiers = () => {
   const [data, setData] = useState<Preclassifier[]>([]);
   const [querySearch, setQuerySearch] = useState(Strings.empty);
   const [dataBackup, setDataBackup] = useState<Preclassifier[]>([]);
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [registerPreclassifier] = useCreatePreclassifierMutation();
+  const [modalIsLoading, setModalLoading] = useState(false);
+
+  const handleOnClickCreateButton = () => {
+    setModalOpen(true);
+  };
+  const handleOnCancelButton = () => {
+    if (!modalIsLoading) {
+      setModalOpen(false);
+    }
+  };
 
   const handleOnSearch = (event: any) => {
     const getSearch = event.target.value;
@@ -60,6 +76,26 @@ const Preclassifiers = () => {
     handleGetPriorities();
   }, [state, getPreclassifiers]);
 
+  const handleOnFormCreateFinish = async (values: any) => {
+    try {
+      setModalLoading(true);
+      await registerPreclassifier(
+        new CreatePreclassifier(
+          values.code.trim(),
+          values.description.trim(),
+          Number(cardTypeId)
+        )
+      ).unwrap();
+      setModalOpen(false);
+      handleGetPriorities();
+      handleSucccessNotification(NotificationSuccess.REGISTER);
+    } catch (error) {
+      handleErrorNotification(error);
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="h-full flex flex-col">
@@ -81,7 +117,7 @@ const Preclassifiers = () => {
           <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
             <CustomButton
               type="success"
-              //onClick={handleOnClickCreateButton}
+              onClick={handleOnClickCreateButton}
               className="w-full md:w-auto"
             >
               {Strings.create}
@@ -98,6 +134,16 @@ const Preclassifiers = () => {
             isLoading={isLoading}
           />
         </div>
+        <Form.Provider onFormFinish={async (_, { values }) => {await handleOnFormCreateFinish(values)}}>
+        <ModalForm
+          isUpdateForm={false}
+          open={modalIsOpen}
+          onCancel={handleOnCancelButton}
+          FormComponent={RegisterPreclassifierForm}
+          title={Strings.createPreclassifier}
+          isLoading={modalIsLoading}
+        />
+      </Form.Provider>
       </div>
     </>
   );
