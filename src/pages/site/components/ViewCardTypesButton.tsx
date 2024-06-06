@@ -8,11 +8,11 @@ interface props {
   siteName: string;
 }
 
-const ViewPrioritiesButton = ({ siteId, siteName }: props) => {
+const ViewCardTypesButton = ({ siteId, siteName }: props) => {
   const navigate = useNavigate();
 
   const handleOnViewPriorities = (siteId: string, siteName: string) => {
-    navigate(Routes.PriorityAll, { state: { siteId, siteName } });
+    navigate(Routes.CardTypesAllBySite, { state: { siteId, siteName } });
   };
 
   return (
@@ -20,9 +20,9 @@ const ViewPrioritiesButton = ({ siteId, siteName }: props) => {
       type="action"
       onClick={() => handleOnViewPriorities(siteId, siteName)}
     >
-      {Strings.viewPriorities}
+      {Strings.viewCardTypes}
     </CustomButton>
   );
 };
 
-export default ViewPrioritiesButton
+export default ViewCardTypesButton

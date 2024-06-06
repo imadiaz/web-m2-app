@@ -1,61 +1,49 @@
 import { Card, Dropdown, MenuProps, Tag, theme } from "antd";
 import { Company } from "../../../data/company/company";
-import CustomButton from "../../../components/CustomButtons";
 import { getStatusAndText } from "../../../utils/Extensions";
 import { SlOptionsVertical } from "react-icons/sl";
 import Strings from "../../../utils/localizations/Strings";
-import ViewPrioritiesButton from "./ViewPrioritiesButton";
-import ViewCardTypesButton from "./ViewCardTypesButton";
+import { useAppDispatch } from "../../../core/store";
+import {
+  resetChangeIndicator,
+  resetRowData,
+  setRowData,
+} from "../../../core/genericReducer";
+import { CardTypes } from "../../../data/cardtypes/cardTypes";
+import CustomButton from "../../../components/CustomButtons";
 
-interface CompanyCardProps {
-  data: Company;
+interface CardProps {
+  data: CardTypes;
 }
 
-const SiteCard = ({ data }: CompanyCardProps) => {
+const CardTypesCard = ({ data }: CardProps) => {
   const { status, text } = getStatusAndText(data.status);
-   //const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const {
     token: { colorBgContainer, colorPrimary },
   } = theme.useToken();
 
-  /*const handleUpdateClick = (row: Company) => {
+  const handleUpdateClick = (row: Company) => {
     dispatch(resetRowData());
     dispatch(setRowData(row));
     dispatch(resetChangeIndicator());
-  }; */
+  };
 
   const items: MenuProps["items"] = [
     {
       key: "1",
       label: (
-        <ViewPrioritiesButton siteId={data.id} siteName={data.name}/>
+        <CustomButton></CustomButton>
       ),
     },
     {
-      key: "2",
-      label: <CustomButton type="action">{Strings.viewLevels}</CustomButton>,
-    },
-    {
-      key: "3",
-      label: <ViewCardTypesButton siteId={data.id} siteName={data.name}/>,
-    },
-    {
-      key: "4",
-      label: <CustomButton type="action">{Strings.viewCards}</CustomButton>,
-    },
-    {
       key: "5",
-      label: <></>
-    },
-    {
-      key: "6",
-      label: <CustomButton type="action">{Strings.importExcel}</CustomButton>,
+      label: <CustomButton></CustomButton>
     },
   ];
 
   const titleCard = (
     <div className="flex flex-row justify-center items-center">
-      <img className="size-9 border-white border" src={data.logo} alt="logo" />
       <div className="ml-2 max-w-xs">
         <p className="break-words text-wrap text-sm md:text-base text-white">
           {data.name}
@@ -87,38 +75,28 @@ const SiteCard = ({ data }: CompanyCardProps) => {
       </div>
       <div className="">
         <div className="flex flex-row">
-          <h1 className="font-semibold mr-1">{Strings.rfc}: </h1>
-          <p>{data.rfc}</p>
+          <h1 className="font-semibold mr-1">{Strings.methodology}: </h1>
+          <p>{data.methodology}</p>
         </div>
         <div className="flex  flex-row">
-          <h1 className="font-semibold mr-1">{Strings.companyAddress}: </h1>
-          <p>{data.address}</p>
+          <h1 className="font-semibold mr-1">{Strings.name}: </h1>
+          <p>{data.name}</p>
         </div>
         <div className="flex flex-row">
           <h1 className="font-semibold mr-1">{Strings.contact}: </h1>
-          <p>{data.contact}</p>
+          <p>{data.description}</p>
         </div>
         <div className="flex flex-row">
-          <h1 className="font-semibold mr-1">{Strings.position}: </h1>
-          <p>{data.position}</p>
+          <h1 className="font-semibold mr-1">{Strings.responsible}: </h1>
+          <p>{data.responsableName}</p>
         </div>
         <div className="flex flex-row flex-wrap">
-          <h1 className="font-semibold mr-1">{Strings.phone}: </h1>
-          <p>{data.phone}</p>
-          <h1 className="font-semibold  ml-2 mr-1">{Strings.extension}: </h1>
-          <p>{data.extension}</p>
-        </div>
-        <div className="flex flex-row">
-          <h1 className="font-semibold mr-1">{Strings.cellular}: </h1>
-          <p>{data.cellular}</p>
-        </div>
-        <div className="flex flex-row flex-wrap">
-          <h1 className="font-semibold mr-1">{Strings.email}: </h1>
-          <p>{data.email}</p>
+          <h1 className="font-semibold mr-1">{Strings.color}: </h1>
+          <div style={{ backgroundColor: `#${data.color}`, width: 50, height: 20 }} />
         </div>
       </div>
     </Card>
   );
 };
 
-export default SiteCard;
+export default CardTypesCard;

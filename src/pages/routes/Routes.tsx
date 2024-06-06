@@ -8,6 +8,7 @@ import Routes from "../../utils/Routes";
 import Company from "../company/Companies";
 import Priorities from "../priority/Priorities";
 import Sites from "../site/Sites";
+import CardTypess from "../cardtypes/CardTypes";
 
 const companies = new Route(
   "Companies",
@@ -19,7 +20,7 @@ const companies = new Route(
 const priorities = new Route(
   "Priorities",
   "priorities",
-  "priority/all/",
+  Routes.PriorityAll,
   <Priorities />,
   <></>
 );
@@ -28,11 +29,19 @@ const sites = new Route(
   "Sites",
   "sites",
   Routes.SitesAllByCompany,
-  <Sites/>,
+  <Sites />,
   <></>
-)
+);
 
-const adminRoutes: Route[] = [companies, priorities, sites];
+const cardTypes = new Route(
+  "Card types",
+  "cardtypes",
+  Routes.CardTypesAllBySite,
+  <CardTypess />,
+  <></>
+);
+
+const adminRoutes: Route[] = [companies, priorities, sites, cardTypes];
 
 const adminRoutesSiderOptions = (): ItemType[] => {
   const items: MenuProps["items"] = [

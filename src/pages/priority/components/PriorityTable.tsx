@@ -73,7 +73,7 @@ const PriorityTable = ({ data, isLoading }: PrioritiesTableProps) => {
     defaultExpandAllRows: true,
     showExpandColumn: false,
     expandedRowRender: (_: Priority) => (
-      <Space className="flex justify-evenly">
+      <Space className="flex justify-end">
         <CustomButton type="edit">{Strings.edit}</CustomButton>
         <CustomButton type="cancel">{Strings.delete}</CustomButton>
       </Space>

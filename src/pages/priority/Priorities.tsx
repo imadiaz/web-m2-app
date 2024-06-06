@@ -20,15 +20,15 @@ import {
 import RegisterPriorityForm from "./components/RegisterPriorityForm";
 
 interface stateType {
-  companyId: string;
-  companyName: string;
+  siteId: string;
+  siteName: string;
 }
 
 const Priorities = () => {
   const [getPriorities] = useGetPrioritiesMutation();
   const [isLoading, setLoading] = useState(false);
   const { state } = useLocation();
-  const { companyId, companyName } = state as stateType;
+  const { siteId, siteName } = state as stateType;
   const [data, setData] = useState<Priority[]>([]);
   const [querySearch, setQuerySearch] = useState(Strings.empty);
   const [dataBackup, setDataBackup] = useState<Priority[]>([]);
@@ -69,9 +69,9 @@ const Priorities = () => {
 
   const handleGetPriorities = async () => {
     setLoading(true);
-    if (companyId) {
+    if (siteId) {
       try {
-        const response = await getPriorities(companyId).unwrap();
+        const response = await getPriorities(siteId).unwrap();
         console.log(response);
         setData(response);
         setDataBackup(response);
@@ -89,7 +89,7 @@ const Priorities = () => {
       setModalLoading(true);
       await registerPriority(
         new CreatePriority(
-          Number(companyId),
+          Number(siteId),
           values.code.trim(),
           values.description.trim(),
           values.daysNumber
@@ -121,7 +121,7 @@ const Priorities = () => {
             </Space>
             <h1 className="font-semibold text-lg ml-0 md:ml-3">
               {Strings.prioritiesOf}
-              <span className="font-normal">{companyName}</span>
+              <span className="font-normal">{siteName}</span>
             </h1>
           </div>
           <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
@@ -144,7 +144,7 @@ const Priorities = () => {
           open={modalIsOpen}
           onCancel={handleOnCancelButton}
           FormComponent={RegisterPriorityForm}
-          title={Strings.createPriority.concat(` ${companyName}`)}
+          title={Strings.createPriority.concat(` ${siteName}`)}
           isLoading={modalIsLoading}
         />
       </Form.Provider>
