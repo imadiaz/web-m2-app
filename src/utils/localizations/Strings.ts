@@ -28,6 +28,7 @@ export default class Strings {
   static requiredCode = "Please enter the code";
   static requiredDescription = "Please enter the description";
   static requiredDaysNumber = "Please enter the days number";
+  static requiredResponsableId = "Please select the responsable"
 
   //company
   static logo = "Logo";
@@ -84,6 +85,25 @@ export default class Strings {
   static color = "Color";
   static responsible = 'Responsible'
   static cardTypesOf = "Card types of:"
+  static picturesCreate=  "Pictures create"
+  static audiosCreate = "Audios create"
+  static videosCreate = "Videos create"
+  static audiosDurationCreate = "Audios duration create"
+  static videosDurationCreate = "Videos duration create"
+  static quantityPicturesClose = "Pictures close"
+  static quantityAudiosClose = "Audios close"
+  static quantityVideosClose = "Videos close"
+  static audiosDurationClose = "Audios duration close"
+  static videosDurationClose = "Videos duration close"
+  static quantityCreate = "Quantity create"
+  static durationCreate = "Duration create"
+  static quantityClose = "Quantity close"
+  static durationClose = "Duration close"
+
+  //errors card type form
+  static requiredMethodology = "Please enter the methodology"
+  static requiredCardTypeName = "Please enter the card type name"
+  static requiredColor = "Please select a color"
 
   //CardTypes actions
   static viewPreclassifiers = "View preclassifiers"
@@ -100,6 +120,7 @@ export default class Strings {
   static createPriority = "Create priority for";
   static createSite = "Create site for";
   static createPreclassifier= "Create Preclassifier"
+  static createCardType = "Create card type for"
 
   //general actions
   static edit = "Edit";
