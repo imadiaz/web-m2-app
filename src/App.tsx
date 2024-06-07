@@ -32,7 +32,7 @@ function App() {
           },
           Modal: {
             colorIcon: "black",
-            colorIconHover: "#e73773" 
+            colorIconHover: "#e73773",
           }
         }
       }}

@@ -14,6 +14,7 @@ import Strings from "../../utils/localizations/Strings";
 import { useAppSelector } from "../../core/store";
 import { selectCurrentUser } from "../../core/authReducer";
 import { RESPONSIVE_AVATAR } from "../../utils/Extensions";
+import Logout from "../auth/Logout";
 
 const { Header, Sider, Content } = Layout;
 
@@ -63,6 +64,9 @@ const BaseLayout: React.FC = () => {
           selectedKeys={[selectedPath]}
           items={getUserSiderOptions(getSessionUser() as User)}
         />
+        <div className="bottom-10 left-3 absolute">
+          <Logout/>
+        </div>
       </Sider>
       <Layout>
         <Header style={headerStyle(colorBgContainer)}>
