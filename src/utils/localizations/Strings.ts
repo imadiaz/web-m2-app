@@ -1,5 +1,6 @@
 export default class Strings {
   static login = "Log in";
+  static logout = "Log out"
   static password = "Password";
   static email = "E-mail";
   static forgotPassword = "Forgot password";
@@ -7,6 +8,8 @@ export default class Strings {
   static clearFiltersAndSorters = "Clear filters and sorters";
   static empty = "";
   static welcome = "Welcome!";
+  static logoutModalTittle= "Are you sure you want to log out?"
+  static logutModalContent = "You are about to log out of your account."
 
   //errors login form
   static requiredEmail = "Please input your e-mail address!";
@@ -129,6 +132,7 @@ export default class Strings {
   static cancel = "Cancel";
   static actions = "Actions";
   static delete = "Delete";
+  static confirm = "Confirm"
 
   static tagVersion = "Version 1.0.0";
 
