@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Menu, Button, theme } from "antd";
+import { Layout, Menu, Button, theme, Avatar } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import {
   buttonSiderStyle,
@@ -11,10 +11,15 @@ import { getUserSiderOptions } from "../routes/Routes";
 import { useSessionStorage } from "../../core/useSessionStorage";
 import User from "../../data/user/user";
 import Strings from "../../utils/localizations/Strings";
+import { useAppSelector } from "../../core/store";
+import { selectCurrentUser } from "../../core/authReducer";
+import { RESPONSIVE_AVATAR } from "../../utils/Extensions";
 
 const { Header, Sider, Content } = Layout;
 
 const BaseLayout: React.FC = () => {
+  const user = useAppSelector(selectCurrentUser);
+
   //provisional code
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,6 +49,13 @@ const BaseLayout: React.FC = () => {
         collapsible
         collapsed={isCollapsed}
       >
+          <div className="m-2 flex justify-center bg-white">
+            <Avatar
+              size={RESPONSIVE_AVATAR}
+              src={<img src={user.logo} alt={Strings.logo} />}
+              shape="square"
+            />
+          </div>
         <Menu
           theme="dark"
           mode="inline"
@@ -65,7 +77,9 @@ const BaseLayout: React.FC = () => {
           className="p-3 mt-6 ml-4 mr-4"
           style={contentStyle(colorBgContainer, borderRadiusLG)}
         >
-          <span className="absolute bottom-0 right-8 text-xs md:text-sm">{Strings.tagVersion}</span>
+          <span className="absolute bottom-0 right-8 text-xs md:text-sm">
+            {Strings.tagVersion}
+          </span>
           <Outlet />
         </Content>
       </Layout>
