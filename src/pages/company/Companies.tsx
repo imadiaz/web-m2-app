@@ -21,6 +21,7 @@ import {
 import Strings from "../../utils/localizations/Strings";
 import { useAppSelector } from "../../core/store";
 import { selectCurrentChangeIndicator } from "../../core/genericReducer";
+import { uploadImageToFirebaseAndGetURL } from "../../config/firebaseUpload";
 
 const Companies = () => {
   const [getCompanies] = useGetCompaniesMutation();
@@ -84,6 +85,7 @@ const Companies = () => {
   const handleOnFormCreateFinish = async (values: any) =>{
     try {
       setModalLoading(true);
+      const imgURL = await uploadImageToFirebaseAndGetURL(values.logo.file)
       await registerCompany(
         new CreateCompany(
           values.name,
@@ -95,7 +97,7 @@ const Companies = () => {
           values.extension?.toString(),
           values.cellular?.toString(),
           values.email,
-          Strings.logoTemp
+          imgURL
         )
       ).unwrap();
       setModalOpen(false);

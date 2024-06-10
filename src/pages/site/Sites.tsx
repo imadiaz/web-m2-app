@@ -21,6 +21,7 @@ import {
   handleSucccessNotification,
 } from "../../utils/Notifications";
 import Constants from "../../utils/Constants";
+import { uploadImageToFirebaseAndGetURL } from "../../config/firebaseUpload";
 
 interface stateType {
   companyId: string;
@@ -91,6 +92,7 @@ const Sites = () => {
   const handleOnFormCreateFinish = async (values: any) =>{
     try {
       setModalLoading(true);
+      const imgURL = await uploadImageToFirebaseAndGetURL(values.logo.file)
       await registerSite(
         new CreateSite(
           Number(companyId),
@@ -106,7 +108,7 @@ const Sites = () => {
           values.extension?.toString(),
           values.cellular?.toString(),
           values.email,
-          Strings.logoTemp,
+          imgURL,
           values.latitud.toString(),
           values.longitud.toString(),
           values.dueDate.format(Constants.DATE_FORMAT),

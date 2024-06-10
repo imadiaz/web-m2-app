@@ -295,13 +295,14 @@ const RegisterSiteForm = ({ form }: FormProps) => {
         <Form.Item
           name="logo"
           label={Strings.logo}
-          //rules={[{ required: true, message: Strings.requiredLogoURL }]}
+          rules={[{ required: true, message: Strings.requiredLogo }]}
         >
           <Upload
             listType="picture-card"
             fileList={fileList}
             onPreview={handlePreview}
             onChange={handleChange}
+            accept="image/*"
           >
             {fileList.length === 0 ? uploadButton : null}
           </Upload>
