@@ -8,7 +8,7 @@ interface UploadFile {
 
 export const uploadImageToFirebaseAndGetURL = async (file: UploadFile): Promise<string> => {
   try {
-    const imageRef = ref(storage, `/images/${file.name}`);
+    const imageRef = ref(storage, `/images/companies/${file.name}`);
     await uploadBytes(imageRef, file.originFileObj);
     const downloadURL = await getDownloadURL(imageRef);
     return downloadURL;
