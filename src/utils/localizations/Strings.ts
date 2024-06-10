@@ -22,7 +22,7 @@ export default class Strings {
   static requiredPhone = "Please enter the phone number";
   static requiredExtension = "Please enter a extension";
   static requiredCellular = "Please enter the cellular";
-  static requiredLogoURL = "Please upload the logo";
+  static requiredLogo = "Please upload the logo";
 
   //errors priority form
   static requiredCode = "Please enter the code";
