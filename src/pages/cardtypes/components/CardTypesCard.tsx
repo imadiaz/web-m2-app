@@ -1,14 +1,7 @@
 import { Card, Dropdown, MenuProps, Tag, theme } from "antd";
-import { Company } from "../../../data/company/company";
 import { getStatusAndText } from "../../../utils/Extensions";
 import { SlOptionsVertical } from "react-icons/sl";
 import Strings from "../../../utils/localizations/Strings";
-import { useAppDispatch } from "../../../core/store";
-import {
-  resetChangeIndicator,
-  resetRowData,
-  setRowData,
-} from "../../../core/genericReducer";
 import { CardTypes } from "../../../data/cardtypes/cardTypes";
 import CustomButton from "../../../components/CustomButtons";
 import ViewPreclassifiersButton from "./ViewPreclassifiersButton";
@@ -19,16 +12,9 @@ interface CardProps {
 
 const CardTypesCard = ({ data }: CardProps) => {
   const { status, text } = getStatusAndText(data.status);
-  const dispatch = useAppDispatch();
   const {
     token: { colorBgContainer, colorPrimary },
   } = theme.useToken();
-
-  const handleUpdateClick = (row: Company) => {
-    dispatch(resetRowData());
-    dispatch(setRowData(row));
-    dispatch(resetChangeIndicator());
-  };
 
   const items: MenuProps["items"] = [
     {

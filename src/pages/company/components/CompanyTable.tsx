@@ -1,17 +1,11 @@
 import { ColumnsType } from "antd/es/table";
 import { Company } from "../../../data/company/company";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Badge, Table, Space } from "antd";
 import { useTableHeight } from "../../../utils/tableHeight";
 import Constants from "../../../utils/Constants";
 import { getStatusAndText } from "../../../utils/Extensions";
 import Strings from "../../../utils/localizations/Strings";
-import { useAppDispatch } from "../../../core/store";
-import {
-  resetChangeIndicator,
-  resetRowData,
-  setRowData,
-} from "../../../core/genericReducer";
 import UpdateCompany from "./UpdateCompany";
 import ViewSitesButton from "./ViewSitesButton";
 
@@ -23,15 +17,18 @@ interface CompaniesTableProps {
 const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
-  const dispatch = useAppDispatch();
-
-  const handleUpdateClick = (row: Company) => {
-    dispatch(resetRowData());
-    dispatch(setRowData(row));
-    dispatch(resetChangeIndicator());
-  };
-
   const uniqueExtensions = [...new Set(data.map((item) => item.extension))];
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
+
+  useEffect(() => {
+    const allRowKeys = data.map(item => item.id);
+    setExpandedRowKeys(allRowKeys);
+  }, [data]);
+
+  const handleExpand = (expanded: boolean, record: Company) => {
+    const keys = expanded ? [...expandedRowKeys, record.id] : expandedRowKeys.filter(key => key !== record.id);
+    setExpandedRowKeys(keys);
+  };
 
   const extensionFilters = uniqueExtensions.map((extension) => ({
     text: extension === null ? Strings.noExtension : extension,
@@ -129,12 +126,13 @@ const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
   );
 
   const actionsRow = {
-    defaultExpandAllRows: true,
+    expandedRowKeys,
+    onExpand: handleExpand,
     showExpandColumn: false,
     expandedRowRender: (data: Company) => (
       <Space className="flex justify-end">
         <ViewSitesButton companyId={data.id} companyName={data.name} />
-        <UpdateCompany onClick={handleUpdateClick} row={data} />
+        <UpdateCompany data={data} />
       </Space>
     ),
   };
@@ -144,6 +142,7 @@ const CompanyTable = ({ data, isLoading }: CompaniesTableProps) => {
       <Table
         loading={isLoading}
         size="middle"
+        rowKey="id"
         columns={columns}
         dataSource={data}
         pagination={{

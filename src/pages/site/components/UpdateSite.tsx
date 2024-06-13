@@ -1,52 +1,64 @@
 import { useState } from "react";
 import CustomButton from "../../../components/CustomButtons";
 import Strings from "../../../utils/localizations/Strings";
-import { Company } from "../../../data/company/company";
-import UpdateCompanyForm from "./UpdateCompanyForm";
-import { Form } from "antd";
+import { Form, Spin } from "antd";
 import {
   NotificationSuccess,
   handleErrorNotification,
   handleSucccessNotification,
 } from "../../../utils/Notifications";
-import { useUpdateCompanyMutation } from "../../../services/companyService";
-import { UpdateCompanyRequest } from "../../../data/company/company.request";
 import { useAppDispatch } from "../../../core/store";
 import {
   resetRowData,
-  setCompanyUpdatedIndicator,
   setRowData,
+  setSiteUpdatedIndicator,
 } from "../../../core/genericReducer";
+import UpdateSiteForm from "./UpdateSiteForm";
 import ModalUpdateForm from "../../../components/ModalUpdateForm";
+import {
+  useGetSiteMutation,
+  useUpdateSiteMutation,
+} from "../../../services/siteService";
+import { UpdateSiteReq } from "../../../data/site/site.request";
 import { updateImageToFirebaseAndGetURL } from "../../../config/firebaseUpdate";
+import Constants from "../../../utils/Constants";
 
 interface ButtonEditProps {
-  data: Company;
+  siteId: string;
 }
 
-const UpdateCompany = ({ data }: ButtonEditProps) => {
+const UpdateSite = ({ siteId }: ButtonEditProps) => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [modalIsLoading, setModalLoading] = useState(false);
-  const [updateCompany] = useUpdateCompanyMutation();
+  const [dataIsLoading, setDataLoading] = useState(false);
   const dispatch = useAppDispatch();
+  const [getSite] = useGetSiteMutation();
+  const [updateSite] = useUpdateSiteMutation();
 
-  //Edit modal
-  const handleOnClickEditButton = () => {
-    dispatch(setRowData(data));
+  const handleOnClickEditButton = async () => {
+    setDataLoading(true);
+    const site = await getSite(siteId).unwrap();
+    dispatch(setRowData(site));
     setModalOpen(true);
+    setDataLoading(false);
   };
+
   const handleOnCancelButton = () => {
     if (!modalIsLoading) {
       dispatch(resetRowData());
       setModalOpen(false);
     }
   };
+
   const handleOnUpdateFormFinish = async (values: any) => {
     try {
       setModalLoading(true);
-      const companyToUpdate = new UpdateCompanyRequest(
+      const siteToUpdate = new UpdateSiteReq(
         Number(values.id),
+        values.siteCode,
+        values.siteBusinessName,
         values.name,
+        values.siteType,
         values.rfc,
         values.address,
         values.contact,
@@ -55,21 +67,28 @@ const UpdateCompany = ({ data }: ButtonEditProps) => {
         values.extension?.toString(),
         values.cellular?.toString(),
         values.email,
-        values.logoURL
+        values.logoURL,
+        values.latitud,
+        values.longitud,
+        values.dueDate.format(Constants.DATE_FORMAT),
+        Number(values.monthlyPayment),
+        values.currency,
+        Number(values.appHistoryDays),
+        values.status
       );
-      await updateCompany(companyToUpdate).unwrap();
+      await updateSite(siteToUpdate).unwrap();
       let newURLLogo;
       if (values.logo[0] !== "h") {
         newURLLogo = await updateImageToFirebaseAndGetURL(
-          Strings.companies,
+          Strings.sites,
           values.logoURL,
           values.logo[0]
         );
-        companyToUpdate.logo = newURLLogo;
-        await updateCompany(companyToUpdate).unwrap();
+        siteToUpdate.logo = newURLLogo;
+        await updateSite(siteToUpdate).unwrap();
       }
       setModalOpen(false);
-      dispatch(setCompanyUpdatedIndicator());
+      dispatch(setSiteUpdatedIndicator());
       handleSucccessNotification(NotificationSuccess.UPDATE);
     } catch (error) {
       handleErrorNotification(error);
@@ -77,22 +96,28 @@ const UpdateCompany = ({ data }: ButtonEditProps) => {
       setModalLoading(false);
     }
   };
+
   return (
     <>
       <CustomButton onClick={handleOnClickEditButton} type="edit">
         {Strings.edit}
       </CustomButton>
-      <Form.Provider onFormFinish={async (_, { values }) => {await handleOnUpdateFormFinish(values)}}>
+      <Form.Provider
+        onFormFinish={async (_, { values }) => {
+          await handleOnUpdateFormFinish(values);
+        }}
+      >
         <ModalUpdateForm
           open={modalIsOpen}
           onCancel={handleOnCancelButton}
-          FormComponent={UpdateCompanyForm}
+          FormComponent={UpdateSiteForm}
           title={Strings.updateCompany}
           isLoading={modalIsLoading}
         />
       </Form.Provider>
+      <Spin spinning={dataIsLoading} fullscreen />
     </>
   );
 };
 
-export default UpdateCompany;
+export default UpdateSite;

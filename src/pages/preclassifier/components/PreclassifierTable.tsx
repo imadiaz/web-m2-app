@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTableHeight } from "../../../utils/tableHeight";
 import { ColumnsType } from "antd/es/table";
 import Strings from "../../../utils/localizations/Strings";
@@ -15,13 +15,17 @@ interface TableProps {
 const PreclassifierTable = ({ data, isLoading }: TableProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
-  //const dispatch = useAppDispatch();
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
 
-  /* const handleUpdateClick = (row: Company) => {
-      dispatch(resetRowData());
-      dispatch(setRowData(row));
-      dispatch(resetChangeIndicator());
-    }; */
+  useEffect(() => {
+    const allRowKeys = data.map(item => item.id);
+    setExpandedRowKeys(allRowKeys);
+  }, [data]);
+
+  const handleExpand = (expanded: boolean, record: Preclassifier) => {
+    const keys = expanded ? [...expandedRowKeys, record.id] : expandedRowKeys.filter(key => key !== record.id);
+    setExpandedRowKeys(keys);
+  };
 
   const columns: ColumnsType<Preclassifier> = useMemo(
     () => [
@@ -61,7 +65,8 @@ const PreclassifierTable = ({ data, isLoading }: TableProps) => {
   );
 
   const actionsRow = {
-    defaultExpandAllRows: true,
+    expandedRowKeys,
+    onExpand: handleExpand,
     showExpandColumn: false,
     expandedRowRender: (_: Preclassifier) => (
       <Space className="flex justify-end">
@@ -76,6 +81,7 @@ const PreclassifierTable = ({ data, isLoading }: TableProps) => {
       <Table
         loading={isLoading}
         size="middle"
+        rowKey='id'
         columns={columns}
         dataSource={data}
         pagination={{

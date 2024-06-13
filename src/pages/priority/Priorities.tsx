@@ -72,7 +72,6 @@ const Priorities = () => {
     if (siteId) {
       try {
         const response = await getPriorities(siteId).unwrap();
-        console.log(response);
         setData(response);
         setDataBackup(response);
       } catch (error) {}
@@ -140,7 +139,6 @@ const Priorities = () => {
       </div>
       <Form.Provider onFormFinish={async (_, { values }) => {await handleOnFormCreateFinish(values)}}>
         <ModalForm
-          isUpdateForm={false}
           open={modalIsOpen}
           onCancel={handleOnCancelButton}
           FormComponent={RegisterPriorityForm}

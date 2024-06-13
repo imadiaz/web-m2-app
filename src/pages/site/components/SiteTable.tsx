@@ -1,30 +1,37 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTableHeight } from "../../../utils/tableHeight";
 import { ColumnsType } from "antd/es/table";
 import Strings from "../../../utils/localizations/Strings";
-import { Badge, Space, Table} from "antd";
+import { Badge, Space, Table } from "antd";
 import { getStatusAndText } from "../../../utils/Extensions";
 import Constants from "../../../utils/Constants";
 import CustomButton from "../../../components/CustomButtons";
 import { Site } from "../../../data/site/site";
 import ViewPrioritiesButton from "./ViewPrioritiesButton";
 import ViewCardTypesButton from "./ViewCardTypesButton";
+import UpdateSite from "./UpdateSite";
 
 interface TableProps {
-    data: Site[];
-    isLoading: boolean;
-  }
+  data: Site[];
+  isLoading: boolean;
+}
 
-const SiteTable = ({data, isLoading}: TableProps) => {
-    const contentRef = useRef<HTMLDivElement>(null);
+const SiteTable = ({ data, isLoading }: TableProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
-  //const dispatch = useAppDispatch();
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
 
-  /* const handleUpdateClick = (row: Company) => {
-    dispatch(resetRowData());
-    dispatch(setRowData(row));
-    dispatch(resetChangeIndicator());
-  }; */
+  useEffect(() => {
+    const allRowKeys = data.map((item) => item.id);
+    setExpandedRowKeys(allRowKeys);
+  }, [data]);
+
+  const handleExpand = (expanded: boolean, record: Site) => {
+    const keys = expanded
+      ? [...expandedRowKeys, record.id]
+      : expandedRowKeys.filter((key) => key !== record.id);
+    setExpandedRowKeys(keys);
+  };
 
   const uniqueExtensions = [...new Set(data.map((item) => item.extension))];
 
@@ -124,15 +131,16 @@ const SiteTable = ({data, isLoading}: TableProps) => {
   );
 
   const actionsRow = {
-    defaultExpandAllRows: true,
+    expandedRowKeys,
+    onExpand: handleExpand,
     showExpandColumn: false,
     expandedRowRender: (data: Site) => (
       <Space className="flex justify-end">
-        <ViewPrioritiesButton siteId={data.id} siteName={data.name}/>
+        <ViewPrioritiesButton siteId={data.id} siteName={data.name} />
         <CustomButton type="action">{Strings.viewLevels}</CustomButton>
-        <ViewCardTypesButton siteId={data.id} siteName={data.name}/>
+        <ViewCardTypesButton siteId={data.id} siteName={data.name} />
         <CustomButton type="action">{Strings.viewCards}</CustomButton>
-        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <UpdateSite siteId={data.id} />
         <CustomButton type="action">{Strings.importExcel}</CustomButton>
       </Space>
     ),
@@ -144,6 +152,7 @@ const SiteTable = ({data, isLoading}: TableProps) => {
         loading={isLoading}
         size="middle"
         columns={columns}
+        rowKey="id"
         dataSource={data}
         pagination={{
           defaultPageSize: Constants.PAGE_SIZE,
@@ -156,6 +165,6 @@ const SiteTable = ({data, isLoading}: TableProps) => {
       />
     </div>
   );
-}
+};
 
-export default SiteTable
+export default SiteTable;

@@ -1,5 +1,4 @@
-import { useMemo, useRef } from "react";
-import { useAppDispatch } from "../../../core/store";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTableHeight } from "../../../utils/tableHeight";
 import { ColumnsType } from "antd/es/table";
 import { Priority } from "../../../data/priority/priority";
@@ -17,13 +16,17 @@ interface PrioritiesTableProps {
 const PriorityTable = ({ data, isLoading }: PrioritiesTableProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
-  const dispatch = useAppDispatch();
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
 
-  /* const handleUpdateClick = (row: Company) => {
-      dispatch(resetRowData());
-      dispatch(setRowData(row));
-      dispatch(resetChangeIndicator());
-    }; */
+  useEffect(() => {
+    const allRowKeys = data.map(item => item.id);
+    setExpandedRowKeys(allRowKeys);
+  }, [data]);
+
+  const handleExpand = (expanded: boolean, record: Priority) => {
+    const keys = expanded ? [...expandedRowKeys, record.id] : expandedRowKeys.filter(key => key !== record.id);
+    setExpandedRowKeys(keys);
+  };
 
   const columns: ColumnsType<Priority> = useMemo(
     () => [
@@ -70,7 +73,8 @@ const PriorityTable = ({ data, isLoading }: PrioritiesTableProps) => {
   );
 
   const actionsRow = {
-    defaultExpandAllRows: true,
+    expandedRowKeys,
+    onExpand: handleExpand,
     showExpandColumn: false,
     expandedRowRender: (_: Priority) => (
       <Space className="flex justify-end">
@@ -85,6 +89,7 @@ const PriorityTable = ({ data, isLoading }: PrioritiesTableProps) => {
       <Table
         loading={isLoading}
         size="middle"
+        rowKey="id"
         columns={columns}
         dataSource={data}
         pagination={{

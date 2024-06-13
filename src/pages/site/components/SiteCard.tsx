@@ -6,6 +6,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import Strings from "../../../utils/localizations/Strings";
 import ViewPrioritiesButton from "./ViewPrioritiesButton";
 import ViewCardTypesButton from "./ViewCardTypesButton";
+import UpdateSite from "./UpdateSite";
 
 interface CompanyCardProps {
   data: Company;
@@ -45,7 +46,7 @@ const SiteCard = ({ data }: CompanyCardProps) => {
     },
     {
       key: "5",
-      label: <></>
+      label: <UpdateSite siteId={data.id}/>
     },
     {
       key: "6",

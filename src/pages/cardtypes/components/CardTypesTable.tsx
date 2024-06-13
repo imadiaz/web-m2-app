@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTableHeight } from "../../../utils/tableHeight";
 import { ColumnsType } from "antd/es/table";
 import Strings from "../../../utils/localizations/Strings";
@@ -17,84 +17,93 @@ interface TableProps {
 const CardTypesTable = ({ data, isLoading }: TableProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
-  //const dispatch = useAppDispatch();
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
 
-  /* const handleUpdateClick = (row: Company) => {
-      dispatch(resetRowData());
-      dispatch(setRowData(row));
-      dispatch(resetChangeIndicator());
-    }; */
+  useEffect(() => {
+    const allRowKeys = data.map((item) => item.id);
+    setExpandedRowKeys(allRowKeys);
+  }, [data]);
 
-    const columns: ColumnsType<CardTypes> = useMemo(
-        () => [
-          {
-            title: Strings.methodology,
-            dataIndex: 'methodology',
-            key: 'methodology',
-            sorter: (a, b) => a.methodology.localeCompare(b.methodology),
-            sortDirections: ['ascend', 'descend'],
-          },
-          {
-            title: Strings.name,
-            dataIndex: 'name',
-            key: 'name',
-            sorter: (a, b) => a.name.localeCompare(b.name),
-            sortDirections: ['ascend', 'descend'],
-            ellipsis: true,
-          },
-          {
-            title: Strings.description,
-            dataIndex: 'description',
-            key: 'description',
-            sorter: (a, b) => a.description.localeCompare(b.description),
-            sortDirections: ['ascend', 'descend'],
-            ellipsis: true,
-          },
-          {
-            title: Strings.color,
-            dataIndex: 'color',
-            key: 'color',
-            render: (color: string) => (
-              <div style={{ backgroundColor: `#${color}`, width: 50, height: 20 }} />
-            ),
-          },
-          {
-            title: Strings.responsible,
-            dataIndex: 'responsableName',
-            key: 'responsableName',
-            sorter: (a, b) => a.responsableName.localeCompare(b.responsableName),
-            sortDirections: ['ascend', 'descend'],
-            ellipsis: true,
-          },
-          {
-            title: Strings.status,
-            key: "status",
-            render: (record) => {
-              const { status, text } = getStatusAndText(record.status);
-              return <Badge status={status} text={text} />;
-            },
-            filters: [
-              { text: Strings.active, value: "A" },
-              { text: Strings.inactive, value: "I" },
-            ],
-            onFilter: (value, record) => record.status === value,
-            ellipsis: true,
-          },
-        ],
-        []
-      );
-      
-      const actionsRow = {
-        defaultExpandAllRows: true,
-        showExpandColumn: false,
-        expandedRowRender: (data: CardTypes) => (
-          <Space className="flex justify-end">
-            <ViewPreclassifiersButton cardTypeId={data.id} />
-            <CustomButton type="edit">{Strings.edit}</CustomButton>
-            <CustomButton type="cancel">{Strings.delete}</CustomButton>
-          </Space>
+  const handleExpand = (expanded: boolean, record: CardTypes) => {
+    const keys = expanded
+      ? [...expandedRowKeys, record.id]
+      : expandedRowKeys.filter((key) => key !== record.id);
+    setExpandedRowKeys(keys);
+  };
+
+  const columns: ColumnsType<CardTypes> = useMemo(
+    () => [
+      {
+        title: Strings.methodology,
+        dataIndex: "methodology",
+        key: "methodology",
+        sorter: (a, b) => a.methodology.localeCompare(b.methodology),
+        sortDirections: ["ascend", "descend"],
+      },
+      {
+        title: Strings.name,
+        dataIndex: "name",
+        key: "name",
+        sorter: (a, b) => a.name.localeCompare(b.name),
+        sortDirections: ["ascend", "descend"],
+        ellipsis: true,
+      },
+      {
+        title: Strings.description,
+        dataIndex: "description",
+        key: "description",
+        sorter: (a, b) => a.description.localeCompare(b.description),
+        sortDirections: ["ascend", "descend"],
+        ellipsis: true,
+      },
+      {
+        title: Strings.color,
+        dataIndex: "color",
+        key: "color",
+        render: (color: string) => (
+          <div
+            style={{ backgroundColor: `#${color}`, width: 50, height: 20 }}
+          />
         ),
-      };
+      },
+      {
+        title: Strings.responsible,
+        dataIndex: "responsableName",
+        key: "responsableName",
+        sorter: (a, b) => a.responsableName.localeCompare(b.responsableName),
+        sortDirections: ["ascend", "descend"],
+        ellipsis: true,
+      },
+      {
+        title: Strings.status,
+        key: "status",
+        render: (record) => {
+          const { status, text } = getStatusAndText(record.status);
+          return <Badge status={status} text={text} />;
+        },
+        filters: [
+          { text: Strings.active, value: "A" },
+          { text: Strings.inactive, value: "I" },
+        ],
+        onFilter: (value, record) => record.status === value,
+        ellipsis: true,
+      },
+    ],
+    []
+  );
+
+  const actionsRow = {
+    expandedRowKeys,
+    onExpand: handleExpand,
+    showExpandColumn: false,
+    expandedRowRender: (data: CardTypes) => (
+      <Space className="flex justify-end">
+        <ViewPreclassifiersButton cardTypeId={data.id} />
+        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <CustomButton type="cancel">{Strings.delete}</CustomButton>
+      </Space>
+    ),
+  };
 
   return (
     <div className="h-full" ref={contentRef}>
@@ -102,6 +111,7 @@ const CardTypesTable = ({ data, isLoading }: TableProps) => {
         loading={isLoading}
         size="middle"
         columns={columns}
+        rowKey='id'
         dataSource={data}
         pagination={{
           defaultPageSize: Constants.PAGE_SIZE,
