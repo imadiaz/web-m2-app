@@ -13,6 +13,8 @@ import ModalForm from "../../components/ModalForm";
 import RegisterCardTypeForm from "./components/RegisterCardTypeForm";
 import { CreateCardType } from "../../data/cardtypes/cardTypes.request";
 import { NotificationSuccess, handleErrorNotification, handleSucccessNotification } from "../../utils/Notifications";
+import { resetCardTypeUpdatedIndicator, selectCardTypeUpdatedIndicator } from "../../core/genericReducer";
+import { useAppDispatch, useAppSelector } from "../../core/store";
 
 interface stateType {
   siteId: string;
@@ -30,6 +32,15 @@ const CardTypess = () => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerCardType] = useCreateCardTypeMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const isCardTypeUpdated = useAppSelector(selectCardTypeUpdatedIndicator);
+
+  useEffect(() => {
+    if (isCardTypeUpdated) {
+      handleGetPriorities();
+      dispatch(resetCardTypeUpdatedIndicator());
+    }
+  }, [isCardTypeUpdated, dispatch]);
 
   const handleOnClickCreateButton = () => {
     setModalOpen(true);

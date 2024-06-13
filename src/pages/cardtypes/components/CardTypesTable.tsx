@@ -8,6 +8,7 @@ import CustomButton from "../../../components/CustomButtons";
 import Constants from "../../../utils/Constants";
 import { CardTypes } from "../../../data/cardtypes/cardTypes";
 import ViewPreclassifiersButton from "./ViewPreclassifiersButton";
+import UpdateCardType from "./UpdateCardType";
 
 interface TableProps {
   data: CardTypes[];
@@ -99,7 +100,7 @@ const CardTypesTable = ({ data, isLoading }: TableProps) => {
     expandedRowRender: (data: CardTypes) => (
       <Space className="flex justify-end">
         <ViewPreclassifiersButton cardTypeId={data.id} />
-        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <UpdateCardType id={data.id}/>
         <CustomButton type="cancel">{Strings.delete}</CustomButton>
       </Space>
     ),

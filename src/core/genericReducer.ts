@@ -6,6 +6,7 @@ const initialState = {
     company: { updated: false },
     site: { updated: false },
     priority: { updated: false },
+    cardType: {updated: false}
   },
 };
 const genericSlice = createSlice({
@@ -36,6 +37,12 @@ const genericSlice = createSlice({
     resetPriorityUpdatedIndicator: (state) => {
       state.indicators.priority.updated = false;
     },
+    setCardTypeUpdatedIndicator: (state) => {
+      state.indicators.cardType.updated = true;
+    },
+    resetCardTypeUpdatedIndicator: (state) => {
+      state.indicators.cardType.updated = false;
+    },
   },
 });
 
@@ -48,6 +55,8 @@ export const {
   resetSiteUpdatedIndicator,
   setPriorityUpdatedIndicator,
   resetPriorityUpdatedIndicator,
+  setCardTypeUpdatedIndicator,
+  resetCardTypeUpdatedIndicator
 } = genericSlice.actions;
 
 export default genericSlice.reducer;
@@ -59,3 +68,5 @@ export const selectCompanyUpdatedIndicator = (state: any) =>
   state.data.indicators.company.updated;
 export const selectPriorityUpdatedIndicator = (state: any) =>
   state.data.indicators.priority.updated;
+export const selectCardTypeUpdatedIndicator = (state: any) =>
+  state.data.indicators.cardType.updated;
