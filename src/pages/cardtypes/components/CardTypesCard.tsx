@@ -5,6 +5,7 @@ import Strings from "../../../utils/localizations/Strings";
 import { CardTypes } from "../../../data/cardtypes/cardTypes";
 import CustomButton from "../../../components/CustomButtons";
 import ViewPreclassifiersButton from "./ViewPreclassifiersButton";
+import UpdateCardType from "./UpdateCardType";
 
 interface CardProps {
   data: CardTypes;
@@ -20,7 +21,7 @@ const CardTypesCard = ({ data }: CardProps) => {
     {
       key: "1",
       label: (
-        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <UpdateCardType id={data.id}/>
       ),
     },
     {
