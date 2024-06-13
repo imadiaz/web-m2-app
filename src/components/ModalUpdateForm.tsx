@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Form, Modal } from "antd";
 import type { GetRef } from "antd";
 import Strings from "../utils/localizations/Strings";
 
 type FormInstance = GetRef<typeof Form>;
 
-interface ModalFormProps {
+interface ModalUpdateFormProps {
   open: boolean;
   onCancel: () => void;
   title: string;
@@ -13,34 +13,14 @@ interface ModalFormProps {
   isLoading: boolean;
 }
 
-// reset form fields when modal is form, closed
-const useResetFormOnCloseModal = ({ form, open }: { form: FormInstance; open: boolean }) => {
-  const prevOpenRef = useRef<boolean>();
-  useEffect(() => {
-    prevOpenRef.current = open;
-  }, [open]);
-  const prevOpen = prevOpenRef.current;
-
-  useEffect(() => {
-    if (!open && prevOpen) {
-      form.resetFields();
-    }
-  }, [form, prevOpen, open]);
-};
-
-const ModalForm = ({
+const ModalUpdateForm = ({
   open,
   onCancel,
   title,
   FormComponent,
   isLoading,
-}: ModalFormProps) => {
+}: ModalUpdateFormProps) => {
   const [form] = Form.useForm();
-
-  useResetFormOnCloseModal({
-    form,
-    open
-  });
 
   const handleOnOk = () => {
     if(!isLoading){
@@ -52,7 +32,7 @@ const ModalForm = ({
     <Modal
       onOk={handleOnOk}
       okText={Strings.save}
-      width={820}
+      width={810}
       title={title}
       open={open}
       onCancel={onCancel}
@@ -65,4 +45,4 @@ const ModalForm = ({
   );
 };
 
-export default ModalForm;
+export default ModalUpdateForm;

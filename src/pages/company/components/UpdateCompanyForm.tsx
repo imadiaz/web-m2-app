@@ -42,30 +42,32 @@ const getBase64 = (file: FileType): Promise<string> =>
 const UpdateCompanyForm = ({ form }: FormProps) => {
   const rowData = useAppSelector(selectCurrentRowData) as unknown as Company;
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState(
-    rowData.logo || Strings.empty
-  );
+  const [previewImage, setPreviewImage] = useState(Strings.empty);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   useEffect(() => {
-    form.setFieldsValue({ ...rowData });
-    if (rowData.logo) {
+    form.setFieldsValue({
+      ...rowData,
+      logoURL: rowData?.logo
+    });
+    if (rowData?.logo) {
       setFileList([
         {
           uid: "-1",
-          name: "logo.png",
+          name: "logo",
           status: "done",
           url: rowData.logo,
         },
       ]);
     }
-  }, [rowData, form]);
+  }, []);
 
-  const handlePreview = async (file: UploadFile) => {
+  const handleOnPreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as FileType);
     }
-    setPreviewImage(file.url || (file.preview as string) || rowData.logo);
+
+    setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
   };
 
@@ -219,18 +221,24 @@ const UpdateCompanyForm = ({ form }: FormProps) => {
             placeholder={Strings.email}
           />
         </Form.Item>
+        <Form.Item name='logoURL' className="hidden">
+            <Input/>
+          </Form.Item>
         <Form.Item
           name="logo"
           label={Strings.logo}
-          //rules={[{ required: true, message: Strings.requiredLogoURL }]}
+          getValueFromEvent={(event) => event?.fileList}
+          rules={[{ required: true, message: Strings.requiredLogo }]}
         >
           <Upload
+            maxCount={1}
+            accept="image/*"
             listType="picture-card"
-            fileList={fileList}
-            onPreview={handlePreview}
+            onPreview={handleOnPreview}
             onChange={handleChange}
+            fileList={fileList}
           >
-            {fileList.length === 0 ? uploadButton : null}
+            {uploadButton}
           </Upload>
         </Form.Item>
         <Form.Item>

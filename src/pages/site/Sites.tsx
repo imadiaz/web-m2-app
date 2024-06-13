@@ -22,6 +22,8 @@ import {
 } from "../../utils/Notifications";
 import Constants from "../../utils/Constants";
 import { uploadImageToFirebaseAndGetURL } from "../../config/firebaseUpload";
+import { useAppDispatch, useAppSelector } from "../../core/store";
+import { resetSiteUpdatedIndicator, selectCurrentStateOfSiteUpdatedIndicator } from "../../core/genericReducer";
 
 interface stateType {
   companyId: string;
@@ -39,6 +41,8 @@ const Sites = () => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerSite] = useCreateSiteMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
+  const dispatch = useAppDispatch()
+  const siteWasUpdated = useAppSelector(selectCurrentStateOfSiteUpdatedIndicator)
 
   const handleGetSites = async () => {
     setLoading(true);
@@ -55,6 +59,13 @@ const Sites = () => {
   useEffect(() => {
     handleGetSites();
   }, []);
+
+  useEffect(()=>{
+    if(siteWasUpdated){
+      handleGetSites()
+      dispatch(resetSiteUpdatedIndicator())
+    }
+  }, [siteWasUpdated, dispatch])
 
   const handleOnSearch = (event: any) => {
     const getSearch = event.target.value;
@@ -92,7 +103,7 @@ const Sites = () => {
   const handleOnFormCreateFinish = async (values: any) =>{
     try {
       setModalLoading(true);
-      const imgURL = await uploadImageToFirebaseAndGetURL(values.logo.file)
+      const imgURL = await uploadImageToFirebaseAndGetURL(Strings.sites, values.logo[0])
       await registerSite(
         new CreateSite(
           Number(companyId),
@@ -109,39 +120,6 @@ const Sites = () => {
           values.cellular?.toString(),
           values.email,
           imgURL,
-          values.latitud.toString(),
-          values.longitud.toString(),
-          values.dueDate.format(Constants.DATE_FORMAT),
-          values.monthlyPayment,
-          values.currency,
-          values.appHistoryDays
-        )
-      ).unwrap();
-      setModalOpen(false);
-      handleGetSites();
-      handleSucccessNotification(NotificationSuccess.REGISTER);
-    } catch (error) {
-      handleErrorNotification(error);
-    } finally {
-      setModalLoading(false);
-    }try {
-      setModalLoading(true);
-      await registerSite(
-        new CreateSite(
-          Number(companyId),
-          values.siteCode,
-          values.siteBusinessName,
-          values.name,
-          values.siteType,
-          values.rfc,
-          values.address,
-          values.contact,
-          values.position,
-          values.phone.toString(),
-          values.extension?.toString(),
-          values.cellular?.toString(),
-          values.email,
-          Strings.logoTemp,
           values.latitud.toString(),
           values.longitud.toString(),
           values.dueDate.format(Constants.DATE_FORMAT),
@@ -210,7 +188,6 @@ const Sites = () => {
           FormComponent={RegisterSiteForm}
           title={Strings.createSite.concat(` ${companyName}`)}
           isLoading={modalIsLoading}
-          isUpdateForm={false}
         />
       </Form.Provider>
     </>

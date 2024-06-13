@@ -136,7 +136,6 @@ const Preclassifiers = () => {
         </div>
         <Form.Provider onFormFinish={async (_, { values }) => {await handleOnFormCreateFinish(values)}}>
         <ModalForm
-          isUpdateForm={false}
           open={modalIsOpen}
           onCancel={handleOnCancelButton}
           FormComponent={RegisterPreclassifierForm}

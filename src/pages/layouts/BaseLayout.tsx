@@ -53,7 +53,7 @@ const BaseLayout: React.FC = () => {
           <div className="m-2 flex justify-center bg-white">
             <Avatar
               size={RESPONSIVE_AVATAR}
-              src={<img src={user.logo} alt={Strings.logo} />}
+              src={<img src={user?.logo} alt={Strings.logo} />}
               shape="square"
             />
           </div>

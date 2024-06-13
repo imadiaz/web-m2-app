@@ -48,7 +48,7 @@ const RegisterSiteForm = ({ form }: FormProps) => {
   const [previewImage, setPreviewImage] = useState(Strings.empty);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-  const handlePreview = async (file: UploadFile) => {
+  const handleOnPreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as FileType);
     }
@@ -58,7 +58,8 @@ const RegisterSiteForm = ({ form }: FormProps) => {
   };
 
   const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+    const filteredFileList = newFileList.filter(file => file.status !== 'removed');
+    setFileList(filteredFileList);
   };
 
   const uploadButton = (
@@ -69,7 +70,7 @@ const RegisterSiteForm = ({ form }: FormProps) => {
   );
 
   return (
-    <Form form={form} name="registerCompanyForm">
+    <Form form={form}>
       <div className="flex flex-col">
         <div className="flex flex-row flex-wrap">
           <Form.Item
@@ -287,7 +288,7 @@ const RegisterSiteForm = ({ form }: FormProps) => {
         >
           <InputNumber
             size="large"
-            maxLength={5}
+            maxLength={3}
             placeholder={Strings.appHistoryDays}
             addonBefore={<LuHistory />}
           />
@@ -295,16 +296,18 @@ const RegisterSiteForm = ({ form }: FormProps) => {
         <Form.Item
           name="logo"
           label={Strings.logo}
+          getValueFromEvent={(event) => event?.fileList}
           rules={[{ required: true, message: Strings.requiredLogo }]}
         >
           <Upload
-            listType="picture-card"
-            fileList={fileList}
-            onPreview={handlePreview}
-            onChange={handleChange}
+            maxCount={1}
             accept="image/*"
+            listType="picture-card"
+            onPreview={handleOnPreview}
+            onChange={handleChange}
+            fileList={fileList}
           >
-            {fileList.length === 0 ? uploadButton : null}
+            {uploadButton}
           </Upload>
         </Form.Item>
         <Form.Item>

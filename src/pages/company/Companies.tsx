@@ -19,8 +19,8 @@ import {
   handleSucccessNotification,
 } from "../../utils/Notifications";
 import Strings from "../../utils/localizations/Strings";
-import { useAppSelector } from "../../core/store";
-import { selectCurrentChangeIndicator } from "../../core/genericReducer";
+import { useAppDispatch, useAppSelector } from "../../core/store";
+import { resetCompanyUpdatedIndicator, selectCurrentStateOfCompanyUpdatedIndicator } from "../../core/genericReducer";
 import { uploadImageToFirebaseAndGetURL } from "../../config/firebaseUpload";
 
 const Companies = () => {
@@ -32,11 +32,15 @@ const Companies = () => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerCompany] = useCreateCompanyMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
-  const changeIndicator = useAppSelector(selectCurrentChangeIndicator);
+  const dispatch = useAppDispatch()
+  const companyWasUpdated = useAppSelector(selectCurrentStateOfCompanyUpdatedIndicator);
 
   useEffect(() => {
-    if (changeIndicator === 1) handleGetCompanies();
-  }, [changeIndicator]);
+    if (companyWasUpdated){
+      handleGetCompanies();
+      dispatch(resetCompanyUpdatedIndicator())
+    } 
+  }, [companyWasUpdated, dispatch]);
 
   const handleGetCompanies = async () => {
     setLoading(true);
@@ -85,7 +89,7 @@ const Companies = () => {
   const handleOnFormCreateFinish = async (values: any) =>{
     try {
       setModalLoading(true);
-      const imgURL = await uploadImageToFirebaseAndGetURL(values.logo.file)
+      const imgURL = await uploadImageToFirebaseAndGetURL(Strings.companies, values.logo[0])
       await registerCompany(
         new CreateCompany(
           values.name,
@@ -151,7 +155,6 @@ const Companies = () => {
           FormComponent={RegisterCompanyForm}
           title={Strings.createCompany}
           isLoading={modalIsLoading}
-          isUpdateForm={false}
         />
       </Form.Provider>
     </>

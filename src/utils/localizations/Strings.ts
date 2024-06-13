@@ -69,9 +69,11 @@ export default class Strings {
   static requiredMonthlyPayment = "Please enter the monthly payment";
   static requiredCurrency = "Please enter the currency";
   static requiredAppHistoryDays = "Please enter app history days";
+  static companies = "companies"
 
   //sites
   static sitesOf = "Sites of:";
+  static sites = "sites"
   static latitud = "Latitud";
   static longitud = "Longitud";
   static siteCode = "Site code";

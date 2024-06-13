@@ -1,4 +1,5 @@
 import {
+  DatePicker,
   Form,
   GetProp,
   GetRef,
@@ -11,7 +12,12 @@ import {
 } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import { FaRegBuilding } from "react-icons/fa";
-import { MdOutlineLocalPhone, MdOutlineQrCodeScanner } from "react-icons/md";
+import {
+  MdCurrencyExchange,
+  MdOutlineCategory,
+  MdOutlineLocalPhone,
+  MdOutlineQrCodeScanner,
+} from "react-icons/md";
 import { SlCompass } from "react-icons/sl";
 import { IoIosContact } from "react-icons/io";
 import { PlusOutlined } from "@ant-design/icons";
@@ -19,7 +25,16 @@ import { BsDiagram3 } from "react-icons/bs";
 import { HiDevicePhoneMobile } from "react-icons/hi2";
 import { TiPlusOutline } from "react-icons/ti";
 import Strings from "../../../utils/localizations/Strings";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { CiBarcode } from "react-icons/ci";
+import { IoBusinessOutline } from "react-icons/io5";
+import { TbWorldLatitude, TbWorldLongitude } from "react-icons/tb";
+import { FiDollarSign } from "react-icons/fi";
+import { LuHistory } from "react-icons/lu";
+import { useAppSelector } from "../../../core/store";
+import { selectCurrentRowData } from "../../../core/genericReducer";
+import { SiteUpdateForm } from "../../../data/site/site";
+import moment from "moment";
 
 type FormInstance = GetRef<typeof Form>;
 
@@ -37,10 +52,31 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const RegisterCompanyForm = ({ form }: FormProps) => {
+const UpdateSiteForm = ({ form }: FormProps) => {
+  const rowData = useAppSelector(
+    selectCurrentRowData
+  ) as unknown as SiteUpdateForm;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState(Strings.empty);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [fileList, setFileList] = useState<UploadFile[]>([])
+
+  useEffect(() => {
+    form.setFieldsValue({
+      ...rowData,
+      dueDate: moment(rowData?.dueDate),
+      logoURL: rowData?.logo
+    });
+    if (rowData?.logo) {
+      setFileList([
+        {
+          uid: "-1",
+          name: "logo",
+          status: "done",
+          url: rowData.logo,
+        },
+      ]);
+    }
+  }, []);
 
   const handleOnPreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -51,10 +87,9 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
     setPreviewOpen(true);
   };
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-  };
-
+  }
   const uploadButton = (
     <button style={{ border: 0, background: "none" }} type="button">
       <PlusOutlined />
@@ -63,9 +98,12 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
   );
 
   return (
-    <Form form={form} name="registerCompanyForm">
+    <Form form={form}>
       <div className="flex flex-col">
         <div className="flex flex-row flex-wrap">
+          <Form.Item name='id' className="hidden">
+            <Input/>
+          </Form.Item>
           <Form.Item
             name="name"
             validateDebounce={1000}
@@ -87,7 +125,8 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
             validateFirst
             rules={[
               { required: true, message: Strings.requiredRFC },
-              { max: 13 }, {min: 12}
+              { max: 13 },
+              { min: 12 },
             ]}
           >
             <Input
@@ -102,6 +141,69 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
                   e.target as HTMLInputElement
                 ).value.toUpperCase())
               }
+            />
+          </Form.Item>
+        </div>
+        <div className="flex flex-row flex-wrap">
+          <Form.Item
+            name="siteCode"
+            rules={[{ required: true, message: Strings.requiredSiteCode }]}
+          >
+            <Input
+              size="large"
+              maxLength={6}
+              showCount
+              placeholder={Strings.siteCode}
+              addonBefore={<CiBarcode />}
+            />
+          </Form.Item>
+          <Form.Item
+            name="siteBusinessName"
+            rules={[
+              { required: true, message: Strings.requiredSiteBusinessName },
+            ]}
+            className="flex-1 ml-1"
+          >
+            <Input
+              size="large"
+              maxLength={100}
+              placeholder={Strings.siteBusinessName}
+              addonBefore={<IoBusinessOutline />}
+            />
+          </Form.Item>
+        </div>
+        <div className="flex justify-between flex-row flex-wrap">
+          <Form.Item
+            name="siteType"
+            rules={[{ required: true, message: Strings.requiredSiteType }]}
+          >
+            <Input
+              size="large"
+              maxLength={20}
+              placeholder={Strings.siteType}
+              addonBefore={<MdOutlineCategory />}
+            />
+          </Form.Item>
+          <Form.Item
+            name="latitud"
+            rules={[{ required: true, message: Strings.requiredLatitud }]}
+          >
+            <InputNumber
+              size="large"
+              maxLength={11}
+              placeholder={Strings.latitud}
+              addonBefore={<TbWorldLatitude />}
+            />
+          </Form.Item>
+          <Form.Item
+            name="longitud"
+            rules={[{ required: true, message: Strings.requiredLongitud }]}
+          >
+            <InputNumber
+              size="large"
+              maxLength={11}
+              placeholder={Strings.longitud}
+              addonBefore={<TbWorldLongitude />}
             />
           </Form.Item>
         </div>
@@ -162,9 +264,7 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
               placeholder={Strings.phone}
             />
           </Form.Item>
-          <Form.Item
-            name="extension"
-          >
+          <Form.Item name="extension">
             <InputNumber
               size="large"
               maxLength={5}
@@ -199,6 +299,56 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
             placeholder={Strings.email}
           />
         </Form.Item>
+        <div className="flex justify-between flex-row flex-wrap">
+           <Form.Item
+            name="dueDate"
+            rules={[{ required: true, message: Strings.requiredDueDate }]}
+          >
+            <DatePicker
+              size="large"
+              format="YYYY-MM-DD"
+              placeholder={Strings.dueDate}
+            />
+          </Form.Item>
+          <Form.Item
+            name="monthlyPayment"
+            rules={[
+              { required: true, message: Strings.requiredMonthlyPayment },
+            ]}
+          >
+            <InputNumber
+              size="large"
+              maxLength={12}
+              placeholder={Strings.monthlyPayment}
+              addonBefore={<FiDollarSign />}
+            />
+          </Form.Item>
+          <Form.Item
+            name="currency"
+            rules={[{ required: true, message: Strings.requiredCurrency }]}
+          >
+            <Input
+              size="large"
+              maxLength={3}
+              placeholder={Strings.currency}
+              addonBefore={<MdCurrencyExchange />}
+            />
+          </Form.Item>
+        </div>
+        <Form.Item
+          name="appHistoryDays"
+          rules={[{ required: true, message: Strings.requiredAppHistoryDays }]}
+        >
+          <InputNumber
+            size="large"
+            maxLength={3}
+            placeholder={Strings.appHistoryDays}
+            addonBefore={<LuHistory />}
+          />
+        </Form.Item>
+        <Form.Item name='logoURL' className="hidden">
+            <Input/>
+          </Form.Item>
         <Form.Item
           name="logo"
           label={Strings.logo}
@@ -223,15 +373,18 @@ const RegisterCompanyForm = ({ form }: FormProps) => {
               preview={{
                 visible: previewOpen,
                 onVisibleChange: (visible) => setPreviewOpen(visible),
-                afterOpenChange: (visible) => !visible && setPreviewImage(""),
+                afterOpenChange: (visible) => !visible && setPreviewImage(Strings.empty),
               }}
               src={previewImage}
             />
           )}
+        </Form.Item>
+        <Form.Item name="status" className="hidden">
+          <Input/>
         </Form.Item>
       </div>
     </Form>
   );
 };
 
-export default RegisterCompanyForm;
+export default UpdateSiteForm;

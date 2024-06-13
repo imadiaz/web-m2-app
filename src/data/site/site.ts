@@ -12,3 +12,27 @@ export interface Site {
   logo: string;
   status: string;
 }
+
+export interface SiteUpdateForm {
+  id: string;
+  siteCode: string;
+  siteBusinessName: string;
+  name: string;
+  siteType: string;
+  rfc: string;
+  address: string;
+  contact: string;
+  position: string;
+  phone: string;
+  extension: string;
+  cellular: string;
+  email: string;
+  logo: string;
+  latitude: string;
+  longitude: string;
+  dueDate: string;
+  monthlyPayment: string;
+  currency: string;
+  appHistoryDays: number;
+  status: string;
+}
