@@ -18,6 +18,11 @@ import {
   handleSucccessNotification,
 } from "../../utils/Notifications";
 import RegisterPriorityForm from "./components/RegisterPriorityForm";
+import { useAppDispatch, useAppSelector } from "../../core/store";
+import {
+  resetPriorityUpdatedIndicator,
+  selectPriorityUpdatedIndicator,
+} from "../../core/genericReducer";
 
 interface stateType {
   siteId: string;
@@ -35,6 +40,15 @@ const Priorities = () => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerPriority] = useCreatePriorityMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const isPriorityUpdated = useAppSelector(selectPriorityUpdatedIndicator);
+
+  useEffect(() => {
+    if (isPriorityUpdated) {
+      handleGetPriorities();
+      dispatch(resetPriorityUpdatedIndicator());
+    }
+  }, [isPriorityUpdated, dispatch]);
 
   const handleOnClickCreateButton = () => {
     setModalOpen(true);
@@ -137,7 +151,11 @@ const Priorities = () => {
           <PriorityTable data={data} isLoading={isLoading} />
         </div>
       </div>
-      <Form.Provider onFormFinish={async (_, { values }) => {await handleOnFormCreateFinish(values)}}>
+      <Form.Provider
+        onFormFinish={async (_, { values }) => {
+          await handleOnFormCreateFinish(values);
+        }}
+      >
         <ModalForm
           open={modalIsOpen}
           onCancel={handleOnCancelButton}

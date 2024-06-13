@@ -1,6 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { rowData: null, companyUpdatedIndicator: false, siteUpdatedIndicator: false };
+const initialState = {
+  rowData: null,
+  indicators: {
+    company: { updated: false },
+    site: { updated: false },
+    priority: { updated: false },
+  },
+};
 const genericSlice = createSlice({
   name: "data",
   initialState,
@@ -12,17 +19,23 @@ const genericSlice = createSlice({
       state.rowData = null;
     },
     setCompanyUpdatedIndicator: (state) => {
-      state.companyUpdatedIndicator = true;
+      state.indicators.company.updated = true;
     },
     resetCompanyUpdatedIndicator: (state) => {
-      state.companyUpdatedIndicator = false;
+      state.indicators.company.updated = false;
     },
     setSiteUpdatedIndicator: (state) => {
-      state.siteUpdatedIndicator = true
+      state.indicators.site.updated = true;
     },
     resetSiteUpdatedIndicator: (state) => {
-      state.siteUpdatedIndicator = false
-    }
+      state.indicators.site.updated = false;
+    },
+    setPriorityUpdatedIndicator: (state) => {
+      state.indicators.priority.updated = true;
+    },
+    resetPriorityUpdatedIndicator: (state) => {
+      state.indicators.priority.updated = false;
+    },
   },
 });
 
@@ -32,11 +45,17 @@ export const {
   setCompanyUpdatedIndicator,
   resetCompanyUpdatedIndicator,
   setSiteUpdatedIndicator,
-  resetSiteUpdatedIndicator
+  resetSiteUpdatedIndicator,
+  setPriorityUpdatedIndicator,
+  resetPriorityUpdatedIndicator,
 } = genericSlice.actions;
 
 export default genericSlice.reducer;
 
 export const selectCurrentRowData = (state: any) => state.data.rowData;
-export const selectCurrentStateOfSiteUpdatedIndicator = (state: any) => state.data.siteUpdatedIndicator
-export const selectCurrentStateOfCompanyUpdatedIndicator = (state: any) => state.data.companyUpdatedIndicator
+export const selectSiteUpdatedIndicator = (state: any) =>
+  state.data.indicators.site.updated;
+export const selectCompanyUpdatedIndicator = (state: any) =>
+  state.data.indicators.company.updated;
+export const selectPriorityUpdatedIndicator = (state: any) =>
+  state.data.indicators.priority.updated;

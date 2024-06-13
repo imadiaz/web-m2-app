@@ -20,7 +20,7 @@ import {
 } from "../../utils/Notifications";
 import Strings from "../../utils/localizations/Strings";
 import { useAppDispatch, useAppSelector } from "../../core/store";
-import { resetCompanyUpdatedIndicator, selectCurrentStateOfCompanyUpdatedIndicator } from "../../core/genericReducer";
+import { resetCompanyUpdatedIndicator, selectCompanyUpdatedIndicator } from "../../core/genericReducer";
 import { uploadImageToFirebaseAndGetURL } from "../../config/firebaseUpload";
 
 const Companies = () => {
@@ -33,14 +33,14 @@ const Companies = () => {
   const [registerCompany] = useCreateCompanyMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
   const dispatch = useAppDispatch()
-  const companyWasUpdated = useAppSelector(selectCurrentStateOfCompanyUpdatedIndicator);
+  const isCompanyUpdated = useAppSelector(selectCompanyUpdatedIndicator);
 
   useEffect(() => {
-    if (companyWasUpdated){
+    if (isCompanyUpdated){
       handleGetCompanies();
       dispatch(resetCompanyUpdatedIndicator())
     } 
-  }, [companyWasUpdated, dispatch]);
+  }, [isCompanyUpdated, dispatch]);
 
   const handleGetCompanies = async () => {
     setLoading(true);

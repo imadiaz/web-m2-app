@@ -7,6 +7,7 @@ import { getStatusAndText } from "../../../utils/Extensions";
 import { Badge, Space, Table } from "antd";
 import CustomButton from "../../../components/CustomButtons";
 import Constants from "../../../utils/Constants";
+import UpdatePriority from "./UpdatePriority";
 
 interface PrioritiesTableProps {
   data: Priority[];
@@ -76,9 +77,9 @@ const PriorityTable = ({ data, isLoading }: PrioritiesTableProps) => {
     expandedRowKeys,
     onExpand: handleExpand,
     showExpandColumn: false,
-    expandedRowRender: (_: Priority) => (
+    expandedRowRender: (data: Priority) => (
       <Space className="flex justify-end">
-        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <UpdatePriority priorityId={data.id}/>
         <CustomButton type="cancel">{Strings.delete}</CustomButton>
       </Space>
     ),

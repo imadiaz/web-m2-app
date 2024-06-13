@@ -23,7 +23,7 @@ import {
 import Constants from "../../utils/Constants";
 import { uploadImageToFirebaseAndGetURL } from "../../config/firebaseUpload";
 import { useAppDispatch, useAppSelector } from "../../core/store";
-import { resetSiteUpdatedIndicator, selectCurrentStateOfSiteUpdatedIndicator } from "../../core/genericReducer";
+import { resetSiteUpdatedIndicator, selectSiteUpdatedIndicator } from "../../core/genericReducer";
 
 interface stateType {
   companyId: string;
@@ -42,7 +42,7 @@ const Sites = () => {
   const [registerSite] = useCreateSiteMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
   const dispatch = useAppDispatch()
-  const siteWasUpdated = useAppSelector(selectCurrentStateOfSiteUpdatedIndicator)
+  const isSiteUpdated = useAppSelector(selectSiteUpdatedIndicator)
 
   const handleGetSites = async () => {
     setLoading(true);
@@ -61,11 +61,11 @@ const Sites = () => {
   }, []);
 
   useEffect(()=>{
-    if(siteWasUpdated){
+    if(isSiteUpdated){
       handleGetSites()
       dispatch(resetSiteUpdatedIndicator())
     }
-  }, [siteWasUpdated, dispatch])
+  }, [isSiteUpdated, dispatch])
 
   const handleOnSearch = (event: any) => {
     const getSearch = event.target.value;

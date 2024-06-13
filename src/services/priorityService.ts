@@ -1,5 +1,5 @@
 import { Priority } from "../data/priority/priority";
-import { CreatePriority } from "../data/priority/priority.request";
+import { CreatePriority, UpdatePriorityReq } from "../data/priority/priority.request";
 import { apiSlice } from "./apiSlice";
 
 export const priorityService = apiSlice.injectEndpoints({
@@ -14,8 +14,19 @@ export const priorityService = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: {...priority}
             })
-        })
+        }),
+        getPriority: builder.mutation<Priority, string>({
+            query: (id) => `/priority/one/${id}`,
+            transformResponse: (response: {data: Priority}) => response.data
+        }),
+        updatePriority: builder.mutation<void, UpdatePriorityReq>({
+            query: (priority) => ({
+              url: '/priority/update',
+              method: 'PUT',
+              body: {...priority}
+            })
+          })
     })
 })
 
-export const {useGetPrioritiesMutation, useCreatePriorityMutation} = priorityService
+export const {useGetPrioritiesMutation, useCreatePriorityMutation, useGetPriorityMutation, useUpdatePriorityMutation} = priorityService
