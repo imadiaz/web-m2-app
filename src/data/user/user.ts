@@ -19,3 +19,22 @@ export default class User {
     this.logo = logo;
   }
 }
+
+export interface Role {
+  id: string;
+  name: string;
+}
+
+interface Site {
+  id: string;
+  name: string;
+  logo: string;
+}
+
+export interface UserTable {
+  id: string
+  name: string;
+  email: string;
+  roles: Role[];
+  site: Site;
+}

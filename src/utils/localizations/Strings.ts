@@ -71,8 +71,10 @@ export default class Strings {
   static requiredAppHistoryDays = "Please enter app history days";
   static companies = "companies"
   static companiesUpperCase  = "Companies"
+  static users = "Users"
 
   //sites
+  static site = "Site"
   static sitesOf = "Sites of:";
   static sites = "sites"
   static latitud = "Latitud";
@@ -105,6 +107,9 @@ export default class Strings {
   static durationCreate = "Duration create"
   static quantityClose = "Quantity close"
   static durationClose = "Duration close"
+
+  //roles
+  static roles = 'Roles'
 
   //errors card type form
   static requiredMethodology = "Please enter the methodology"
