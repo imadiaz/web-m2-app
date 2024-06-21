@@ -12,16 +12,18 @@ import ModalForm from "../../components/ModalForm";
 import { NotificationSuccess, handleErrorNotification, handleSucccessNotification } from "../../utils/Notifications";
 import { CreatePreclassifier } from "../../data/preclassifier/preclassifier.request";
 import RegisterPreclassifierForm from "./components/RegisterPreclassifierForm";
+import PageTitle from "../../components/PageTitle";
 
 interface stateType {
   cardTypeId: string;
+  cardTypeName: string
 }
 
 const Preclassifiers = () => {
   const [getPreclassifiers] = useGetPreclassifierMutation();
   const [isLoading, setLoading] = useState(false);
   const { state } = useLocation();
-  const { cardTypeId } = state as stateType;
+  const { cardTypeId, cardTypeName } = state as stateType;
   const [data, setData] = useState<Preclassifier[]>([]);
   const [querySearch, setQuerySearch] = useState(Strings.empty);
   const [dataBackup, setDataBackup] = useState<Preclassifier[]>([]);
@@ -99,29 +101,28 @@ const Preclassifiers = () => {
   return (
     <>
       <div className="h-full flex flex-col">
-        <div className="flex flex-col md:flex-row flex-wrap m-3 items-center md:justify-between">
-          <div className="flex flex-col md:flex-row items-center flex-1 mb-1 md:mb-0">
-            <Space className="w-full md:w-auto mb-1 md:mb-0">
-              <Input
-                className="w-full"
-                onChange={handleOnSearch}
-                placeholder={Strings.searchRecord}
-                value={querySearch}
-                addonAfter={<IoIosSearch />}
-              />
-            </Space>
-            <h1 className="font-semibold text-lg ml-0 md:ml-3">
-              {Strings.preclassifiers}
-            </h1>
-          </div>
-          <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
-            <CustomButton
-              type="success"
-              onClick={handleOnClickCreateButton}
-              className="w-full md:w-auto"
-            >
-              {Strings.create}
-            </CustomButton>
+      <div className="flex flex-col items-center m-3">
+          <PageTitle mainText={Strings.preclassifiersof} subText={cardTypeName} />
+          <div className="flex flex-col md:flex-row flex-wrap items-center md:justify-between w-full">
+            <div className="flex flex-col md:flex-row items-center flex-1 mb-1 md:mb-0">
+              <Space className="w-full md:w-auto mb-1 md:mb-0">
+                <Input
+                  className="w-full"
+                  onChange={handleOnSearch}
+                  value={querySearch}
+                  addonAfter={<IoIosSearch />}
+                />
+              </Space>
+            </div>
+            <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
+              <CustomButton
+                type="success"
+                onClick={handleOnClickCreateButton}
+                className="w-full md:w-auto"
+              >
+                {Strings.create}
+              </CustomButton>
+            </div>
           </div>
         </div>
         <div className="flex-1 overflow-auto hidden lg:block">

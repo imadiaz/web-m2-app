@@ -70,6 +70,7 @@ export default class Strings {
   static requiredCurrency = "Please enter the currency";
   static requiredAppHistoryDays = "Please enter app history days";
   static companies = "companies"
+  static companiesUpperCase  = "Companies"
 
   //sites
   static sitesOf = "Sites of:";
@@ -143,5 +144,5 @@ export default class Strings {
   static inactive = "Inactive";
 
 
-  static preclassifiers = "Preclassifiers"
+  static preclassifiersof = "Preclassifiers of:"
 }

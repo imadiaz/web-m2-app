@@ -23,6 +23,7 @@ import {
   resetPriorityUpdatedIndicator,
   selectPriorityUpdatedIndicator,
 } from "../../core/genericReducer";
+import PageTitle from "../../components/PageTitle";
 
 interface stateType {
   siteId: string;
@@ -121,30 +122,28 @@ const Priorities = () => {
   return (
     <>
       <div className="h-full flex flex-col">
-        <div className="flex flex-col md:flex-row flex-wrap m-3 items-center md:justify-between">
-          <div className="flex flex-col md:flex-row items-center flex-1 mb-1 md:mb-0">
-            <Space className="w-full md:w-auto mb-1 md:mb-0">
-              <Input
-                className="w-full"
-                onChange={handleOnSearch}
-                placeholder={Strings.searchRecord}
-                value={querySearch}
-                addonAfter={<IoIosSearch />}
-              />
-            </Space>
-            <h1 className="font-semibold text-lg ml-0 md:ml-3">
-              {Strings.prioritiesOf}
-              <span className="font-normal">{siteName}</span>
-            </h1>
-          </div>
-          <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
-            <CustomButton
-              type="success"
-              onClick={handleOnClickCreateButton}
-              className="w-full md:w-auto"
-            >
-              {Strings.create}
-            </CustomButton>
+        <div className="flex flex-col items-center m-3">
+          <PageTitle mainText={Strings.prioritiesOf} subText={siteName} />
+          <div className="flex flex-col md:flex-row flex-wrap items-center md:justify-between w-full">
+            <div className="flex flex-col md:flex-row items-center flex-1 mb-1 md:mb-0">
+              <Space className="w-full md:w-auto mb-1 md:mb-0">
+                <Input
+                  className="w-full"
+                  onChange={handleOnSearch}
+                  value={querySearch}
+                  addonAfter={<IoIosSearch />}
+                />
+              </Space>
+            </div>
+            <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
+              <CustomButton
+                type="success"
+                onClick={handleOnClickCreateButton}
+                className="w-full md:w-auto"
+              >
+                {Strings.create}
+              </CustomButton>
+            </div>
           </div>
         </div>
         <div className="flex-1 overflow-auto">

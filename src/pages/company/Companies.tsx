@@ -20,8 +20,13 @@ import {
 } from "../../utils/Notifications";
 import Strings from "../../utils/localizations/Strings";
 import { useAppDispatch, useAppSelector } from "../../core/store";
-import { resetCompanyUpdatedIndicator, selectCompanyUpdatedIndicator } from "../../core/genericReducer";
+import {
+  resetCompanyUpdatedIndicator,
+  selectCompanyUpdatedIndicator,
+} from "../../core/genericReducer";
 import { uploadImageToFirebaseAndGetURL } from "../../config/firebaseUpload";
+import PageTitle from "../../components/PageTitle";
+
 
 const Companies = () => {
   const [getCompanies] = useGetCompaniesMutation();
@@ -32,14 +37,14 @@ const Companies = () => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerCompany] = useCreateCompanyMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const isCompanyUpdated = useAppSelector(selectCompanyUpdatedIndicator);
 
   useEffect(() => {
-    if (isCompanyUpdated){
+    if (isCompanyUpdated) {
       handleGetCompanies();
-      dispatch(resetCompanyUpdatedIndicator())
-    } 
+      dispatch(resetCompanyUpdatedIndicator());
+    }
   }, [isCompanyUpdated, dispatch]);
 
   const handleGetCompanies = async () => {
@@ -86,10 +91,13 @@ const Companies = () => {
     }
   };
 
-  const handleOnFormCreateFinish = async (values: any) =>{
+  const handleOnFormCreateFinish = async (values: any) => {
     try {
       setModalLoading(true);
-      const imgURL = await uploadImageToFirebaseAndGetURL(Strings.companies, values.logo[0])
+      const imgURL = await uploadImageToFirebaseAndGetURL(
+        Strings.companies,
+        values.logo[0]
+      );
       await registerCompany(
         new CreateCompany(
           values.name,
@@ -112,25 +120,33 @@ const Companies = () => {
     } finally {
       setModalLoading(false);
     }
-  }
+  };
 
   return (
     <>
-      <div className="h-full flex flex-col">
-        <div className="flex flex-wrap-reverse m-3">
-          <Space className="flex-1 mb-1 md:mb-0">
-            <Input
-              className="w-full"
-              onChange={handleOnSearch}
-              placeholder={Strings.searchRecord}
-              value={querySearch}
-              addonAfter={<IoIosSearch />}
-            />
-          </Space>
-          <div className="flex mb-1 md:mb-0 md:justify-end flex-1">
-            <CustomButton onClick={handleOnClickCreateButton} type="success">
-              {Strings.create}
-            </CustomButton>
+     <div className="h-full flex flex-col">
+        <div className="flex flex-col items-center m-3">
+          <PageTitle mainText={Strings.companiesUpperCase}/>
+          <div className="flex flex-col md:flex-row flex-wrap items-center md:justify-between w-full">
+            <div className="flex flex-col md:flex-row items-center flex-1 mb-1 md:mb-0">
+              <Space className="w-full md:w-auto mb-1 md:mb-0">
+                <Input
+                  className="w-full"
+                  onChange={handleOnSearch}
+                  value={querySearch}
+                  addonAfter={<IoIosSearch />}
+                />
+              </Space>
+            </div>
+            <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
+              <CustomButton
+                type="success"
+                onClick={handleOnClickCreateButton}
+                className="w-full md:w-auto"
+              >
+                {Strings.create}
+              </CustomButton>
+            </div>
           </div>
         </div>
         <div className="flex-1 overflow-auto hidden lg:block">
@@ -146,7 +162,7 @@ const Companies = () => {
       </div>
       <Form.Provider
         onFormFinish={async (_, { values }) => {
-         await handleOnFormCreateFinish(values)
+          await handleOnFormCreateFinish(values);
         }}
       >
         <ModalForm

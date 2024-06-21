@@ -23,7 +23,11 @@ import {
 import Constants from "../../utils/Constants";
 import { uploadImageToFirebaseAndGetURL } from "../../config/firebaseUpload";
 import { useAppDispatch, useAppSelector } from "../../core/store";
-import { resetSiteUpdatedIndicator, selectSiteUpdatedIndicator } from "../../core/genericReducer";
+import {
+  resetSiteUpdatedIndicator,
+  selectSiteUpdatedIndicator,
+} from "../../core/genericReducer";
+import PageTitle from "../../components/PageTitle";
 
 interface stateType {
   companyId: string;
@@ -41,8 +45,8 @@ const Sites = () => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerSite] = useCreateSiteMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
-  const dispatch = useAppDispatch()
-  const isSiteUpdated = useAppSelector(selectSiteUpdatedIndicator)
+  const dispatch = useAppDispatch();
+  const isSiteUpdated = useAppSelector(selectSiteUpdatedIndicator);
 
   const handleGetSites = async () => {
     setLoading(true);
@@ -60,12 +64,12 @@ const Sites = () => {
     handleGetSites();
   }, []);
 
-  useEffect(()=>{
-    if(isSiteUpdated){
-      handleGetSites()
-      dispatch(resetSiteUpdatedIndicator())
+  useEffect(() => {
+    if (isSiteUpdated) {
+      handleGetSites();
+      dispatch(resetSiteUpdatedIndicator());
     }
-  }, [isSiteUpdated, dispatch])
+  }, [isSiteUpdated, dispatch]);
 
   const handleOnSearch = (event: any) => {
     const getSearch = event.target.value;
@@ -99,11 +103,13 @@ const Sites = () => {
     }
   };
 
-
-  const handleOnFormCreateFinish = async (values: any) =>{
+  const handleOnFormCreateFinish = async (values: any) => {
     try {
       setModalLoading(true);
-      const imgURL = await uploadImageToFirebaseAndGetURL(Strings.sites, values.logo[0])
+      const imgURL = await uploadImageToFirebaseAndGetURL(
+        Strings.sites,
+        values.logo[0]
+      );
       await registerSite(
         new CreateSite(
           Number(companyId),
@@ -136,34 +142,32 @@ const Sites = () => {
     } finally {
       setModalLoading(false);
     }
-  }
+  };
   return (
     <>
       <div className="h-full flex flex-col">
-        <div className="flex flex-col md:flex-row flex-wrap m-3 items-center md:justify-between">
-          <div className="flex flex-col md:flex-row items-center flex-1 mb-1 md:mb-0">
-            <Space className="w-full md:w-auto mb-1 md:mb-0">
-              <Input
-                className="w-full"
-                onChange={handleOnSearch}
-                placeholder={Strings.searchRecord}
-                value={querySearch}
-                addonAfter={<IoIosSearch />}
-              />
-            </Space>
-            <h1 className="font-semibold text-base md:text-lg ml-0 md:ml-3">
-              {Strings.sitesOf}
-              <span className="font-normal">{companyName}</span>
-            </h1>
-          </div>
-          <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
-            <CustomButton
-              type="success"
-              onClick={handleOnClickCreateButton}
-              className="w-full md:w-auto"
-            >
-              {Strings.create}
-            </CustomButton>
+        <div className="flex flex-col items-center m-3">
+          <PageTitle mainText={Strings.sitesOf} subText={companyName}/>
+          <div className="flex flex-col md:flex-row flex-wrap items-center md:justify-between w-full">
+            <div className="flex flex-col md:flex-row items-center flex-1 mb-1 md:mb-0">
+              <Space className="w-full md:w-auto mb-1 md:mb-0">
+                <Input
+                  className="w-full"
+                  onChange={handleOnSearch}
+                  value={querySearch}
+                  addonAfter={<IoIosSearch />}
+                />
+              </Space>
+            </div>
+            <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
+              <CustomButton
+                type="success"
+                onClick={handleOnClickCreateButton}
+                className="w-full md:w-auto"
+              >
+                {Strings.create}
+              </CustomButton>
+            </div>
           </div>
         </div>
         <div className="flex-1 overflow-auto hidden lg:block">
@@ -179,7 +183,7 @@ const Sites = () => {
       </div>
       <Form.Provider
         onFormFinish={async (_, { values }) => {
-          await handleOnFormCreateFinish(values)
+          await handleOnFormCreateFinish(values);
         }}
       >
         <ModalForm

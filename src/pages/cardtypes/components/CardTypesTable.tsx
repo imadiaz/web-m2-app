@@ -99,7 +99,7 @@ const CardTypesTable = ({ data, isLoading }: TableProps) => {
     showExpandColumn: false,
     expandedRowRender: (data: CardTypes) => (
       <Space className="flex justify-end">
-        <ViewPreclassifiersButton cardTypeId={data.id} />
+        <ViewPreclassifiersButton cardTypeId={data.id} cardTypeName={data.name} />
         <UpdateCardType id={data.id}/>
         <CustomButton type="cancel">{Strings.delete}</CustomButton>
       </Space>
