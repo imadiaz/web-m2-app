@@ -5,13 +5,14 @@ import Routes from "../../../utils/Routes";
 
 interface props {
   cardTypeId: string;
+  cardTypeName: string
 }
 
-const ViewPreclassifiersButton = ({ cardTypeId }: props) => {
+const ViewPreclassifiersButton = ({ cardTypeId, cardTypeName }: props) => {
   const navigate = useNavigate();
 
   const handleOnViewPriorities = (cardTypeId: string) => {
-    navigate(Routes.PreclassifiersAllByCardType, { state: { cardTypeId } });
+    navigate(Routes.PreclassifiersAllByCardType, { state: { cardTypeId, cardTypeName } });
   };
 
   return (

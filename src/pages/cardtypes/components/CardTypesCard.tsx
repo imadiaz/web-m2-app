@@ -32,7 +32,7 @@ const CardTypesCard = ({ data }: CardProps) => {
     },
     {
       key: "5",
-      label: <ViewPreclassifiersButton cardTypeId={data.id} />
+      label: <ViewPreclassifiersButton cardTypeId={data.id} cardTypeName={data.name}/>
     },
   ];
 
