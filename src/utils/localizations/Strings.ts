@@ -145,4 +145,5 @@ export default class Strings {
 
 
   static preclassifiersof = "Preclassifiers of:"
+  static levelsof = "Levels of:"
 }

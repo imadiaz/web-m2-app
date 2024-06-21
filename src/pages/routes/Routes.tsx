@@ -10,6 +10,7 @@ import Priorities from "../priority/Priorities";
 import Sites from "../site/Sites";
 import CardTypess from "../cardtypes/CardTypes";
 import Preclassifiers from "../preclassifier/Preclassifiers";
+import Levels from "../level/Levels";
 
 const companies = new Route(
   "Companies",
@@ -50,7 +51,15 @@ const preclassifiers = new Route(
   <></>
 )
 
-const adminRoutes: Route[] = [companies, priorities, sites, cardTypes, preclassifiers];
+const levels = new Route(
+  "Levels",
+  "levels",
+  Routes.LevelsAllByCardType,
+  <Levels />,
+  <></>
+)
+
+const adminRoutes: Route[] = [companies, priorities, sites, cardTypes, preclassifiers, levels];
 
 const adminRoutesSiderOptions = (): ItemType[] => {
   const items: MenuProps["items"] = [
