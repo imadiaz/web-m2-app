@@ -4,6 +4,8 @@ const SitesAllByCompany = "/sites/all";
 const CardTypesAllBySite = "/cardTypes/all";
 const PreclassifiersAllByCardType = "/preclassifier/all"
 const Users = "/users"
+const LevelsAllByCardType = "/level/all"
+
 
 export default {
   AdminDirectionHome,
@@ -11,5 +13,6 @@ export default {
   SitesAllByCompany,
   CardTypesAllBySite,
   PreclassifiersAllByCardType,
-  Users
+  Users,
+  LevelsAllByCardType
 };

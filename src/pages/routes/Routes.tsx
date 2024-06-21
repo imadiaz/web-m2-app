@@ -12,6 +12,8 @@ import CardTypess from "../cardtypes/CardTypes";
 import Preclassifiers from "../preclassifier/Preclassifiers";
 import Users from "../user/Users";
 import { MdOutlineManageAccounts } from "react-icons/md";
+import Levels from "../level/Levels";
+
 
 const companies = new Route(
   "Companies",
@@ -59,8 +61,16 @@ const preclassifiers = new Route(
   <Preclassifiers />,
   <></>
 )
+  
+const levels = new Route(
+  "Levels",
+  "levels",
+  Routes.LevelsAllByCardType,
+  <Levels />,
+  <></>
+)
 
-const adminRoutes: Route[] = [companies, users, priorities, sites, cardTypes, preclassifiers];
+const adminRoutes: Route[] = [companies, users, priorities, sites, cardTypes, preclassifiers, levels];
 
 const adminRoutesSiderOptions = (): ItemType[] => {
   const items: MenuProps["items"] = [

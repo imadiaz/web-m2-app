@@ -10,6 +10,7 @@ import { Site } from "../../../data/site/site";
 import ViewPrioritiesButton from "./ViewPrioritiesButton";
 import ViewCardTypesButton from "./ViewCardTypesButton";
 import UpdateSite from "./UpdateSite";
+import ViewLevelsButton from "./ViewLevelsButton";
 
 interface TableProps {
   data: Site[];
@@ -137,7 +138,7 @@ const SiteTable = ({ data, isLoading }: TableProps) => {
     expandedRowRender: (data: Site) => (
       <Space className="flex justify-end">
         <ViewPrioritiesButton siteId={data.id} siteName={data.name} />
-        <CustomButton type="action">{Strings.viewLevels}</CustomButton>
+        <ViewLevelsButton siteId={data.id} siteName={data.name}/>
         <ViewCardTypesButton siteId={data.id} siteName={data.name} />
         <CustomButton type="action">{Strings.viewCards}</CustomButton>
         <UpdateSite siteId={data.id} />

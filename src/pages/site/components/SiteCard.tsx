@@ -7,6 +7,7 @@ import Strings from "../../../utils/localizations/Strings";
 import ViewPrioritiesButton from "./ViewPrioritiesButton";
 import ViewCardTypesButton from "./ViewCardTypesButton";
 import UpdateSite from "./UpdateSite";
+import ViewLevelsButton from "./ViewLevelsButton";
 
 interface CompanyCardProps {
   data: Company;
@@ -14,16 +15,9 @@ interface CompanyCardProps {
 
 const SiteCard = ({ data }: CompanyCardProps) => {
   const { status, text } = getStatusAndText(data.status);
-   //const dispatch = useAppDispatch();
   const {
     token: { colorBgContainer, colorPrimary },
   } = theme.useToken();
-
-  /*const handleUpdateClick = (row: Company) => {
-    dispatch(resetRowData());
-    dispatch(setRowData(row));
-    dispatch(resetChangeIndicator());
-  }; */
 
   const items: MenuProps["items"] = [
     {
@@ -34,7 +28,7 @@ const SiteCard = ({ data }: CompanyCardProps) => {
     },
     {
       key: "2",
-      label: <CustomButton type="action">{Strings.viewLevels}</CustomButton>,
+      label: <ViewLevelsButton siteId={data.id} siteName={data.name}/>,
     },
     {
       key: "3",
