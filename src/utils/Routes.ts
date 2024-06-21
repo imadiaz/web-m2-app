@@ -3,11 +3,13 @@ const PriorityAll = "/priority/all";
 const SitesAllByCompany = "/sites/all";
 const CardTypesAllBySite = "/cardTypes/all";
 const PreclassifiersAllByCardType = "/preclassifier/all"
+const Users = "/users"
 
 export default {
   AdminDirectionHome,
   PriorityAll,
   SitesAllByCompany,
   CardTypesAllBySite,
-  PreclassifiersAllByCardType
+  PreclassifiersAllByCardType,
+  Users
 };
