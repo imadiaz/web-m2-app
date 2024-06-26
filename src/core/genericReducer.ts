@@ -8,6 +8,7 @@ const initialState = {
     priority: { updated: false },
     cardType: {updated: false}
   },
+  siteId: 0
 };
 const genericSlice = createSlice({
   name: "data",
@@ -18,6 +19,9 @@ const genericSlice = createSlice({
     },
     resetRowData: (state) => {
       state.rowData = null;
+    },
+    setSiteId: (state, action) => {
+      state.siteId = action.payload;
     },
     setCompanyUpdatedIndicator: (state) => {
       state.indicators.company.updated = true;
@@ -49,6 +53,7 @@ const genericSlice = createSlice({
 export const {
   setRowData,
   resetRowData,
+  setSiteId,
   setCompanyUpdatedIndicator,
   resetCompanyUpdatedIndicator,
   setSiteUpdatedIndicator,
@@ -70,3 +75,5 @@ export const selectPriorityUpdatedIndicator = (state: any) =>
   state.data.indicators.priority.updated;
 export const selectCardTypeUpdatedIndicator = (state: any) =>
   state.data.indicators.cardType.updated;
+export const selectSiteId = (state: any) =>
+  state.data.siteId;

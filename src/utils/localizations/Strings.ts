@@ -88,15 +88,21 @@ export default class Strings {
   static appHistoryDays = "App history days";
 
   //CardTypes
-  static methodology = "Methodology";
+  static methodology = "Methodology name";
   static name = "Name";
   static color = "Color";
   static responsible = 'Responsible'
+  static cardTypeMethodology = 'Methodology default (M)'
   static cardTypesOf = "Card types of:"
   static picturesCreate=  "Pictures create"
   static audiosCreate = "Audios create"
   static videosCreate = "Videos create"
+  static picturesCreatePs = 'Pictures create provisional solution'
+  static audiosCreatePs = "Audios create provisional solution"
+  static videosCreatePs = "Videos create provisional solution"
   static audiosDurationCreate = "Audios duration create"
+  static audiosDurationPs = "Audios duration provisional solution"
+  static videosDurationPs = "Videos duration provisional solution"
   static videosDurationCreate = "Videos duration create"
   static quantityPicturesClose = "Pictures close"
   static quantityAudiosClose = "Audios close"
@@ -107,6 +113,9 @@ export default class Strings {
   static durationCreate = "Duration create"
   static quantityClose = "Quantity close"
   static durationClose = "Duration close"
+  //cardtype methodology
+  static M = 'M'
+  static C = 'C'
 
   //roles
   static roles = 'Roles'

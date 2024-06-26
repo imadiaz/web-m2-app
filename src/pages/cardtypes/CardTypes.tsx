@@ -23,6 +23,7 @@ import {
 import {
   resetCardTypeUpdatedIndicator,
   selectCardTypeUpdatedIndicator,
+  setSiteId,
 } from "../../core/genericReducer";
 import { useAppDispatch, useAppSelector } from "../../core/store";
 import PageTitle from "../../components/PageTitle";
@@ -92,6 +93,7 @@ const CardTypess = () => {
         setData(response);
         setDataBackup(response);
       } catch (error) {}
+      dispatch(setSiteId(siteId));
     }
     setLoading(false);
   };
@@ -105,6 +107,7 @@ const CardTypess = () => {
       setModalLoading(true);
       await registerCardType(
         new CreateCardType(
+          values.cardTypeMethodology? values.cardTypeMethodology:Strings.M,
           Number(siteId),
           values.methodology.trim(),
           values.name.trim(),
@@ -120,7 +123,12 @@ const CardTypess = () => {
           Number(values.quantityAudiosClose),
           Number(values.quantityVideosClose),
           Number(values.audiosDurationClose),
-          Number(values.videosDurationClose)
+          Number(values.videosDurationClose),
+          Number(values.quantityPicturesPs),
+          Number(values.quantityAudiosPs),
+          Number(values.quantityVideosPs),
+          Number(values.audiosDurationPs),
+          Number(values.videosDurationPs)
         )
       ).unwrap();
       setModalOpen(false);

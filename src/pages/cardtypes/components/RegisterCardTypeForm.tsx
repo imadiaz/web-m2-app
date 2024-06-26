@@ -4,6 +4,11 @@ import { BsCardText } from "react-icons/bs";
 import { AiOutlineFieldNumber } from "react-icons/ai";
 import { FiTool } from "react-icons/fi";
 import { LuTextCursor } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import { useGetSiteResponsiblesMutation } from "../../../services/userService";
+import { useAppSelector } from "../../../core/store";
+import { selectSiteId } from "../../../core/genericReducer";
+import { Responsible } from "../../../data/user/user";
 
 type FormInstance = GetRef<typeof Form>;
 
@@ -12,10 +17,37 @@ interface FormProps {
 }
 
 const RegisterCardTypeForm = ({ form }: FormProps) => {
+  const [getResponsibles] = useGetSiteResponsiblesMutation();
+  const siteId = useAppSelector(selectSiteId);
+  const [data, setData] = useState<Responsible[]>([]);
+
+  const handleGetResponsibles = async () => {
+    const responsibles = await getResponsibles(siteId).unwrap();
+    setData(responsibles);
+  };
+  useEffect(() => {
+    handleGetResponsibles();
+  }, []);
+
+  const selectOptions = () => {
+    return data.map((responsible) => (
+      <Select.Option key={responsible.id} value={responsible.id}>
+        {responsible.name}
+      </Select.Option>
+    ));
+  };
   return (
     <Form form={form}>
       <div className="flex flex-col">
         <div className="flex flex-row justify-between flex-wrap">
+          <Form.Item
+            name="cardTypeMethodology"
+          >
+            <Select size="large" placeholder={Strings.cardTypeMethodology}>
+              <Select.Option value={Strings.M}>{Strings.M}</Select.Option>
+              <Select.Option value={Strings.C}>{Strings.C}</Select.Option>
+            </Select>
+          </Form.Item>
           <Form.Item
             name="methodology"
             validateFirst
@@ -77,13 +109,7 @@ const RegisterCardTypeForm = ({ form }: FormProps) => {
             rules={[{ required: true, message: Strings.requiredResponsableId }]}
           >
             <Select size="large" placeholder={Strings.responsible}>
-              <Select.Option value="1">Fausto</Select.Option>
-              <Select.Option value="2">Juan Mecanico</Select.Option>
-              <Select.Option value="3">Israel Navarro</Select.Option>
-              <Select.Option value="4">Sergio Mecanico</Select.Option>
-              <Select.Option value="5">Imma</Select.Option>
-              <Select.Option value="6">Marisela</Select.Option>
-              <Select.Option value="7">Imma Mecanico</Select.Option>
+              {selectOptions()}
             </Select>
           </Form.Item>
         </div>
@@ -92,7 +118,7 @@ const RegisterCardTypeForm = ({ form }: FormProps) => {
           <Form.Item name="quantityPicturesCreate" validateFirst>
             <InputNumber
               size="large"
-              max={255}
+              max={127}
               addonBefore={<AiOutlineFieldNumber />}
               placeholder={Strings.picturesCreate}
             />
@@ -100,7 +126,7 @@ const RegisterCardTypeForm = ({ form }: FormProps) => {
           <Form.Item name="quantityAudiosCreate" validateFirst>
             <InputNumber
               size="large"
-              max={255}
+              max={127}
               addonBefore={<AiOutlineFieldNumber />}
               placeholder={Strings.audiosCreate}
             />
@@ -108,9 +134,33 @@ const RegisterCardTypeForm = ({ form }: FormProps) => {
           <Form.Item name="quantityVideosCreate" validateFirst>
             <InputNumber
               size="large"
-              max={255}
+              max={127}
               addonBefore={<AiOutlineFieldNumber />}
               placeholder={Strings.videosCreate}
+            />
+          </Form.Item>
+          <Form.Item name="quantityPicturesPs" validateFirst>
+            <InputNumber
+              size="large"
+              max={127}
+              addonBefore={<AiOutlineFieldNumber />}
+              placeholder={Strings.picturesCreatePs}
+            />
+          </Form.Item>
+          <Form.Item name="quantityAudiosPs" validateFirst>
+            <InputNumber
+              size="large"
+              max={127}
+              addonBefore={<AiOutlineFieldNumber />}
+              placeholder={Strings.audiosCreatePs}
+            />
+          </Form.Item>
+          <Form.Item name="quantityVideosPs" validateFirst>
+            <InputNumber
+              size="large"
+              max={127}
+              addonBefore={<AiOutlineFieldNumber />}
+              placeholder={Strings.videosCreatePs}
             />
           </Form.Item>
         </div>
@@ -124,12 +174,28 @@ const RegisterCardTypeForm = ({ form }: FormProps) => {
               placeholder={Strings.audiosDurationCreate}
             />
           </Form.Item>
-          <Form.Item name="videosDurationCreate" validateFirst>
+          <Form.Item name="videosDurationCreate" validateFirst className="mr-1">
             <InputNumber
               size="large"
               maxLength={10}
               addonBefore={<AiOutlineFieldNumber />}
               placeholder={Strings.videosDurationCreate}
+            />
+          </Form.Item>
+          <Form.Item name="audiosDurationPs" validateFirst className="mr-1">
+            <InputNumber
+              size="large"
+              maxLength={10}
+              addonBefore={<AiOutlineFieldNumber />}
+              placeholder={Strings.audiosDurationPs}
+            />
+          </Form.Item>
+          <Form.Item name="videosDurationPs" validateFirst className="mr-1">
+            <InputNumber
+              size="large"
+              maxLength={10}
+              addonBefore={<AiOutlineFieldNumber />}
+              placeholder={Strings.videosDurationPs}
             />
           </Form.Item>
         </div>
@@ -138,7 +204,7 @@ const RegisterCardTypeForm = ({ form }: FormProps) => {
           <Form.Item name="quantityPicturesClose" validateFirst>
             <InputNumber
               size="large"
-              max={255}
+              max={127}
               addonBefore={<AiOutlineFieldNumber />}
               placeholder={Strings.quantityPicturesClose}
             />
@@ -146,7 +212,7 @@ const RegisterCardTypeForm = ({ form }: FormProps) => {
           <Form.Item name="quantityAudiosClose" validateFirst>
             <InputNumber
               size="large"
-              max={255}
+              max={127}
               addonBefore={<AiOutlineFieldNumber />}
               placeholder={Strings.quantityAudiosClose}
             />
@@ -154,7 +220,7 @@ const RegisterCardTypeForm = ({ form }: FormProps) => {
           <Form.Item name="quantityVideosClose" validateFirst>
             <InputNumber
               size="large"
-              max={255}
+              max={127}
               addonBefore={<AiOutlineFieldNumber />}
               placeholder={Strings.quantityVideosClose}
             />
