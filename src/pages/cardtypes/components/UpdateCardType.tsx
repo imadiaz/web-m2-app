@@ -69,6 +69,11 @@ const UpdateCardType = ({ id }: ButtonEditProps) => {
         Number(values.quantityVideosClose),
         Number(values.audiosDurationClose),
         Number(values.videosDurationClose),
+        Number(values.quantityPicturesPs),
+        Number(values.quantityAudiosPs),
+        Number(values.quantityVideosPs),
+        Number(values.audiosDurationPs),
+        Number(values.videosDurationPs),
         values.status
       );
       await updateCardType(cardTypeToUpdate).unwrap();

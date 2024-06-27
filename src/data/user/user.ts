@@ -38,3 +38,9 @@ export interface UserTable {
   roles: Role[];
   site: Site;
 }
+
+export interface Responsible{
+  id: string,
+  name: string,
+  email: string
+}

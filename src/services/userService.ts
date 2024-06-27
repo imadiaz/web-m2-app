@@ -1,4 +1,4 @@
-import { UserTable } from "../data/user/user";
+import { Responsible, UserTable } from "../data/user/user";
 import { apiSlice } from "./apiSlice";
 
 export const userService = apiSlice.injectEndpoints({
@@ -7,7 +7,11 @@ export const userService = apiSlice.injectEndpoints({
             query: () => `/users/all`,
             transformResponse: (response: {data: UserTable[]}) => response.data
         }),
+        getSiteResponsibles: builder.mutation<Responsible[], void>({
+            query: (siteId) => `/users/all/${siteId}`,
+            transformResponse: (response: {data: Responsible[]}) => response.data
+        }),
     })
 })
 
-export const {useGetUsersMutation} = userService
+export const {useGetUsersMutation, useGetSiteResponsiblesMutation} = userService

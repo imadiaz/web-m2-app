@@ -28,5 +28,10 @@ export interface CardTypeUpdateForm{
   quantityVideosClose: number;
   audiosDurationClose: number;
   videosDurationClose: number;
+  quantityPicturesPs: number;
+  quantityAudiosPs: number;
+  quantityVideosPs: number;
+  audiosDurationPs: number;
+  videosDurationPs: number;
   status: string;
 }
