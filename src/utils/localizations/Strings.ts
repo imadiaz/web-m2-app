@@ -119,6 +119,7 @@ export default class Strings {
 
   //roles
   static roles = 'Roles'
+  static createNode = "Create node"
 
   //errors card type form
   static requiredMethodology = "Please enter the methodology"
@@ -141,6 +142,8 @@ export default class Strings {
   static createSite = "Create site for";
   static createPreclassifier= "Create Preclassifier"
   static createCardType = "Create card type for"
+  static createLevel = "Create level for"
+  static createNodefor = "Create node for"
 
   //general actions
   static edit = "Edit";
