@@ -23,25 +23,27 @@ const ModalUpdateForm = ({
   const [form] = Form.useForm();
 
   const handleOnOk = () => {
-    if(!isLoading){
+    if (!isLoading) {
       form.submit();
     }
   };
 
   return (
-    <Modal
-      onOk={handleOnOk}
-      okText={Strings.save}
-      width={810}
-      title={title}
-      open={open}
-      onCancel={onCancel}
-      cancelText={Strings.cancel}
-      confirmLoading={isLoading}
-      destroyOnClose
-    >
-      <FormComponent form={form} />
-    </Modal>
+    <div onClick={(event) => event.stopPropagation()}>
+      <Modal
+        onOk={handleOnOk}
+        okText={Strings.save}
+        width={810}
+        title={title}
+        open={open}
+        onCancel={onCancel}
+        cancelText={Strings.cancel}
+        confirmLoading={isLoading}
+        destroyOnClose
+      >
+        <FormComponent form={form} />
+      </Modal>
+    </div>
   );
 };
 

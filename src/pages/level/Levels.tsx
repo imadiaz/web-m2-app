@@ -14,8 +14,18 @@ import LevelCollapse from "./components/LevelCollapse";
 import { useAppDispatch, useAppSelector } from "../../core/store";
 import ModalForm from "../../components/ModalForm";
 import RegisterLevelForm from "./components/RegisterLevelForm";
-import { resetLevelCreatedIndicator, selectLevelCreatedIndicator, setSiteId } from "../../core/genericReducer";
-import { NotificationSuccess, handleErrorNotification, handleSucccessNotification } from "../../utils/Notifications";
+import {
+  resetLevelCreatedIndicator,
+  resetLevelUpdatedIndicator,
+  selectLevelCreatedIndicator,
+  selectLevelUpdatedIndicator,
+  setSiteId,
+} from "../../core/genericReducer";
+import {
+  NotificationSuccess,
+  handleErrorNotification,
+  handleSucccessNotification,
+} from "../../utils/Notifications";
 import { CreateLevel } from "../../data/level/level.request";
 
 interface stateType {
@@ -35,15 +45,16 @@ const Levels = () => {
   const [registerLevel] = useCreateLevelMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const isLevelCreated = useAppSelector(selectLevelCreatedIndicator)
-  
+  const isLevelCreated = useAppSelector(selectLevelCreatedIndicator);
+  const isLevelUpdated = useAppSelector(selectLevelUpdatedIndicator);
+
   useEffect(() => {
-    if (isLevelCreated) {
+    if (isLevelCreated || isLevelUpdated) {
       handleGetLevels();
       dispatch(resetLevelCreatedIndicator());
+      dispatch(resetLevelUpdatedIndicator());
     }
-  }, [isLevelCreated, dispatch]);
-
+  }, [isLevelCreated, isLevelUpdated, dispatch]);
   const handleOnSearch = (event: any) => {
     const getSearch = event.target.value;
 

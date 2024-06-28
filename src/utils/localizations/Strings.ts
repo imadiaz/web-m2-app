@@ -157,6 +157,7 @@ export default class Strings {
   static createPreclassifier= "Create Preclassifier"
   static createCardType = "Create card type for"
   static createLevel = "Create level for"
+  static updateLevel = "Update level"
   static createNodefor = "Create node for"
 
   //general actions

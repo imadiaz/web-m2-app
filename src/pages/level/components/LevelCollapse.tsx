@@ -1,29 +1,44 @@
-import { Collapse, Empty, Spin } from "antd";
+import { Collapse, Empty, Space, Spin } from "antd";
 import { Level } from "../../../data/level/level";
 import RegisterNodeButton from "./RegisterNodeButton";
+import UpdateLevelButton from "./UpdateLevelButton";
 
 interface Props {
   data: Level[];
   isLoading: boolean;
 }
-const generateItems = (parentId: number, data: Level[], nodesName: string[]): any => {
+const generateItems = (
+  parentId: number,
+  data: Level[],
+  nodesName: string[]
+): any => {
   return data
     .filter((item) => Number(item.superiorId) === parentId)
     .map((item) => {
       const updatedNodesName = [...nodesName, item.name];
-      const childrenItems = generateItems(Number(item.id), data, updatedNodesName);
+      const childrenItems = generateItems(
+        Number(item.id),
+        data,
+        updatedNodesName
+      );
       return {
         key: item.id.toString(),
         label: <h1 className="flex-1 text-base md:text-lg">{item.name}</h1>,
-        extra: <RegisterNodeButton superiorId={item.id} nodesName={updatedNodesName} />,
+        extra: (
+          <Space>
+            <RegisterNodeButton
+              superiorId={item.id}
+              nodesName={updatedNodesName}
+            />
+            <UpdateLevelButton levelId={item.id} />
+          </Space>
+        ),
         children: (
           <>
             <h2 className="mb-2 font-light text-base md:text-lg">
               {item.description}
             </h2>
-            {childrenItems.length > 0 && (
-              <Collapse items={childrenItems} />
-            )}
+            {childrenItems.length > 0 && <Collapse items={childrenItems} />}
           </>
         ),
       };
