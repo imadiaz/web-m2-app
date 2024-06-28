@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
-import { Input, Space } from "antd";
+import { Form, Input, Space } from "antd";
 import { IoIosSearch } from "react-icons/io";
 import CustomButton from "../../components/CustomButtons";
 import Strings from "../../utils/localizations/Strings";
 import PageTitle from "../../components/PageTitle";
-import { useGetUsersMutation } from "../../services/userService";
+import {
+  useCreateUserMutation,
+  useGetUsersMutation,
+} from "../../services/userService";
 import { UserTable } from "../../data/user/user";
 import UserTableComponent from "./components/UserTable";
+import ModalForm from "../../components/ModalForm";
+import RegisterUserForm from "./components/RegisterUserForm";
+import { NotificationSuccess, handleErrorNotification, handleSucccessNotification } from "../../utils/Notifications";
+import { CreateUser } from "../../data/user/user.request";
 
 const Users = () => {
   const [getUsers] = useGetUsersMutation();
@@ -14,6 +21,18 @@ const Users = () => {
   const [isLoading, setLoading] = useState(false);
   const [querySearch, setQuerySearch] = useState(Strings.empty);
   const [dataBackup, setDataBackup] = useState<UserTable[]>([]);
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [registerUser] = useCreateUserMutation();
+  const [modalIsLoading, setModalLoading] = useState(false);
+
+  const handleOnClickCreateButton = () => {
+    setModalOpen(true);
+  };
+  const handleOnCancelButton = () => {
+    if (!modalIsLoading) {
+      setModalOpen(false);
+    }
+  };
 
   const handleGetUsers = async () => {
     setLoading(true);
@@ -49,6 +68,30 @@ const Users = () => {
     );
   };
 
+  const handleOnFormCreateFinish = async (values: any) => {
+    try {
+      setModalLoading(true);
+      await registerUser(
+        new CreateUser(
+          values.name.trim(),
+          values.email.trim(),
+          Number(values.siteId),
+          values.password,
+          values.uploadCardDataWithDataNet,
+          values.uploadCardEvidenceWithDataNet,
+          values.roles
+        )
+      ).unwrap();
+      setModalOpen(false);
+      handleGetUsers();
+      handleSucccessNotification(NotificationSuccess.REGISTER);
+    } catch (error) {
+      handleErrorNotification(error);
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="h-full flex flex-col">
@@ -66,7 +109,11 @@ const Users = () => {
               </Space>
             </div>
             <div className="flex mb-1 md:mb-0 md:justify-end w-full md:w-auto">
-              <CustomButton type="success" className="w-full md:w-auto">
+              <CustomButton
+                onClick={handleOnClickCreateButton}
+                type="success"
+                className="w-full md:w-auto"
+              >
                 {Strings.create}
               </CustomButton>
             </div>
@@ -76,6 +123,19 @@ const Users = () => {
           <UserTableComponent data={data} isLoading={isLoading} />
         </div>
       </div>
+      <Form.Provider
+        onFormFinish={async (_, { values }) => {
+          await handleOnFormCreateFinish(values);
+        }}
+      >
+        <ModalForm
+          open={modalIsOpen}
+          onCancel={handleOnCancelButton}
+          FormComponent={RegisterUserForm}
+          title={Strings.createPriority}
+          isLoading={modalIsLoading}
+        />
+      </Form.Provider>
     </>
   );
 };

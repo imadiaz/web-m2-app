@@ -7,3 +7,31 @@ export class LoginRequest {
     this.password = password;
   }
 }
+
+export class CreateUser {
+  name: string;
+  email: string;
+  siteId: number;
+  password: string;
+  uploadCardDataWithDataNet: number;
+  uploadCardEvidenceWithDataNet: number;
+  roles: number[];
+
+  constructor(
+    name: string,
+    email: string,
+    siteId: number,
+    password: string,
+    uploadCardDataWithDataNet: number,
+    uploadCardEvidenceWithDataNet: number,
+    roles: number[]
+  ) {
+    this.name = name;
+    this.email = email;
+    this.siteId = siteId;
+    this.password = password;
+    this.uploadCardDataWithDataNet = uploadCardDataWithDataNet;
+    this.uploadCardEvidenceWithDataNet = uploadCardEvidenceWithDataNet;
+    this.roles = roles;
+  }
+}

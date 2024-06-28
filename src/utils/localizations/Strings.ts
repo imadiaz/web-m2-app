@@ -2,6 +2,9 @@ export default class Strings {
   static login = "Log in";
   static logout = "Log out"
   static password = "Password";
+  static confirmPassword = "Confirm password"
+  static uploadCardDataWithDataNet = "Upload card with data net"
+  static uploadCardEvidenceWithDataNet = "Upload card evidence with data net"
   static email = "E-mail";
   static forgotPassword = "Forgot password";
   static searchRecord = "Search record";
@@ -15,6 +18,16 @@ export default class Strings {
   static requiredEmail = "Please input your e-mail address!";
   static requiredPassword = "Please input your password!";
   static requiredValidEmailAddress = "Please enter a valid e-mail address!";
+  static requiredInfo = "please enter the information"
+
+  //errors user form
+  static requiredUserName = "Please enter the user name"
+  static requiredSite = "Please select a site"
+  static requiredRoles = "Please assing at least one role"
+  static requiredConfirmPassword = "Please confirnm your password"
+  static passwordsDoNotMatch = "Password do not match"
+  static onlyLetters = "Please input only letters"
+  static passwordLenght = "Password must have at least 8 characters"
 
   //errors company form
   static requiredCompanyName = "Please enter the company name";
