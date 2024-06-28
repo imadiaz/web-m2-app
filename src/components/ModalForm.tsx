@@ -14,7 +14,13 @@ interface ModalFormProps {
 }
 
 // reset form fields when modal is form, closed
-const useResetFormOnCloseModal = ({ form, open }: { form: FormInstance; open: boolean }) => {
+const useResetFormOnCloseModal = ({
+  form,
+  open,
+}: {
+  form: FormInstance;
+  open: boolean;
+}) => {
   const prevOpenRef = useRef<boolean>();
   useEffect(() => {
     prevOpenRef.current = open;
@@ -39,29 +45,37 @@ const ModalForm = ({
 
   useResetFormOnCloseModal({
     form,
-    open
+    open,
   });
 
-  const handleOnOk = () => {
-    if(!isLoading){
+  const handleOnOk = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    if (!isLoading) {
       form.submit();
     }
   };
 
+  const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onCancel();
+  };
+
   return (
-    <Modal
-      onOk={handleOnOk}
-      okText={Strings.save}
-      width={820}
-      title={title}
-      open={open}
-      onCancel={onCancel}
-      cancelText={Strings.cancel}
-      confirmLoading={isLoading}
-      destroyOnClose
-    >
-      <FormComponent form={form} />
-    </Modal>
+    <div onClick={(event) => event.stopPropagation()}>
+      <Modal
+        onOk={handleOnOk}
+        okText={Strings.save}
+        width={820}
+        title={title}
+        open={open}
+        onCancel={handleCancel}
+        cancelText={Strings.cancel}
+        confirmLoading={isLoading}
+        destroyOnClose
+      >
+        <FormComponent form={form} />
+      </Modal>
+    </div>
   );
 };
 
