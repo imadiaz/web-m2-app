@@ -140,6 +140,7 @@ export default class Strings {
   static updateCompany = "Update company";
   static createPriority = "Create priority for";
   static createSite = "Create site for";
+  static updateSite = "Update site"
   static createPreclassifier= "Create Preclassifier"
   static createCardType = "Create card type for"
   static createLevel = "Create level for"
@@ -162,5 +163,6 @@ export default class Strings {
 
 
   static preclassifiersof = "Preclassifiers of:"
+  static updatePreclassifier = "Update preclassifier"
   static levelsof = "Levels of:"
 }

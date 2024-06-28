@@ -3,6 +3,7 @@ import { getStatusAndText } from "../../../utils/Extensions";
 import { SlOptionsVertical } from "react-icons/sl";
 import Strings from "../../../utils/localizations/Strings";
 import CustomButton from "../../../components/CustomButtons";
+import UpdatePreclassierButton from "./UpdatePreclassifierButton";
 
 interface CardProps {
   data: Preclassifier;
@@ -18,7 +19,7 @@ const PreclassifierCard = ({ data }: CardProps) => {
     {
       key: "1",
       label: (
-        <CustomButton type="edit">{Strings.edit}</CustomButton>
+        <UpdatePreclassierButton preclassifierId={data.id}/>
       ),
     },
     {

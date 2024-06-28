@@ -4,7 +4,7 @@ import { IoIosSearch } from "react-icons/io";
 import Strings from "../../utils/localizations/Strings";
 import CustomButton from "../../components/CustomButtons";
 import { useLocation } from "react-router-dom";
-import { useCreatePreclassifierMutation, useGetPreclassifierMutation } from "../../services/preclassifierService";
+import { useCreatePreclassifierMutation, useGetPreclassifiersMutation } from "../../services/preclassifierService";
 import PreclassifierTable from "./components/PreclassifierTable";
 import PaginatedList from "../../components/PaginatedList";
 import PreclassifierCard from "./components/PreclassifierCard";
@@ -13,6 +13,8 @@ import { NotificationSuccess, handleErrorNotification, handleSucccessNotificatio
 import { CreatePreclassifier } from "../../data/preclassifier/preclassifier.request";
 import RegisterPreclassifierForm from "./components/RegisterPreclassifierForm";
 import PageTitle from "../../components/PageTitle";
+import { useAppDispatch, useAppSelector } from "../../core/store";
+import { resetPreclassifierUpdatedIndicator, selectPreclassifierUpdatedIndicator } from "../../core/genericReducer";
 
 interface stateType {
   cardTypeId: string;
@@ -20,7 +22,7 @@ interface stateType {
 }
 
 const Preclassifiers = () => {
-  const [getPreclassifiers] = useGetPreclassifierMutation();
+  const [getPreclassifiers] = useGetPreclassifiersMutation();
   const [isLoading, setLoading] = useState(false);
   const { state } = useLocation();
   const { cardTypeId, cardTypeName } = state as stateType;
@@ -30,6 +32,15 @@ const Preclassifiers = () => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [registerPreclassifier] = useCreatePreclassifierMutation();
   const [modalIsLoading, setModalLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const isPreclassifierUpdated = useAppSelector(selectPreclassifierUpdatedIndicator);
+
+  useEffect(() => {
+    if (isPreclassifierUpdated) {
+      handleGetPriorities();
+      dispatch(resetPreclassifierUpdatedIndicator());
+    }
+  }, [isPreclassifierUpdated, dispatch]);
 
   const handleOnClickCreateButton = () => {
     setModalOpen(true);
