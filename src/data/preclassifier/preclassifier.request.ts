@@ -13,3 +13,22 @@ export class CreatePreclassifier {
     this.cardTypeId = cardTypeId;
   }
 }
+
+export class UpdatePreclassifier {
+  id: number;
+  preclassifierCode: string;
+  preclassifierDescription: string;
+  status: string;
+
+  constructor(
+    id: number,
+    preclassifierCode: string,
+    preclassifierDescription: string,
+    status: string
+  ) {
+    this.preclassifierCode = preclassifierCode;
+    this.preclassifierDescription = preclassifierDescription;
+    this.id = id;
+    this.status = status;
+  }
+}

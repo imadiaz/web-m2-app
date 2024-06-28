@@ -1,9 +1,9 @@
-import { CreatePreclassifier } from "../data/preclassifier/preclassifier.request";
+import { CreatePreclassifier, UpdatePreclassifier } from "../data/preclassifier/preclassifier.request";
 import { apiSlice } from "./apiSlice";
 
 export const preclassifierService = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getPreclassifier: builder.mutation<Preclassifier[], string>({
+        getPreclassifiers: builder.mutation<Preclassifier[], string>({
             query: (cardTypeId) => `/preclassifier/all/${cardTypeId}`,
             transformResponse: (response: {data: Preclassifier[]}) => response.data
         }),
@@ -13,8 +13,19 @@ export const preclassifierService = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: {...preclassifier}
             })
-        })
+        }),
+        getPreclassifier: builder.mutation<Preclassifier, string>({
+            query: (id) => `/preclassifier/${id}`,
+            transformResponse: (response: {data: Preclassifier}) => response.data
+        }),
+        updatePreclassifier: builder.mutation<void, UpdatePreclassifier>({
+            query: (preclassifier) => ({
+                url: '/preclassifier/update',
+                method: 'PUT',
+                body: {...preclassifier}
+            })
+        }),
     })
 })
 
-export const {useGetPreclassifierMutation, useCreatePreclassifierMutation} = preclassifierService
+export const {useGetPreclassifiersMutation, useCreatePreclassifierMutation, useGetPreclassifierMutation, useUpdatePreclassifierMutation} = preclassifierService

@@ -10,34 +10,32 @@ import {
 import { useAppDispatch } from "../../../core/store";
 import {
   resetRowData,
+  setPreclassifierUpdatedIndicator,
   setRowData,
-  setSiteUpdatedIndicator,
 } from "../../../core/genericReducer";
-import UpdateSiteForm from "./UpdateSiteForm";
 import ModalUpdateForm from "../../../components/ModalUpdateForm";
 import {
-  useGetSiteMutation,
-  useUpdateSiteMutation,
-} from "../../../services/siteService";
-import { UpdateSiteReq } from "../../../data/site/site.request";
-import { updateImageToFirebaseAndGetURL } from "../../../config/firebaseUpdate";
-import Constants from "../../../utils/Constants";
+  useGetPreclassifierMutation,
+  useUpdatePreclassifierMutation,
+} from "../../../services/preclassifierService";
+import { UpdatePreclassifier } from "../../../data/preclassifier/preclassifier.request";
+import UpdatePreclassifierForm from "./UpdatePreclassifierForm";
 
 interface ButtonEditProps {
-  siteId: string;
+  preclassifierId: string;
 }
 
-const UpdateSite = ({ siteId }: ButtonEditProps) => {
+const UpdatePreclassierButton = ({ preclassifierId }: ButtonEditProps) => {
   const [modalIsOpen, setModalOpen] = useState(false);
   const [modalIsLoading, setModalLoading] = useState(false);
   const [dataIsLoading, setDataLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const [getSite] = useGetSiteMutation();
-  const [updateSite] = useUpdateSiteMutation();
+  const [getPreclassifier] = useGetPreclassifierMutation();
+  const [updatePreclassifier] = useUpdatePreclassifierMutation();
 
   const handleOnClickEditButton = async () => {
     setDataLoading(true);
-    const site = await getSite(siteId).unwrap();
+    const site = await getPreclassifier(preclassifierId).unwrap();
     dispatch(setRowData(site));
     setModalOpen(true);
     setDataLoading(false);
@@ -53,42 +51,15 @@ const UpdateSite = ({ siteId }: ButtonEditProps) => {
   const handleOnUpdateFormFinish = async (values: any) => {
     try {
       setModalLoading(true);
-      const siteToUpdate = new UpdateSiteReq(
+      const priorityToUpdate = new UpdatePreclassifier(
         Number(values.id),
-        values.siteCode,
-        values.siteBusinessName,
-        values.name,
-        values.siteType,
-        values.rfc,
-        values.address,
-        values.contact,
-        values.position,
-        values.phone.toString(),
-        values.extension?.toString(),
-        values.cellular?.toString(),
-        values.email,
-        values.logoURL,
-        values.latitud,
-        values.longitud,
-        values.dueDate.format(Constants.DATE_FORMAT),
-        Number(values.monthlyPayment),
-        values.currency,
-        Number(values.appHistoryDays),
+        values.code,
+        values.description,
         values.status
       );
-      await updateSite(siteToUpdate).unwrap();
-      let newURLLogo;
-      if (values.logo[0] !== "h") {
-        newURLLogo = await updateImageToFirebaseAndGetURL(
-          Strings.sites,
-          values.logoURL,
-          values.logo[0]
-        );
-        siteToUpdate.logo = newURLLogo;
-        await updateSite(siteToUpdate).unwrap();
-      }
+      await updatePreclassifier(priorityToUpdate).unwrap();
       setModalOpen(false);
-      dispatch(setSiteUpdatedIndicator());
+      dispatch(setPreclassifierUpdatedIndicator());
       handleSucccessNotification(NotificationSuccess.UPDATE);
     } catch (error) {
       handleErrorNotification(error);
@@ -110,8 +81,8 @@ const UpdateSite = ({ siteId }: ButtonEditProps) => {
         <ModalUpdateForm
           open={modalIsOpen}
           onCancel={handleOnCancelButton}
-          FormComponent={UpdateSiteForm}
-          title={Strings.updateSite}
+          FormComponent={UpdatePreclassifierForm}
+          title={Strings.updatePreclassifier}
           isLoading={modalIsLoading}
         />
       </Form.Provider>
@@ -120,4 +91,4 @@ const UpdateSite = ({ siteId }: ButtonEditProps) => {
   );
 };
 
-export default UpdateSite;
+export default UpdatePreclassierButton;

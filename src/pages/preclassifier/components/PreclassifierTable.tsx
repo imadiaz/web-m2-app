@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { useTableHeight } from "../../../utils/tableHeight";
 import { ColumnsType } from "antd/es/table";
 import Strings from "../../../utils/localizations/Strings";
@@ -6,6 +6,7 @@ import { getStatusAndText } from "../../../utils/Extensions";
 import { Badge, Space, Table } from "antd";
 import CustomButton from "../../../components/CustomButtons";
 import Constants from "../../../utils/Constants";
+import UpdatePreclassierButton from "./UpdatePreclassifierButton";
 
 interface TableProps {
   data: Preclassifier[];
@@ -15,17 +16,6 @@ interface TableProps {
 const PreclassifierTable = ({ data, isLoading }: TableProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const tableHeight = useTableHeight(contentRef);
-  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
-
-  useEffect(() => {
-    const allRowKeys = data.map(item => item.id);
-    setExpandedRowKeys(allRowKeys);
-  }, [data]);
-
-  const handleExpand = (expanded: boolean, record: Preclassifier) => {
-    const keys = expanded ? [...expandedRowKeys, record.id] : expandedRowKeys.filter(key => key !== record.id);
-    setExpandedRowKeys(keys);
-  };
 
   const columns: ColumnsType<Preclassifier> = useMemo(
     () => [
@@ -60,28 +50,27 @@ const PreclassifierTable = ({ data, isLoading }: TableProps) => {
         onFilter: (value, record) => record.status === value,
         ellipsis: true,
       },
+      {
+        title: Strings.actions,
+        render: (data) => {
+          return (
+            <Space className="flex justify-end">
+              <UpdatePreclassierButton preclassifierId={data.id} />
+              <CustomButton type="cancel">{Strings.delete}</CustomButton>
+            </Space>
+          );
+        },
+      },
     ],
     [Strings, getStatusAndText]
   );
-
-  const actionsRow = {
-    expandedRowKeys,
-    onExpand: handleExpand,
-    showExpandColumn: false,
-    expandedRowRender: (_: Preclassifier) => (
-      <Space className="flex justify-end">
-        <CustomButton type="edit">{Strings.edit}</CustomButton>
-        <CustomButton type="cancel">{Strings.delete}</CustomButton>
-      </Space>
-    ),
-  };
 
   return (
     <div className="h-full" ref={contentRef}>
       <Table
         loading={isLoading}
         size="middle"
-        rowKey='id'
+        rowKey="id"
         columns={columns}
         dataSource={data}
         pagination={{
@@ -91,7 +80,6 @@ const PreclassifierTable = ({ data, isLoading }: TableProps) => {
         }}
         key={data.length}
         scroll={{ y: tableHeight }}
-        expandable={actionsRow}
       />
     </div>
   );
