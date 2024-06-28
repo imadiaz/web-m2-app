@@ -7,7 +7,7 @@ const initialState = {
     site: { updated: false },
     priority: { updated: false },
     cardType: { updated: false },
-    level: { created: false },
+    level: { created: false, updated: false },
   },
   siteId: 0,
 };
@@ -54,6 +54,12 @@ const genericSlice = createSlice({
     resetLevelCreatedIndicator: (state) => {
       state.indicators.level.created = false;
     },
+    setLevelUpdatedIndicator: (state) => {
+      state.indicators.level.updated = true;
+    },
+    resetLevelUpdatedIndicator: (state) => {
+      state.indicators.level.updated = false;
+    },
   },
 });
 
@@ -71,6 +77,8 @@ export const {
   resetCardTypeUpdatedIndicator,
   setLevelCreatedIndicator,
   resetLevelCreatedIndicator,
+  setLevelUpdatedIndicator,
+  resetLevelUpdatedIndicator,
 } = genericSlice.actions;
 
 export default genericSlice.reducer;
@@ -86,4 +94,6 @@ export const selectCardTypeUpdatedIndicator = (state: any) =>
   state.data.indicators.cardType.updated;
 export const selectLevelCreatedIndicator = (state: any) =>
   state.data.indicators.level.created;
+export const selectLevelUpdatedIndicator = (state: any) =>
+  state.data.indicators.level.updated;
 export const selectSiteId = (state: any) => state.data.siteId;

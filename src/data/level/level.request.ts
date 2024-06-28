@@ -36,3 +36,24 @@ export class CreateNode {
     this.superiorId = superiorId;
   }
 }
+
+export class UpdateLevel {
+  id: number;
+  name: string;
+  description: string;
+  responsibleId: number;
+  status: string;
+  constructor(
+    id: number,
+    name: string,
+    description: string,
+    responsibleId: number,
+    status: string
+  ) {
+    this.name = name;
+    this.description = description;
+    this.responsibleId = responsibleId;
+    this.id = id;
+    this.status = status;
+  }
+}
